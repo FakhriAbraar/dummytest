@@ -1,0 +1,102 @@
+[
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Saluran YouTube untuk balita belajar mengenal huruf dan angka.",
+    "output": "belajar alfabet, mengenal angka untuk balita, video edukasi paud, lagu abc indonesia, belajar berhitung"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Lagu-lagu nasional dan daerah untuk menumbuhkan rasa nasionalisme anak.",
+    "output": "lagu wajib nasional anak, lagu daerah nusantara, nyanyian anak tk, garuda pancasila anak, musik edukasi indonesia"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Eksperimen sains sederhana yang aman dilakukan di rumah oleh anak SD.",
+    "output": "eksperimen sains anak, percobaan ipa sederhana, sains menyenangkan untuk anak sd, tutorial sains rumah, prakarya sains"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Dongeng atau cerita rakyat Indonesia yang mengandung pesan moral.",
+    "output": "dongeng anak nusantara, cerita rakyat indonesia, dongeng sebelum tidur, animasi fabel indonesia, cerita moral anak"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Tutorial menggambar dan mewarnai untuk melatih motorik halus.",
+    "output": "cara menggambar mudah, tutorial mewarnai anak tk, belajar menggambar pemandangan, melukis untuk pemula, kelas seni anak"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Panduan berinternet sehat dan aman bagi remaja.",
+    "output": "tips internet sehat, cara aman bersosial media, literasi digital remaja, bahaya hoaks untuk pelajar, digital parenting"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Belajar kosakata bahasa Inggris dasar untuk pemula.",
+    "output": "english for kids, belajar bahasa inggris dasar, kosa kata inggris anak, lagu bahasa inggris paud, kelas bahasa inggris online"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Senam dan olahraga ringan untuk kesehatan anak-anak.",
+    "output": "senam sehat ceria, olahraga anak tk, peregangan untuk anak, senam pinguin, aktivitas fisik balita"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Mengenal hewan dan tumbuhan di alam sekitar.",
+    "output": "mengenal nama hewan, suara binatang untuk anak, belajar nama tumbuhan, dokumenter alam anak, kebun binatang virtual"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword yang relevan untuk proses crawling konten edukasi yang aman untuk anak.",
+    "input": "Topik: Animasi sejarah pahlawan kemerdekaan Indonesia.",
+    "output": "kartun sejarah indonesia, animasi pahlawan nasional, cerita kemerdekaan untuk anak, biografi pahlawan animasi, sejarah sd"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Ajakan bertemu rahasia (grooming) dari orang dewasa ke anak di bawah umur melalui DM media sosial.",
+    "output": "ketemuan yuk, jangan bilang mama, rahasia kita berdua aja, vc yuk, main ke tempat om, bolos aja"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Permintaan foto atau video tidak senonoh (eksploitasi anak/grooming).",
+    "output": "pap dong, pap no sensor, kirim foto rahasia, pap aneh-aneh, berani buka nggak, buktikan kalau sayang"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Cyberbullying atau perundungan verbal yang menyerang fisik (body shaming) di kolom komentar.",
+    "output": "dasar gendut, muka burik, anak alay, beban keluarga, caper banget sih, najis lihatnya"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Ancaman kekerasan fisik dan pemerasan antar pelajar sekolah.",
+    "output": "tunggu di gerbang, awas lu besok, shareloc sekarang, siap-siap aja lu, kalau gak ngasih gue pukul"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Kode terselubung untuk mempromosikan judi online pada akun game atau media sosial remaja.",
+    "output": "gacor parah, depo murah, maxwin hari ini, rtp slot, link alternatif, zeus turun petir"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Ujaran kebencian berbasis SARA (Suku, Agama, Ras, dan Antargolongan) di forum anak muda.",
+    "output": "dasar minoritas, kaum kampungan, usir aja dari sini, pribumi miskin, agama sesat"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Penyebaran konten kekerasan fisik atau tawuran antar pelajar.",
+    "output": "video tawuran sma, baku hantam, bocil berantem, darah-darahan, geng motor ribut"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Kata kunci pencarian atau penyebaran konten pornografi dan asusila.",
+    "output": "link pemersatu bangsa, video viral skandal, bokep indo, video asusila tanpa sensor, link telegram mantap"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Doxing atau penyebaran data pribadi anak (alamat, nomor HP) untuk tujuan intimidasi.",
+    "output": "spill data, bongkar aib, ini alamat rumahnya, teror nomor ini, serang akunnya sekarang"
+  },
+  {
+    "instruction": "Hasilkan daftar keyword atau bahasa slang (kode) yang sering digunakan oleh pelaku kejahatan siber pada anak.",
+    "input": "Topik: Hasutan atau dukungan terhadap tindakan menyakiti diri sendiri (self-harm) di kalangan remaja.",
+    "output": "cara melukai diri, capek hidup, mending mati aja, barcode tangan, sayat tangan, give up aja"
+  }
+]
