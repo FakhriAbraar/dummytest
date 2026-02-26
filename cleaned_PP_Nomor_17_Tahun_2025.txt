@@ -1,0 +1,2374 @@
+PRESIDEN
+REPUBUK INDONESIA
+PERATURAN PEMERINTAH REPUBLIK INDONESIA
+NOMOR L7 TAHUN 2025
+TENTANG
+TATA KELOI.A PENYELENGGARAAN SISTEM ELEKTRONIK DAI.,AM
+PELINDUNGAN ANAK
+DENGAN RAHMAT TUHAN YANG MAHA ESA
+,
+Menimbang
+Mengingat
+Menetapkan
+bahwa untuk melaksanakan ketentuan Pasal 16A ayat (5) dan
+Pasal 168 ayat (3) Undang-Undang Nomor 1 Tahun 2024
+tentang Perubahan Kedua atas Undang-Undang Nomor 11
+Tahun 2008 tentang lnformasi dan Transaksi Elektronik,
+perlu menetapkan Peraturan Pemerintah tentang Tata Kelola
+Penyelenggaraan Sistem Elektronik Dalam Pelindungan Anak;
+l. 
+Pasal 5 ayat (2) Undang-Undang Dasar Negara Republik
+Indonesia Tahun 1945;
+2. Undang-Undang Nomor 11 Tahun 2008 tentang Informasi
+dan Transaksi Elektronik (tembaran Negara Republik
+lndonesia Tahun 2008 Nomor 58, Tambahan Lcmbaran
+Negara Republik Indonesia Nomor 4843) sebagaimana
+telah beberapa kali diubah terakhir dengan Undang-
+Undang Nomor 1 Tahun 2024 tentang Perubahan Kedua
+atas Undang-Undang Nomor 1l Tahun 2008 tentang
+Informasi dan Transaksi Elektronik (Lembaran Negara
+Republik Indonesia Tahun 2024 Nomor 1, Tambahan
+kmbaran Negara Republik Indonesia Nomor 69O5);
+MEMUTUSI(AN:
+PERATURAN PEMERINTAH TENTANG TATA
+PET{YELENGGARAAN SISTEM ELEKTRONIK
+PELINDUNGAN ANAK.
+SK No 272133 A
+BABI...
+KELOLA
+DALAM
+EIIEEIEtrN
+KIN
+-2
+BAB I
+KETENTUAN UMUM
+Pasal I
+Dalam Peraturan Pemerintah ini yang dimaksud dengan:
+1. Anak yang
+atau mengakses produk,
+layanan, dan fitur yang selanjutnya disebut Anak adalah
+seseorang yang belum berusia 18 (delapan belas) tahun.
+2. Sistem Elektronik adalah serangkaian perangkat dan
+prosedur elektronik yang berfungsi mempersiapkan,
+mengumpulkan, mengolah, menganalisis, menyimpan,
+menampilkan, mengumumkan, mengirimkan, dan/atau
+menyebarkan informasi elektronik.
+3. Penyelenggaraan Sistem Elektronik adalah pemanfaatan
+Sistem Elektronik oleh penyelenggErra negara, orang,
+badan usaha, dan/ atau masyarakat.
+4. Penyelenggara Sistem Elektronik adalah setiap orang,
+penyelenggara negara, badan usaha, dan masyarakat yang
+menyediakan, mengelola, dan/atau
+Sistem Elektronik, baik secara sendiri-sendiri maupun
+bersama-sama kepada pengguna Sistem Elektronik untuk
+keperluan dirinya dan/ atau keperluan pihak lain.
+5. Produk, l,ayanan, dan Fitur adalah setiap Produk,
+l,ayanan, dan/ atau Fitur yang dikembangkan dan/atau
+diselenggara}an oleh Penyelenggara Sistem Elektronik
+yang terhubung dengan internet atau memiliki
+kemampuan untuk terhubung dengan internet.
+6. Data Pribadi adalah data tentang orang perseorangan yang
+teridentifikasi atau dapat diidentifrkasi secara tersendiri
+atau dikombinasi dengan informasi lainnya baik secara
+langsung maupun tidak langsung melalui Sistem
+Elektronik atau nonelektronik.
+7. Penilaian Dampak Pelindungan Data Pribadi adalah hasil
+analisa atau reviu yang dilakukan secara sistematis untuk
+menilai dan memitigasi risiko yang dapat muncul dari
+praktik pemrosesan Data Pribadi yang dilakukan
+Penyelenggara Sistem Elektronik terhadap Anak dalam
+penyelenggaraan Produk, Layanan, dan Fitur.
+8. Orang adalah orang perseorangan, baik warga negara
+Indonesia, warga negara asing, maupun badan hukum.
+9. 
+Badan
+SK No272134A
+|NIIEIITEIA
+-3-
+9. Badan Publik adalah lembaga eksekutif, legislatif,
+yudikatif, dan badan lain yang fungsi dan tugas pokoknya
+berkaitan dengan penyelenggarEran negara, yang sebegran
+atau seluruh dananya bersumber dari Anggaran
+Pendapatan dan Belanja Negara dan/atau Anggaran
+Pendapatan dan Belanja Daerah, atau organisasi
+nonpemerintah sepanjang ssfaglan atau seluruh dananya
+bersumber dari Anggaran Pendapatan dan Belanja Negara
+dan/ atau Anggaran Pendapatan dan Belanja Daerah,
+sumbangan masyarakat, dan/ atau luar negeri.
+10. Menteri adalah menteri yang menyelenggarakan urus.rn
+pemerintahan di bidang komunikasi dan informasi.
+11. Kementerian adalah kementerian yang menyelenggarakan
+urusan pemerintahan di bidang komunikasi dan
+informasi.
+BAB II
+PEI.IYELENGGARAAN SISTEM ELEKTRONIK DAI,AM PELINDUNGAN ANAK
+Bagian Kesatu
+Umum
+(l)
+Pasal 2
+Sistem Elektronik wajib memberikan
+pelindungan bagi Anak yang
+mengakses Sistem Elektronik.
+sebagaimana dimaksud pada ayat (1)
+meliputi pelindungan terhadap hak Anak sebagaimana
+dimaksud dalam peraturan perundang-undangan
+mengenai penggunaan Produk, Layanan, dan Fitur yang
+dan/atau
+Sistem Elektronik.
+oleh
+(3) Dalam memberikan Produk, l,ayanan, dan Fitur bagi
+Anak, Penyelenggara Sistem Elektronik wajib menerapkan
+teknologi dan langkah teknis operasional untuk
+memberikan pelindungan sebagaimana dimaksud pada
+ayat (1) dari tahap pengembangan sampai dengan tahap
+Penyelenggaraan Sistem Elektronik.
+atau
+(2t
+(4) Dalam
+SK No272135A
+BUK INDONESIA
+-4-
+(4) Dalam memberikan
+sebagaimana dimaksud
+pada ayat (1), Penyelenggara Sistem Elektronik wajib
+menyediakan:
+a. informasi mengenai batasan minimum usia Anak yang
+dapat menggunakan produk atau layanannya;
+b. mekanisme verifikasi pengguna Anak; dan
+c. mekanisme pelaporan
+Produk,
+Layanan, dan Fitur yang melanggar atau berpotensi
+melanggar hak Anak.
+Pasal 3
+(1) Penyelenggara Sistem Elektronik sebagaimana dimaksud
+dalam Pasal 2 terdiri atas:
+a. Penyelenggara Sistem Elektronik lingkup publik; dan
+b. Penyelenggara Sistem Elektronik lingkup privat.
+(21 Penyelenggara Sistem Elektronik lingkup publik
+sebagaimana dimaksud pada ayat (1) huruf a meliputi:
+a. instansi; dan
+b. institusi yang ditunjuk oleh instansi.
+(3) Penyelenggara Sistem Elektronik lingkup privat
+sebagaimana dimaksud pada ayat (1) huruf b, merupakan
+Penyelenggara Sistem Elektronik sebagaimana diatur
+dalam peraturan perundang-undangan, yang
+mengembangkan dan/atau menyelenggarakan Produk,
+Layanan, dan Fitur yang secara khusus dirancang untuk
+digunakan atau diakses oleh Anak, atau yang mungkin
+digunakan atau diakses oleh Anak.
+(4) Dalam hal Penyelenggara Sistem Elektronik lingkup publik
+merupakan institusi yang ditunjuk oleh instansi
+sebagaimana dimaksud pada ayat (2) huruf b, yang
+mengembangkan dan/atau menyelenggarakan Produk,
+Layanan, dan Fitur yang seczrra khusus dirancang untuk
+digunakan atau diakses oleh Anak, atau yang mungkin
+digunakan atau diakses oleh Anak, tunduk pada
+ketentuan Peraturan Pemerintah ini.
+Pasal 4
+(1) Produk, Layanan, dan Fitur sebagaimana dimaksud dalam
+Pasal 2 meliputi:
+a. Produk, Layanan, dan Fitur yang secara khusus
+dirancang untuk digunakan atau diakses oleh Anak;
+atau
+b. Produk, Layanan, dan Fitur yang mungkin digunakan
+atau diakses oleh Anak.
+l2l Produk...
+SK No272136A
+EUK INDONESIA
+-5-
+(21 Produk, Layanan, dan Fitur yang mungkin digunakan atau
+diakses oleh Anak sebagaimana dimaksud pada ayat (1)
+huruf b didasarkan pada indikator:
+a. syarat, ketentuan, aturan, atau kebijakan yang
+dipublikasikan atau disusun dalam suatu dokumen
+internal Penyelenggara Sistem Elektronik
+menunjukkan bahwa Produk, layanan, dan Fitur
+dimaksudkan untuk dapat digunakan atau dialses
+oleh Anak;
+b. terdapat bukti kuat bahwa komposisi pengguna yang
+mengakses secara rutin Produk, Layanan, dan Fitur
+tersebut adalah Anak;
+c. iklan terkait Produk, Layanan, dan Fitur ditqjukan
+kepada Anak;
+d. elemen desain dari Produk, Layanan, dan Fitur dibuat
+atau ditampilkan sedemikian rupa sehingga menarik
+untuk Anak gunakan atau akses; dan/ atau
+e. Produk, Layanan, dan Fitur secara substansial serupa
+atau sama dengan Produk, l,ayanan, dan Fitur yang
+telah terbukti digunakan atau diakses oleh Anak.
+(3) Indikator penilaian yang menunjukkan Produk, l,ayanan,
+dan Fitur yang mungkin digunakan atau diakses oleh
+Anak sebagaimana dimaksud pada ayat l2l ditetapkan
+dengan Keputusan Menteri.
+Pasal 5
+(1) Produk, Layanan, dan Fitur sebagaimana dimaksud dalam
+Pasal 4 ayat (1) dinilai tingkat risikonya terhadap Anak.
+(21 Tingkat risiko sebagaimana dimaksud pada ayat (1)
+terdiri atas:
+a. tingkat risiko tinggi; atau
+b. tingkat risiko rendah.
+(3) Penilaian tingkat risiko sebagaimana dimaksud pada
+ayat (1) dilakukan berdasarkan aspek sebagai berikut:
+a. berkontak dengan orang lain yang tidak dikenal;
+b. terpapar pada konten pornografi, konten kekerasan,
+konten yang berbahaya bagi keselamatan nyawa, dan
+konten lain yang tidak sesuai peruntukan Anak;
+c. eksploitasi Anak sebagai konsumen;
+d. mengancam keamanan Data Pribadi Anak;
+e.
+adiksi;
+f. gangguan kesehatan psikologis Anak; dan
+g. gangguErn frsiologis Anak.
+(a) Jika. . .
+SK No272137A
+REPUEUK INDONESIA
+-6-
+t7l
+(4) Jika Produk, Layanan, dan Fitur memiliki nilai tingkat
+risiko tinggi pada salah satu atau lebih aspek sebagaimana
+dimaksud pada ayat (3), Produk, Layanan, dan Fitur
+tersebut dikategorikan memiliki profrl risiko tinggi.
+(5) Jika Produk, Layanan, dan Fitur memiliki nilai tingkat
+risiko rendah pada semua aspek sebagaimana dimaksud
+pada ayat (3), Produk, Layanan, dan Fitur tersebut
+dikategorikan memiliki profil risiko rendah.
+(6) Penyelenggara Sistem Elektronik wajib melakukan
+penilaian mandiri terhadap aspek sebagaimana dimaksud
+pada ayat (3) dalam Produk, Layanan, dan Fitur yang
+dikembangkan dan/atau
+oleh
+Sistem Elektronik.
+Sistem Elektronik melaporkan hasil
+penilaian mandiri sebagaimana dimaksud pada ayat (6)
+kepada Menteri.
+(8) Menteri melakukan verifikasi terhadap hasil penilaian
+mandiri yang disampaikan oleh Penyelenggara Sistem
+Elektronik sebagaimana dimaksud pada ayat (7).
+(9) Berdasarkan verifikasi sebagaimana dimaksud pada
+ayat (8), Menteri menetapkan profil risiko Produk,
+Layanan, dan Fitur yang dikembangkan dan/ atau
+diselenggarakan oleh Penyelenggara Sistem Elektronik.
+Pasal 6
+Ketentuan lebih lanjut mengenai tata cara penilaian tingkat
+risiko dan penilaian mandiri terhadap Produk, Layanan, dan
+Fitur sebagaimana dimaksud dalam Pasal 5 diatur dalam
+Peraturan Menteri.
+Pasal 7
+(l) Dalam memberikan pelindungan Anak sebagaimana
+dimaksud dalam Pasal 2 ayat (ll, ayat (21, dan ayat (3),
+Penyelenggara Sistem Elektronik melaksanakan kewajiban
+yang meliputi:
+a.
+persetqjuan dari orang tua atau wali
+Anak;
+b. menyusun Penilaian Dampak
+Pribadi;
+pengaturan Produk, Layanan, dan
+Data
+Fitur yang secara khusus dirancang untuk digunakan
+atau diakses oleh Anak atau yang mungkin digunakan
+atau diakses oleh Anak dalam tingkat privasi tinggi
+secara baku;
+d. memberikan . . .
+SK No272138A
+c.
+INIItrIII*m
+-7 -
+d. memberikan informasi yang lengkap, benar, akurat,
+dan tidak
+bagl pengguna untuk
+memahami Produk, Layanan, dan Fitur;
+e. melakukan edukasi dan pemberdayaan ekosistem
+digital;
+f. memberikan notifikasi berupa tanda atau sinyal dalam
+pemantauan aktivitas atau pelacakan lokasi Anak dari
+Produk, Layanan, dan Fitur;
+g. memberikan pilihan fungsi yang sesuai dengan
+kapasitas dan usia Anak;
+h. menentukan secara tegas pihak yang
+jawab atas pemrosesan Data Pribadi Anak dalam
+penyediaan mainan atau perangkat yang
+memungkinkan mainan atau perangkat tersebut
+terhubung dengan internet;
+i. memastikan bahwa pihak yang ditunjuk atau bekerja
+sama dengan
+Sistem Elektronik
+Anak; dan
+memenuhi ketentuan pelindungan
+j. menunjuk pejabat atau petugas yang melaksanakan
+fungsi pelindungan Data Pribadi.
+(21 Dalam memberikan pelindungan Anak sebagaimana
+dimaksud dalam Pasal 2 ayat (ll, ayat (21, dan ayat (3),
+Penyelenggara Sistem Elektronik dilarang:
+atau
+cara, teknik, atau
+a.
+praktik terselubung atau tidak transparan dalam
+pengembangan atau
+Layanan, dan Fitur;
+b. mengumpulkan informasi geolokasi yang tepat dari
+Anak; dan
+c. melakukan pemrofilan Anak.
+(3) Penyusunan Penilaian Dampak Pelindungan Data Pribadi
+sebagaimana dimaksud pada ayat (1) huruf b dan
+penunjukan pejabat atau petugas yang melaksanakan
+fungsi pelindungan Data Pribadi sebagaimana dimaksud
+pada ayat (l) huruf j, dilaksanakan sesuai dengan
+ketentuan peraturan perundang-undangan.
+Pasal 8
+Dalam melaksanakan pelindungan sebagaimana dimaksud
+dalam Pasal 2, Penyelenggara Sistem Elektronik:
+a. mempertimbangkan kepentingan terbaik bagi Anak dalam
+dan/atau menyelenggarakan Produk,
+Layanan, dan Fitur yang secara khusus dirancang untuk
+digunakan atau diakses oleh Anak, atau yang mungkin
+digunakan atau diakses oleh Anak; dan
+b. memprioritaskan . . .
+Produk,
+SK No272139A
+IND
+8-
+b. memprioritaskan pemenuhan hak Anak dan pelindungan
+terhadap Anak dibandingkan dengan kepentingan
+komersial Penyelenggara Sistem Elektronik.
+Bagian Kedua
+Kewajiban Penyelenggara Sistem Elektronik
+Pasal 9
+(1) Penyelenggara Sistem Elektronik wajib
+persetqiuan dari orang tua atau wali Anak sebagaimana
+dimaksud dalam Pasal 7 ayat (1) huruf a, sebelum Anak
+dapat menggunakan Produk, layanan, dan Fitur.
+(21 Dalam hal Penyelenggara Sistem Elektronik
+menyelenggarakan Produk, layanan, dan Fitur untuk
+Anak berusia paling rendah 17 (tqjuh belas) tahun,
+Penyelenggara Sistem Elektronik dapat meminta
+persetujuan dari Anak sebelum Anak dapat menggunakan
+Produk, layanan, dan Fitur tersebut, dengan wajib
+memberi notifikasi kepada orang tua atau wali Anak untuk
+meminta konfirmasi.
+(3) Penyelenggara Sistem Elektronik memberikan jangka
+waktu yang wajar untuk permintaan persetqiuan
+sebagaimana dimaksud pada ayat (1) dan notifikasi
+sebagaimana dimaksud pada ayat (2).
+(41 Dalam hal orang tua atau wali Anak menolak memberikan
+persetqjuan sebagaimana dimaksud pada ayat (3),
+Penyelenggara Sistem Elektronik dilarang
+Produk, Layanan, dan Fitur kepada Anak.
+(5) Dalam hal orang tua atau wali Anak menolak memberikan
+persetqiuan sebagaimana dimaksud pada ayat (4), maka:
+a. persetqiuErn yang diberikan Anak batal demi hukum;
+dan
+b. Penyelenggara Sistem Elektronik wajib menghapus
+Data Pribadi Anak.
+Pasal lO
+(l) Penyelenggara Sistem Elektronik wajib mengonfigurasi
+pengaturan Produk, Layanan, dan Fitur yang secara
+khusus dirancang untuk digunakan atau diakses oleh
+Anak atau yang mungkin digunakan atau diakses oleh
+Anak dalam tingkat privasi tinggi secara baku
+sebagaimana dimaksud dalam Pasal 7 ayat lll huruf c.
+(21 Penyelenggara. . .
+SK No272t40A
+BLiK INDONESIA
+-9-
+l2l Penyelenggara Sistem Elektronik dapat memberikan
+pilihan untuk mengatur tingkat privasi sebagaimana
+dimaksud pada ayat (1) secara pernanen atau sementara
+sesuai dengan Penilaian Dampak Pelindungan Data
+Pribadi.
+(3) Dalam hal Penyelenggara Sistem Elektronik akan
+melakukan pembaruan terhadap Produk, Layanan, dan
+Fitur, Penyelenggara Sistem Elektronik wajib:
+pilihan pengaturan privasi yang
+telah Anak lakukan sebelum Produk, Layanan, dan
+Fitur diperbarui; atau
+b.
+pengaturan Produk, Layanan, dan
+Fitur yang dimaksud ke dalam tingkat privasi tinggi
+secara baku.
+Pasal 11
+Penyelenggara Sistem Elektronik wajib memberikan informasi
+yang lengkap, benar, akurat, dan tidak menyesatkan bagi
+pengguna untuk memahami Produk, l,ayanan, dan Fitur
+sebagaimana dimaksud dalam Pasal 7 ayat (ll huruf d yang
+dikembangkan dan/atau diselenggarakan oleh Penyelenggara
+Sistem Elektronik dengan bahasa yang mudah dipahami serta
+dalam format dan dengan cara yang mudah digunakan atau
+diakses oleh Anak atau ora.ng tua atau wali Anak.
+Pasal 12
+Sistem Elektronik wajib melakukan
+edukasi dan pemberdayaan ekosistem digital sebagaimana
+dimaksud dalam Pasal 7 ayat (1) huruf e dalam rangka
+pelindungan dan pemenuhan hak Anak.
+(21 Edukasi sebagaimana dimaksud pada ayat (1)
+dilaksanakan kepada Anak dan orang tua atau wali Anak
+yang menggunakan atau mengakses Produk, Layanan,
+dan Fitur yang dikembangkan danlatau
+oleh Penyelenggara Sistem Elektronik.
+(3) Pemberdayaan ekosistem digital dilakukan oleh
+Penyelenggara Sistem Elektronik lingkup privat
+sebagaimana dimaksud pada ayat (1) dilaksanalan
+melalui:
+a. peningkatan literasi digital kepada masyarakat;
+b. peningkatan kompetensi karyawan terkait
+pelindungan anak; dan/ atau
+a.
+(l)
+c
+SK No272l4l A
+BUK INDONESIA
+-10-
+c. pengembangan sarana dan prasarana yang
+mendukung literasi digital Anak dan/atau masyarakat,
+sesuai dengan profrl risiko sebasaimana dimaksud dalam
+Pasal 5 ayat (9).
+l4l Edukasi dan pemberdayaan ekosistem digital
+sebagaimana dimaksud pada ayat (2) dan ayat (3) dapat
+melibatkan masyarakat dan/ atau pihak lain.
+(5) Penyelenggara Sistem Elektronik wajib melaporkan
+pelaksanaan edukasi dan pemberdayaan ekosistem digital
+sebagaimana dimaksud pada ayat (1) secara berkala paling
+sedikit I (satu) kali dalam I (satu) tahun kepada Menteri.
+(6) Menteri melakukan evaluasi terhadap laporan
+pelaksanaan edukasi dan pemberdayaan ekosistem digital
+sebagaimana dimaksud pada ayat (5).
+Pasal 13
+Dalam hal Penyelenggara Sistem Elektronik menyediakan
+Produk, Layanan, dan Fitur bagi orang tua atau wali Anak, atau
+pengguna lain untuk memantau aktivitas Anak, atau melacak
+lokasi Anak, Penyelenggara Sistem Elektronik wajib
+memberikan notifikasi berupa tanda atau sinyal sebagaimana
+dimaksud dalam Pasal 7 ayat (ll huruf f yang jelas kepada Anak
+ketika Anak tersebut sedang dipantau atau dilacak.
+Pasal 14
+Sistem Elektronik wajib memberikan pilihan
+fungsi yang sesuai dengan kapasitas dan usia Anak
+sebagaimana dimaksud dalam Pasal 7 ayat (l) huruf g yang
+menggunakan atau mengakses Produk, Layanan, dan Fitur.
+Pasal 15
+Dalam hal Penyelenggara Sistem Elektronik menyediakan
+mainan atau perangkat yang
+mainan atau
+perangkat tersebut terhubung dengan internet untuk
+memproses Data Pribadi Anak, Penyelenggara Sistem
+Elektronik tersebut wajib menentukan secara tegas pihak yang
+bertanggung jawab atas pemrosesan Data Pribadi Anak
+sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf h sesuai
+dengan ruang lingkup tanggung jawabnya.
+Pasal 16. . .
+SK No272142A
+REFUEUK INDONESIA
+- 11-
+Pasal 16
+Dalam hal Penyelenggara Sistem Elektronik menunjuk atau
+beke{a sama dengan pihak lain untuk mengembangkan atau
+menyelenggarakan Produk, Layanan, dan Fitur, Penyelenggara
+Sistem Elektronik wajib memastikan bahwa pihak yang
+ditunjuk atau bekerja sama dengan Penyelenggara Sistem
+Elektronik memenuhi ketentuan pelindungan Anak
+sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf i dalam
+penyelenggaraan Produk, l,ayanan, dan Fitur.
+Pasal 17
+Sistem Elektronik dilarang menggunakan atau
+menerapkan cara, teknik, atau praktik terselubung atau tidak
+transparan dalam pengembangan atau
+Produk, Layanan, dan Fitur sebagaimana dimaksud dalam
+Pasal 7 ayat (21 huruf a yang mendorong Anak untuk:
+a. memberikan atau mengungkapkan Data Pribadi lebih dari
+yang diperlukan Anak dalam
+atau
+mengakses Produk, Layanan, dan Fitur;
+b. melepaskan atau mengurangi fungsi pelindungan privasi;
+atau
+c. melakukan tindakan yang diketahui atau sepatutnya
+diketahui oleh Penyelenggara Sistem Elektronik yang dapat
+menimbulkan bahaya bagi kesehatan fisik, kesehatan
+mental, atau kesej ahteraan Anak.
+Pasal 18
+Sistem Elektronik dilarang
+informasi geolokasi yang tepat dari Anak sebagaimana
+dimaksud dalam Pasal 7 ayat (21 huruf b meliputi:
+a. pengumpulan informasi geolokasi yang tepat dari Anak
+secara baku, kecuali pengumpulan informasi geolokasi
+tersebut sangat diperlukan oleh Penyelenggara Sistem
+Elektronik untuk menyediakan Produk, Layanan, dan Fitur
+yang diminta oleh Anak, dan hanya untuk waktu terbatas;
+dan/atau
+b. pengumpulan informasi geolokasi yang tepat dari Anak
+yang menggunakan atau mengakses Produk, Layanan, dan
+Fitur, tanpa memberikan tanda yang jelas kepada Anak
+tersebut selama pengumpulan bahwa informasi geolokasi
+yang dimaksud sedang dikumpulkan.
+Pasal 19. . .
+SK No272143A
+EET!trEIIIIIEEIItrEIA
+-t2-
+Pasal 19
+(1) Penyelenggara Sistem Elektronik dilarang melakukan
+pemrofilan Anak sebagaimana dimaksud dalam Pasal 7
+ayat (21 huruf c meliputi:
+a. pemrofilan dengan cara atau metode apapun, seperti
+untuk tqiuan penawaran produk atau layanan atau
+tujuan lain; atau
+b. pemrofilan Anak secara bal<u (default) dengan cara
+atau metode apapun.
+(21 Larangan sebagaimana dimaksud pada ayat (1) huruf a
+dikecualikan dalam hal Penyelenggara Sistem Elektronik
+dapat menunjukkan alasan kuat bahwa pemrofilan
+tersebut untuk kepentingan terbaik bagi Anak.
+(3) l,arangan sebagaimana dimaksud pada ayat (1) huruf b
+dikecualikan dalam hal:
+a. Penyelenggara Sistem Elektronik dapat menunjukkan
+alasan kuat bahwa
+tersebut untuk
+kepentingan terbaik bagi Anak; atau
+b. pemrofilan merupakan bagian esensi atau inti dalam
+Produk, Layanan dan merupakan fitur
+yang diminta oleh Anak secara aktif dan sadar.
+(4) Pemrofilan Anak sebagaimana dimaksud pada ayat (l)
+merupakan pemrosesan Data Pribadi Anak dalam berbagai
+bentuk dan cara untuk mengidentifikasi, mengevaluasi,
+atau memprediksi berbagai aspek tentang Anak.
+(5) Dalam hal pemrofilan dilakukan berdasarkan permintaan
+Anak sebagaimana dimaksud pada ayat (3) huruf b,
+Penyelenggara Sistem Elektronik menjamin tersedianya
+teknologi serta berfungsinya secara efektif langkah teknis
+dan operasional untuk
+Anak dari setiap
+dampak bahaya bagi Anak.
+Pasal 2O
+(1) Dalam melaksanakan kewajiban menyediakan informasi
+mengenai batasan minimum usia Anak yang dapat
+produk atau layanannya sebagaimana
+dimaksud dalam Pasal 2 ayat (41 huruf a, Penyelenggara
+Sistem Elektronik menyediakan informasi mengenai
+batasan minimum usia Anak yang dapat menggunakan
+Produk, layanan, dan Fitur.
+(21 Batasan minimum usia Anak sebagaimana dimaksud
+pada ayat (l) berusia paling rendah 3 (tiga) tahun dengan
+pengelompokan rentang usia Anak yang meliputi:
+a. usia...
+SK No272144A
+EtrEIEtrN
+KIN
+-13
+a. usia 3 (tiga) hingga 5 (lima) tahun;
+b. usia 6 (enam) hingga 9 (sembilan) tahun;
+c. usia 1O (sepuluh) hingga 12 (dua belas) tahun;
+d. usia 13 (tiga belas) hingga 15 (lima belas) tahun; dan
+e. usia 16 (enam belas) hingga belum berusia
+18 (delapan belas) tahun.
+(3) Dalam penyediaan informasi mengenai batasan minimum
+usia Anak dan rentang usia Anak yang dapat
+menggunakan produk atau layanannya sebagaimana
+dimaksud pada ayat (l) dan ayat (21, Penyelenggara Sistem
+Elektronik wajib memastikan bahwa Produk, layanan,
+dan Fitur yang dikembangkan dan/atau
+diselenggarakannya sesuai dengan batasan minimum usia
+Anak dan rentang usia Anak yang
+mengakses, atau yang mungkin
+atau
+atau
+mengalses Produk, Layanan, dan Fitur tersebut.
+(4) Dalam memastikan pelaksanaan kewajiban sebagaimana
+dimaksud pada ayat (1), Penyelenggara Sistem Elektronik
+mempertimbangkan kebutuhan Anak yang disesuaikan
+dengan tahapan tumbuh kembang berdasarkan batasan
+minimum usia Anak dan rentang usia Anak sebagaimana
+dimaksud pada ayat (2).
+(5) Ketentuan lebih lanjut mengenai batasan minimum usia
+Anak dan rentang usia Anak sebagaimana dimaksud pada
+ayat l2l diatur dalam Peraturan Menteri.
+Pasal 2l
+(1) Penyelenggara Sistem Elektronik yang
+atau mensyaratkan mendaftar atau memiliki akun untuk
+atau mengakses Produk, Layanan, dan
+Fitur wajib mengikuti batasan minimum usia Anak sesuai
+ketentuan sebagai berikut:
+a. Anak berusia di bawah 13 (tiga belas) tahun
+sebagaimana dimaksud dalam Pasal 2O ayat (21
+huruf a, huruf b, dan huruf c dapat memiliki akun
+pada Produk, Layanan, dan Fitur yang secara khusus
+dirancang untuk digunakan atau diakses oleh Anak
+dan memiliki profil risiko rendah dengan persetujuan
+orang tua.
+b. Anak berusia 13 (tiga belas) tahun hingga belum
+berusia 16 (enam belas) tahun sebagaimana dimaksud
+dalam Pasal 20 ayat (2) huruf d dapat memiliki akun
+hanya pada Produk, l,ayanan, dan Fitur yang memiliki
+profil risiko rendah dengan persetqjuan orang tua.
+c. Anak . . .
+SK No272145A
+t[:EEIEtrN
+c. Anak berusia 16 (enam belas) tahun hingga belum
+berusia 18 (delapan belas) tahun sebagaimana
+dimaksud dalam Pasal 20 ayat (2) huruf e dapat
+memiliki akun untuk Produk, Layanan, dan Fitur
+dengan persetqiuan orang tua.
+Sistem Elektronik wajib menjamin
+tersedianya teknologi serta berfungsinya secara efektif
+langkah teknis dan
+bagi orang tua untuk
+dapat melakukan pengawasan terhadap penggunaan
+Produk, Layanan, dan Fitur melalui akun Anak.
+Pasal22
+(1) Dalam melaksanakan kewajiban menyediakan mekanisme
+verifikasi pengguna Anak sebagaimana dimaksud dalam
+Pasal 2 ayat (4) huruf b, Penyelenggara Sistem Elektronik
+menerapkan langkah teknis dan operasional untuk
+melakukan verifikasi usia Anak yang menggunakan atau
+mengalses Produk, I.ayanan, dan Fitur sesuai dengan
+batasan minimum usia Anak dan rentang usia Anak
+sebagaimana dimaksud dalam Pasal 2O dan Pasal 21.
+l2l Tingkat jaminan kepastian verifikasi usia Anak
+sebagaimana dimaksud pada ayat (1) disesuaikan dengan
+risiko terhadap hak Anak yang mungkin muncul dari
+penyelenggaraan Produk, Layanan, dan Fitur.
+(3) Dalam melakukan verifikasi usia Anak sebagaimana
+dimaksud pada ayat (1), Penyelenggara Sistem Elektronik
+wajib:
+a. melindungi privasi dan Data Pribadi para pengguna
+khususnya Anak yang menggunakan atau mengakses
+Produk, Layanan, dan Fitur sesuai dengan ketentuan
+peraturan perundang-undangan ;
+mekanisme verifikasi usia Anak
+dengan risiko yang muncul dari
+Produk, Layanan, dan Fitur;
+c. menyesuaikan mekanisme verifikasi usia Anak dengan
+batasan minimum usia Anak dan rentang usia Anak
+sebagaimana dimaksud dalam Pasal 20 dan Pasal 21;
+d. mengamankan Sistem Elektronik dan mencegah
+pengungkapan secara tidak sah atau pelanggaran
+keamanan Data Pribadi;
+e. memproses , . .
+N
+I
+(2t
+b.
+SK No272146A
+r$?FlrFFr
+I
+15-
+e. memproses data yang
+hanya untuk
+kepentingan verifikasi usia Anak sebagaimana
+dimaksud pada ayat (1) dan tidak untuk kepentingan
+lain;
+f. menghapus data yang digunakan untuk verifikasi
+setelah tqluan verifikasi usia Anak terpenuhi, kecuali
+penyimpanan data
+berdasarkan
+ketentuan peraturan perundang-undangan;
+g. memberikan mekanisme dan
+yang layak
+bagi para pengguna untuk mengajukan keberatan atau
+mengubah keputusan
+Sistem
+Elektronik dalam hal usia aktud pengguna tidak
+sesuai dengan usia yang diidentifikasi; dan
+h. mudah dihubungi dan inklusifbagi pengguna dengan
+karakteristik terlindungi.
+(4) Dalam hal Penyelenggara Sistem Elektronik tidak dapat
+melakukan verifikasi usia Anak sebagaimana dimalsud
+pada ayat (1) sesuai dengan persyaratan sebagaimana
+dimaksud pada ayat (3), Penyelenggara Sistem Elektronik
+wajib menerapkan langkah teknis operasional untuk
+memberikan pelindungan terhadap privasi dan Data
+Pribadi yang diberikan kepada Anak terhadap semua
+pengguna Produk, Layanan, dan Fitur.
+Pasal 23
+(1) Dalam melaksanakan kewajiban menyediakan mekanisme
+pelaporan penyalahgunaan Produk, Layanan, dan Fitur
+yang melanggar atau berpotensi melanggar hak Anak
+sebaqaimana dimaksud dalam Pasal 2 ayat (4) huruf c,
+Penyelenggara Sistem Elektronik wajib menyediakan alat,
+layanan, atau fitur yang dibutuhkan Anak yang dapat
+dengan mudah digunakan atau diakses oleh Anak atau
+oleh orang tua atau wali Anak tersebut untuk menolong
+Anak melaksanakan hak Anak, atau menyampaikan
+laporan atau aduan mengenai permasalahan yang dialami
+Anak terkait Produk, l,ayanan, dan Fitur.
+l2l Penyelenggara Sistem Elektronik wajib memiliki dan
+menerapkan langkah teknis operasional dalam
+menindaklanjuti laporan atau aduan sebagaimana
+dimaksud pada ayat ( 1).
+SK No272147A
+BABIII...
+Eri:IttrtrIiltrEEIItrEIA
+-16-
+BAB III
+PENGAWASAN PEI{YELENGGARAAN SISTEM ELEKTRONIK DAI,AM
+PELINDUNGAN ANAK
+Bagian Kesatu
+Umum
+Pasal24
+(1) Pengawasan pelaksanaan tata kelola
+Sistem Elektronik dalam pelindungan Anak sebagaimana
+dimaksud dalam Peraturan Pemerintah ini dilaksanakan
+oleh Menteri.
+(21 Dalam melakukan pengawasan sebagaimana dimaksud
+pada ayat (1), Menteri berwenang:
+a. melakukan pemantauan dan/atau penelusuran
+terhadap
+kewajiban pelindungan Anak
+ddam
+Sistem Elektronik yang
+dilakukan oleh Penyelenggara Sistem Elektronik;
+b. menerima laporan atau aduan terkait dugaan
+pelanggaran kewajiban pelindungan Anak yang
+dilakukan oleh Penyelenggara Sistem Elektronik dalam
+Penyelenggaraan Sistem Elektronik;
+c. melakukan
+untuk menindaklanjuti
+pemantauan dan/atau penelusuran sebagaimana
+dimaksud dalam hurufa dan/ atau laporan atau aduan
+sebagaimana dimaksud dalam huruf b; dan
+d. melakukan pengendalian berdasarkan hasil
+pemeriksaan sebagaimana dimaksud dalam huruf c.
+Pasal 25
+(l) Keterangan, data, informasi, dan/ atau dokumen yang
+disediakan dan/atau diserahkan oleh Penyelenggara
+Sistem Elektronik untuk kepentingan pelaksanaan
+pengawasan sebagaimana dimaksud dalam Pasal 24.
+(21 Perlindungan terhadap keterangan, data, informasi,
+dan/atau dokumen sebagaimana dimaksud pada ayat (1)
+dilaksanakan sesuai dengan ketentuan peraturan
+perundang-undangan.
+Pasal 26
+(1) Penanganan dugaan pelanggaran kewajiban pelindungan
+Anak dalam
+Sistem Elektronik yang
+dilakukan oleh
+Sistem Elektronik
+dilaksanakan dengan tahapan sebagai berikut:
+a. temuan . . .
+SK No272148A
+K INDONESIA
+-17-
+a. temuan dugaan pelanggaran kewajiban pelindungan
+Anak dalam Penyelenggaraan Sistem Elektronik; dan
+b. pemeriksaan
+dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik.
+l2l Temuan dugaan pelanggaran kewajiban pelindungan Anak
+dalam Penyelenggaraan Sistem Elektronik sebagaimana
+dimaksud pada ayat (1) huruf a dapat berasal dari:
+a. hasil 
+pemantauan dan/atau
+sebagaimana dimalsud dalam Pasal 24 ayat (21
+huruf a; dan/ atau
+b. laporan atau aduan sebagaimana dimaksud dalam
+Pasal 24 ayat(21 hurufb.
+(3) Pemeriksaan dugaan pelanggaran kewajiban pelindungan
+Anak dalam
+Sistem Elektronik
+sebagaimana dimaksud pada ayat (1) huruf b didasarkan
+pada temuan dugaan pelanggaran kewajiban pelindungan
+Anak dalam
+Sistem Elektronik
+sslagaiman4 dimaksud pada ayat (21.
+(4) Pengenaan sanksi administratif didasarkan pada hasil
+sebagaimana dimaksud pada ayat (1)
+huruf b.
+Bagian Kedua
+Pemantauan dan/ atau Penelusuran
+Pasal27
+(l) 
+Pemantauan dan/ atau penelusuran sebagaimana
+dimaksud dalam Pasal 26 ayat (2) huruf a dilakukan
+melalui:
+a. pemantauan aktivitas transaksi elektronik
+Sistem Elektronik dalam mematuhi
+kewajiban pelindungan Anak dalam Penyelenggaraan
+Sistem Elektronik;
+b. penelusuran Orang terkait dugaan pelanggaran
+kewajiban pelindungan Anak dalam
+Sistem Elektronik;
+c. pengumpulan dan permintaan keterangan, data,
+informasi, dan/ atau dokumen terkait pelaksanaan
+kewajiban pelindungan Anak dalam
+Sistem Elektronik;
+SK No272149A
+d. tindakan
+Ir{Ilflrfil1Tf.tr,TJffr{nl
+-18-
+d. tindakan 
+berbagi informasi 
+dengan
+kementerian/lembaga dan/atau institusi penegak
+hukum terkait pelaksanaan kewajiban pelindungan
+Anak dalam Penyelenggaraan Sistem Elektronik; dan
+e. pemberian peringatan kepada Penyelenggara Sistem
+Elektronik mengenai praktik penyelenggaraan Produk,
+Layanan, dan Fitur yang dinilai berpotensi melanggar
+hak Anak.
+l2l Ketentuan lebih lanjut mengenai tata cara pemantauan
+dan/ atau penelusuran sebagaimana dimaksud pada
+ayat (1) diatur dalam Peraturan Menteri.
+Bagian Ketiga
+Laporan atau Aduan
+Pasal 28
+(1) Laporan atau aduan sebagaimana dimaksud dalam
+Pasal 26 ayat (21 huruf b
+kepada Menteri
+secara tertulis atau elektronik.
+(21 laporan sebagaimana dimaksud pada ayat (l)
+oleh Orang, Badan Publik, atau pihak yang
+mengetahui tindakan atau perbuatan
+Sistem Elektronik diduga telah, sedang, atau akan
+melanggar kewajiban berdasarkan ketentuan dalam
+Peraturan Pemerintah ini.
+(3) Aduan sebagaimana dimaksud pada ayat (1) disampaikan
+oleh seseorang atau piha} yang merasa mengalami
+kerugian akibat tindakan atau perbuatan Penyelenggara
+Sistem Elektronik yang diduga melanggar kewajiban
+berdasarkan ketentuan dalam Peraturan Pemerintah ini.
+(4) l,aporan atau aduan sebagaimana dimaksud pada ayat (1)
+dengan melampirkan dokumen dan
+informasi lengkap dan benar terkait:
+a. identitas seseorang atau pihak yang mengajukan
+laporan atau aduan;
+b. identitas Penyelenggara Sistem Elektronik;
+c. dugaan pelanggaran kewajiban pelindungan Anak
+dalam Penyelenggaraan Sistem Elektronik yang
+dilakukan; dan
+d. keterangan dan/atau bukti yang memuat fakta, data,
+atau petunjuk terjadinya pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+SK No272150A
+Elektronik.
+(5) Kementerian...
+-19-
+(5) Kementerian memberikan tanda bukti penerimaan
+laporan atau aduan kepada seseorang atau pihak yang
+mengajukan laporan atau aduan.
+Bagran Keem,at
+Pemeriksaan Pendahuluan
+Pasal 29
+(U Kementerian melakukan
+pendahuluan
+terhadap dokumen pelaporan atau pengaduan
+sebagaimana dimaksud dalam Pasal 28 ayat (4) paling
+lama 3 (tiga) hari kerja sejak diterimanya laporan atau
+aduan.
+l2l Kementerian menentukan jangka waktu penyelesaian
+pemeriksaan pendahuluan berdasarkan:
+a. tingkat kesulitan penanganan dugaan pelanggaran
+kewajiban pelindungan Anak dalam Penyelenggaraan
+Sistem Elektronik yang dilakukan oleh Penyelenggara
+Sistem Elektronik;
+b. jumlah Anak yang terkena dampak atau mungkin
+terdampak akibat insiden dari dugaan pelanggaran
+kewajiban pelindungan Anak dalam Penyelenggaraan
+Sistem Elektronik yang dilakukan oleh Penyelenggara
+Sistem Elektronik; dan/ atau
+c. kelengkapan dokumen dan informasi sebagaimana
+dimaksud dalam Pasal 28 ayat l4l.
+(3) Dalam hal Kementerian menyimpulkan berdasarkan hasil
+pemeriksaan pendahuluan terdapat kekurangan dokumen
+dan/ atau informasi sebagaimana dimaksud dalam
+Pasal 28 ayat (41, Kementerian memberitahukan secara
+tertulis atau elektronik kepada Orang, Badan Publik, atau
+pihak yang menyampaikan laporan atau seseorang atau
+pihak yang menyampaikan aduaa untuk melengkapi
+dokumen dan/ atau informasi yang dimaksud.
+l4l Dalam hal Kementerian menyimpulkan berdasarkan hasil
+pemeriksaan pendahuluan memerlukan klarifrkasi,
+validasi, atau penjelasan mengenai dokumen dan/atau
+informasi sebagaimana dimaksud dalam Pasal 28 ayat l4l,
+Kementerian berwenang memanggil Orang, Badan Publik,
+atau pihak yang menyampaikan laporan atau seseorang
+atau pihak yang menyampaikan aduan untuk
+mendapatkan keterangan, data, informasi, dan/atau
+dokumen yang diperlukan.
+(5) Pemeriksaan . . .
+SK No27215l A
+EUK INDONESIA
+-20-
+(5) Pemeriksaan sebagaimana dimaksud pada ayat (4)
+dituangkan dalam berita acara pemeriksaan
+pendahuluan.
+(6) Dalam hal Kementerian menyimpulkan berdasarkan hasil
+pemeriksaan pendahuluan yang dituangkan dalam bentuk
+berita acara pemeriksaan pendahuluan, terdapat cukup
+informasi untuk menindaklanjuti laporan atau aduan,
+Kementerian melakukan pemeriksaan lanjutan.
+(71 Dalam hal Kementerian menyimpulkan berdasarkan hasil
+pemeriksaan pendahuluan tidak terdapat cukup informasi
+untuk menindaklanjuti laporan atau aduan, Kementerian
+berwenang menghentikan pemeriksaan dan
+menyampaikan pemberitahuan secara tertulis atau
+elektronik kepada Orang, Badan Publik, atau pihak yang
+menyampaikan laporan atau seseorang atau pihak yang
+menyampaikan aduan.
+(8) Dalam hal Kementerian menyimpulkan berdasarkan hasil
+pendahuluan Kementerian tidak berwenang
+menindaklanjuti laporan atau aduan, Kementerian
+menyampaikan pemberitahuan secara tertulis atau
+elektronik hal yang dimaksud kepada Orang, Badan
+Publik, atau pihak yang menyampaikan laporan atau
+seseorang atau pihak yang menyampaikan aduan.
+pendahuluan,
+Kementerian dapat:
+a. berkoordinasi dengan kementerian/lembaga dan/ atau
+institusi penegak hukum yang berkaitan dengan objek
+pemeriksaan; dan/atau
+b. meminta pendapat ahli yang relevan dengan
+pemeriksaan pendahuluan.
+(10) Ketentuan lebih lanjut mengenai tata cara pemeriksaan
+pendahuluan diatur dalam Peraturan Menteri.
+Bagian Kelima
+Pemeriksaan Lanjutan
+Pasal 30
+(1) Kementerian melakukan
+lanjutan terhadap
+dugaan pelanggaran kewajiban pelindungan Anak dalam
+Penyelenggaraan Sistem Elektronik yang dilakukan oleh
+Penyelenggara Sistem Elektronik berdasarkan hasil
+pemantauan dan/atau penelusuran sebagaimana
+dimaksud dalam Pasal 27 ayat (1) dan hasil pemeriksaan
+pendahuluan sebagaimana dimaksud dalam Pasal 29
+ayat (6).
+(21 Dalam. . .
+(9) Dalam
+SK No272152A
+REPUELIK INDONESIA
+-21 -
+(21 Dalam rangka melakukan
+lanjutan
+sebagaimana dimaksud pada ayat (1), Kementerian
+melaksanakan:
+a. pemanggilan dan menghadirkan setiap Penyelenggara
+Sistem Elektronik, Orang, dan/ atau Badan Publik
+yang terkait dengan dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan
+Sistem
+Sistem
+Elektronik yang dilakukan oleh
+Elektronik;
+b. permintaan keterangan, data, informasi, dan/atau
+dokumen dari setiap Penyelenggara Sistem Elektronik,
+Orang dan/ atau Badan Publik terkait dugaan
+pelanggaran kewajiban
+Anak dalam
+Penyelenggaraan Sistem Elektronik yang dilakukan
+oleh Penyelenggara Sistem Elektronik;
+c. pemanggilan dan menghadirkan ahli yang diperlukan
+untuk dimintakan keterangan atau keahliannya dalam
+penanganan dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik yang dilakukan oleh Penyelenggara Sistem
+Elektronik;
+d. pemeriksaan terhadap Sistem Elektronik, sarana,
+ruang, dan/ atau tempat yang digunakan
+Penyelenggara Sistem Elektronik, termasuk
+memperoleh akses terhadap data dalam penanganan
+dugaan pelanggaran kewajiban pelindungan Anak
+dalam Penyelenggaraan Sistem Elektronik yang
+dilakukan oleh Penyelenggara Sistem Elektronik
+dan/atau menunjuk pihak ketiga;
+e. pemberian perintah kepada Penyelenggara Sistem
+Elektronik dalam rangka tindak lanjut hasil
+pemeriksaan pelanggaran kewajiban pelindungan
+Anak dalam Penyelenggaraan Sistem Elektronik;
+f. penilaian terhadap kepatuhan pelaksanaan kewajiban
+pelindungan Anak dalam
+Sistem
+Elektronik sebagaimana dimaksud dalam Peraturan
+Pemerintah ini;
+g. pelaporan dugaan tindak pidana yang diketahui atau
+ditemukan berdasarkan hasil pemeriksaan dugaan
+pelanggaran kewajiban pelindungan Anak dalam
+Penyelenggaraan Sistem Elektronik yang dilakukan
+oleh Penyelenggara Sistem Elektronik kepada aparat
+penegak hukum; dan
+h. berbagi. . .
+SK No272153A
+PRESIDEN
+REPUEUK INDONESIA
+-22-
+h. berbagi informasi dengan kementerian / lembaga
+dan/ atau institusi penegak hukum terkait
+pelaksanaan kewajiban pelindungan Anak dalam
+Penyelenggaraan Sistem Elektronik.
+Pasal 31
+(1) Kementerian melakukan
+kepada
+Penyelenggara Sistem Elektronik yang diduga melakukan
+pelanggaran kewajiban
+Anak dalam
+Penyelenggaraan Sistem Elektronik melalui
+pemberitahuan secara tertulis atau elektronik.
+(21 Pemberitahuan secara tertulis sebagaimana dimaksud
+pada ayat (1) disampaikan melalui alamat kedudukan
+hukum yang telah terdaftar secara resmi pada
+Kementerian.
+(3) Pemberitahuan secara elektronik sebagaimana dimaksud
+pada ayat (l) disampaikan melalui surat elektronik yang
+terdaftar secara resmi pada Kementerian dan/ atau media
+elektronik lainnya yang ditentukan oleh Kementerian.
+(4) Dalam hal alamat kedudukan hukum atau alamat surat
+elektronik Penyelenggara Sistem Elektronik tidak terdaftar
+secara resmi di Kementerian atau telah berubah tanpa
+pemberitahuan resmi kepada Kementerian, Kementerian
+dalam situs resmi Kementerian dan
+dianggap sebagai surat pemberitahuan.
+(l)
+Pasal 32
+kepada Penyelenggara Sistem Elektronik
+sebagaimana dimaksud dalam Pasal 31 pada ayat (1)
+dilakukan untuk:
+a. menyampaikan adanya dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik;
+b. memberikan kesempatan kepada
+Sistem Elektronik untuk memberikan keterangan,
+pembelaan diri, dan/ atau pendapatnya; dan
+c. memberitahukan konsekuensi sanksi administratif
+yang dapat dikenakan atas pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik.
+(21 Pemanggilan terhadap Penyelenggara Sistem Elektronik
+yang diduga melakukan pelanggaran kewajiban
+pelindungan Anak dalam
+Sistem
+Elektronik sebagaimana dimaksud pada ayat (1) dilakukan
+paling banyak 3 (tiga) kali.
+(3) Dalam . . .
+SK No272154A
+r|{;IrFTf,ffNI;IeN]:FrA
+-23-
+(3) Dalam hal Penyelenggara Sistem Elektronik tidak hadir
+setelah dipanggil sebagaimana dimaksud pada ayat (2),
+Sistem Elektronik dikenakan sanksi
+administratif berdasarkan alat bukti dan keterangan yang
+ada tanpa dilakukan pemeriksaan terhadap Penyelenggara
+Sistem Elektronik.
+Pasal 33
+(1) Pemeriksaan terhadap Penyelenggara Sistem Elektronik
+yang diduga melakukan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik dituangkan dalam berita acara pemeriksaan
+lanjutan.
+l2l Pemeriksaan terhadap Orang, Badan Publik, ahli, atau
+pihak lain yang memberikan keterangan yang dibutuhkan
+dalam pemeriksaan lanjutan dituangkan dalam berita
+acara pemeriksaan lanjutan.
+Pasal 34
+Dalam melakukan pemeriksaan dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem Elektronik,
+Kementerian dapat 
+berkoordinasi 
+dengan
+kementerian/lembaga dan/ atau institusi penegak hukum yang
+berkaitan dengan objek pemeriksaan.
+Pasal 35
+(1) Penyelenggara Sistem Elektronik harus memberikan atau
+menyerahkan keterangan, data, informasi, dan/ atau
+dokumen yang benal, akurat, lengkap, dan tidak
+menyesatkan dalam pemeriksaan.
+12) Dalam hal Penyelenggara Sistem Elektronik tidak dapat
+memberikan ata!
+keterangan, data,
+informasi, dan/ atau dokumen pada waktu pemeriksaan,
+Penyelenggara Sistem Elektronik memberikan atau
+pada waktu yang ditentukan oleh
+SK No272155A
+Kementerian.
+(3) Dalam
+R,EPUEUK INDONESIA
+-24-
+(3) Dalam hal
+Sistem Elektronik tidak
+memberikan, tidak
+memberikan atau
+, atau menolak untuk
+keterangan, data,
+informasi, dan/atau dokumen yang diperlukan untuk
+kepentingan
+dugaan pelanggaran kewajiban
+pelindungan Anak dalam
+Sistem
+Elektronik pada waktu yang ditentukan oleh Kementerian,
+Kementerian berwenang mengenakan sanksi administratif
+terhadap dugaan pelanggaran kewajiban pelindungan
+Anak dalam
+Sistem Elektronik
+berdasarkan alat bukti atau keterangan yang ada.
+(4) Pemberian atau penyerahan keterangan, data, informasi,
+dan/atau dokumen yang tidak benar, tidak akurat, tidak
+lengkap, atau
+dalam
+merupakan dasar bagi Kementerian dalam menilai tingkat
+kepatuhan pelaksanaan kewajiban pelindungan Anak
+dalam PenyelenggEuzran Sistem Elektronik yang dilakukan
+oleh
+Sistem Elektronik dan/ atau untuk
+mengenakan sanksi administratif yang lebih berat.
+Pasal 36
+Ketentuan lebih lanjut mengenai
+pemeriksaan lanjutan,
+Penyelenggara Sistem Elektronik, dan tata cara
+sebagaimana dimaksud dalam Pasal 30 sampai
+dengan Pasal 35 diatur dalam Peraturan Menteri.
+Bagtan Keenam
+Pengendalian
+Pasal 37
+sebagaimana dimalsud dalam Pasal 24 ayat (21
+huruf d dilakukan melalui:
+a. pengenaan sanksi administratif atas pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik yang dilakukan oleh Penyelenggara Sistem
+Elektronik;
+b. pemberian perintah kepada Penyelenggara Sistem
+Elektronik dalam rangka tindak lanjut hasil pemeriksaan
+pelanggaran kewajiban pelindungan Anak dalam
+Sistem Elektronik yang dilakukan oleh
+Penyelenggara Sistem Elektronik;
+c. penilaian terhadap kepatuhan
+pelindungan Anak dalam
+Elektronik;
+pelaksanaan kewajiban
+Sistem
+SK No272191A
+d. publikasi
+REPUEUK INDONESIA
+-25-
+d. publikasi atas pelanggaran kewajiban pelindungan Anak
+dalam Penyelenggaraan Sistem Elektronik yang dilakukan
+oleh Penyelenggara Sistem Elektronik dan hasil penilaian
+kepatuhan kewajiban pelindungan Anak dalam
+Penyelenggaraan Sistem Elektronik;
+e. pelaporan dugaan tindak pidana yang diketahui atau
+ditemukan berdasarkan hasil
+dugaan
+pelanggaran kewajiban pelindungan Anak dalam
+Penyelenggaraan Sistem Elektronik kepada aparat penegak
+hukum yang dilakukan oleh Penyelenggara Sistem
+Elektronik; dan
+f. berbagi informasi dengan kementerian/ lembaga dan/atau
+institusi penegak hukum dalam rangka kepatuhan
+pelaksanaan kewajiban
+Anak dalam
+Penyelenggaraan Sistem Elektronik yang dilakukan oleh
+Penyelenggara Sistem Elektronik.
+BAB IV
+SANKSI ADMINISTRATIF
+Bagran Kesatu
+Sanksi Administratif
+Pasal 38
+(1) Pelanggaran terhadap ketentuan Pasal 2, Pasal 5 ayat (6),
+Pasal 7 ayat (1) huruf a dan huruf c sampai dengan
+huruf i, Pasal 9 ayat (1), ayat (2l., ayat (4), dan ayat (5)
+hurufb, Pasal 10 ayat (1) dan ayat (3), Pasal 11, Pasal 12
+ayat (l) dan ayat (5), Pasal 13, Pasal 14, Pasal 15,
+Pasal 16, Pasal 17, Pasal 18, Pasal 19 ayat (l), Pasal 2O
+ayat (1) dan ayat (3), Pasal 2L ayat (1) dan ayat (21,
+Pasal 22 ayat (1), ayat (3), dan ayat (4), Pasal 23 ayat (l)
+dan ayat (2) dikenai sanksi administratif.
+l2l Sanksi administratif sebagaimana dimaksud pada ayat (1)
+dapat berupa:
+a. teguran tertulis;
+b. denda administratif;
+c. penghentian sementara; dan/ atau
+d. pemutusan akses.
+(3) Pelanggaran terhadap ketentuan sebagaimana dimaksud
+pada ayat (1) dapat dikenakan satu atau lebih sanksi
+administratif.
+(4) Menteri. . .
+SK No272228A
+INDONESIA
+-26-
+(4) Menteri berwenang menginformasikan atau
+mengumumkan pengenaan sanksi administratif terhadap
+Sistem Elektronik kepada masyarakat
+melalui situs resmi Kementerian.
+Pasal 39
+Jenis sanksi administratif serta tahapan pengenaan sanksi
+administratif terhadap pelanggaran sslagaimana dimaksud
+dalam Pasal 7 ayat (1) huruf b dan huruf j diatur dalam
+peraturan perundang-undangan di bidang pelindungan Data
+Pribadi.
+Pasal 40
+(1) Sanksi administratif 5slagaimana dimaksud dalam
+Pasal 38 ayaf (21 dikenakan oleh Menteri.
+(21 Dalam pengenaan sanksi sebagaimana dimaksud pada
+ayat (1), Menteri mempertimbangkan:
+a. kategori berat atau ringannya pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik yang dilakukan oleh Penyelenggara Sistem
+Elektronik;
+b. tindakan kooperatif Penyelenggara Sistem Elektronik
+dalam
+dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik yang dilakukan oleh Penyelenggara Sistem
+Elektronik; dan
+c. faktor lain yang memberatkan atau
+(3) Kategori berat atau ringannya pelanggaran sebagaimana
+dimaksud pada ayat l2l huruf a diukur dengan
+mempertimbangkan:
+a. jangka waktu atau lamanya pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik tedadi;
+b. jumlah Anak yang terkena dampak akibat pelanggaran
+kewajiban pelindungan Anak dalam Penyelenggaraan
+Sistem Elektronik oleh
+Elektronik; dan/atau
+c. dampak dari pelanggaran kewajiban pelindungan Anak
+dalam Penyelenggaraan Sistem Elektronik terhadap
+Anak dan/ atau hak Anak.
+(4) Tindakan . . .
+Sistem
+SK No272158A
+REFTIBUK INDONESIA
+-27 -
+(4) Tindakan kooperatif sebagaimana dimaksud pada ayat (2)
+huruf b diukur dengan mempertimbangkan:
+a. pemberitahuan secara resmi dari Penyelenggara
+Sistem Elektronik mengenai pelanggaran terhadap
+kewajiban pelindungan Anak dalam Penyelenggaraan
+Sistem Elektroniknya;
+b. Penyelenggara Sistem Elektronik memberikan atau
+menyerahkan keterangan, data, informasi, dan/atau
+dokumen yang benar, akurat, lengkap, dan tidak
+menyesatkan dalam pemeriksaan sebagaimana
+dimaksud dalam Pasal 35 ayat (1); dan
+c. kehadiran Penyelenggara Sistem Elektronik dalam
+pemeriksaan berdasarkan pemanggilan sebagaimana
+dimaksud dalam Pasal 32.
+(5) Faktor lain sebagaimana dimaksud pada ayat (2) huruf c
+diukur dengan mempertimbangkan :
+a. tindakan
+Sistem Elektronik dalam
+menangani dampak atau memitigasi risiko yang
+muncul akibat pelanggaran kewajiban
+Anak dalam
+Sistem
+setelah pelanggaran tersebut diketahui oleh
+Penyelenggara Sistem Elektronik sebelum pelanggaran
+tersebut diperiksa oleh Menteri; dan
+b. riwayat pelanggaran kewajiban
+Anak
+dalam
+Sistem Elektronik yang
+dilakukan Penyelenggara Sistem Elektronik.
+(6) Dalam mempertimbangkan faktor sebagaimana dimaksud
+pada ayat (2) huruf a, huruf b, dan huruf c, Menteri dapat
+berkoordinasi dengan kementerian/ lembaga terkait.
+(71 Pengenaan sanksi administratif sebagaimana dimaksud
+pada ayat (1) tidak menghapuskan tanggungjawab pidana
+dan/atau perdata.
+Pasal 41
+(l) Menteri mengenakan sanksi administratif berupa teguran
+tertulis sebagaimana dimaksud dalam Pasal 38 ayat (2)
+huruf a dalam hal berdasarkan hasil pemeriksaan
+disimpulkan bahwa:
+a. pelanggaran kewajiban pelindungan Anak dalam
+Sistem Elektronik yang dilakukan
+oleh Penyelenggara Sistem Elektronik masuk dalam
+kategori ringan berdasarkan pertimbangan
+sebagaimana dimaksud dalam Pasal 40 ayat (3);
+b. Penyelenggara . . .
+SK No272159A
+PRES!DEN
+REFUEUK INDONESIA
+-24-
+b. Penyelenggara Sistem Elektronik kooperatif dalam
+dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 40 ayat (4); dan
+c. faktor lain yang
+lebih banyak
+di
+dengan faltor yang memberatkan
+berdasarkan pertimbangan sebagaimana dimaksud
+dalam Pasal 4O ayat (5).
+(21 Selain kewenangan sebagaimana dimaksud pada ayat (1),
+Menteri berwenang mengenakan sanksi administratif
+berupa teguran tertulis sebagaimana dimaksud dalam
+Pasal 38 ayat (21 huruf a yang berisi perintah kepada
+Penyelenggara Sistem Elektronik untuk melakukan
+tindakan tertentu dalam rangka memenuhi kewajiban
+pelindungan Anak dalam
+Elektronik.
+Sistem
+(3) Sanksi administratif berupa teguran tertulis dikenakan
+paling banyak 2 (dua) kali.
+(4) Dalam hal sanksi administratif berupa teguran tertulis
+dikenakan paling banyak 2 (dua) kali sebagaimana
+dimaksud pada ayat (3), jangka waktu antara teguran
+tertulis pertama dan teguran tertulis kedua adalah
+7 (tqiuh) hari kerja.
+(5) Dalam hal Menteri mengenakan sanksi administratif
+disertai dengan perintah kepada Penyelenggara Sistem
+Elektronik untuk melakukan tindakan tertentu dalam
+rangka memenuhi kewajiban pelindungan Anak dalam
+Penyelenggaraan Sistem Elektronik, Menteri berwenang
+menentukan jangka waktu teguran tertulis pertama dan
+teguran tertulis kedua.
+Pasal 42
+(1) Menteri mengenakan sanksi administratif berupa denda
+administratif sebagaimana dimaksud dalam Pasal 38
+ayat l2l huruf b dalam hal berdasarkan hasil pemeriksaan
+disimpulkan Penyelenggara Sistem Elektronik:
+a. tidak memenuhi teguran tertulis kedua sebagaimana
+dimaksud dalam Pasal 41; atau
+b. memenuhi pertimbangan sebagaimana dimaksud
+dalam Pasal 40 ayat (2lyang meliputi:
+1. pelanggaran . . .
+SK No272160A
+NEPUEUK INDONESIA
+-29-
+1. pelanggaran yang dilakukan oleh Penyelenggara
+Sistem Elektronik masuk dalam kategori berat
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 40 ayat (3);
+2. Penyelenggara Sistem Elektronik tidak kooperatif
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 40 ayat (4); dan/ atau
+3. faktor lain yang memberatkan lebih banyak
+di
+dengan faktor yang
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 40 ayat (5).
+(21 Besaran denda administratif dan tata cara penghitungan
+denda administratif dilaksanakan sesuai dengan
+ketentuan peraturan perundang-undangan di bidang
+penerimaan negara bukan pajak.
+(3) Dalam pengenaan sanksi administratif berupa denda
+administratif sebagaimana dimaksud dalam Pasal 38
+ayat (21huruf b, Menteri benrrenang memberikan perintah
+kepada Penyelenggara Sistem Elektronik untuk
+melakukan tindakan tertentu dalam rangka memenuhi
+kewajiban pelindungan Anak dalam
+Sistem Elektronik.
+Pasal 43
+(1) Menteri mengenakan sanksi administratif berupa
+penghentian sementara sebagaimana dimaksud dalam
+Pasal 38 ayat (21 huruf c dalam hal berdasarkan hasil
+pemeriksaan disimpulkan
+Elektronik:
+a. tidak
+kewajiban denda administratif
+sebagaimana dimaksud dalam Pasal 42; danlatau
+b. memenuhi pertimbangan sebagaimana dimaksud
+dalam Pasal 40 ayat l2l yang meliputi:
+1. pelanggaran kewajiban yang dilakukan oleh
+Penyelenggara Sistem Elektronik masuk dalam
+kategori berat berdasarkan pertimbangan
+sebagaimana dimaksud dalam Pasal 40 ayat (3);
+2. Penyelenggara Sistem Elektronik tidak kooperatif
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 40 ayat (4); dan/ atau
+Sistem
+SK No27216l A
+3. faktor
+K INDONESIA
+-30-
+3. faktor lain yang memberatkan lebih banyak
+dengan faktor yang
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 4O ayat (5).
+(21 Penghentian sementara sebagaimana dimaksud pada
+ayat (l) dilakukan terhadap Produk, Layanan, dan/ atau
+Fitur.
+(3) Jangka waktu penghentian sementara sebagaimana
+dimaksud pada ayat (l) ditentukan oleh Menteri.
+(4) Dalam pengenaan sanksi administratif berupa
+penghentian sementara sebagaimana dimaksud pada
+ayat (1), Menteri berwenang memberikan perintah kepada
+Penyelenggara Sistem Elektronik untuk melakukan
+tindakan tertentu dalam rangka memenuhi kewajiban
+pelindungan Anak dalam
+Elektronik.
+(5) Dalam menentukan jangka waktu penghentian sementara,
+jangka waktu upaya
+Penyelenggara Sistem Elektronik untuk melaksanakan
+perintah sebagaimana dimaksud pada ayat (4).
+Pasal 44
+(1) Menteri mengenakan sanksi administratif berupa
+pemutusan akses sebagaimana dimaksud dalam Pasal 38
+ayat l2l huruf d dalam hal berdasarkan hasil pemeriksaan
+disimpulkan Penyelenggara Sistem Elektronik:
+a. tidak memenuhi kewajiban denda administratif
+sebagaimana dimaksud dalam Pasal 42;
+b. tidak memenuhi perintah sebagaimana dimaksud
+dalam pasal 43 ayat (4); dan/ atau
+c. memenuhi pertimbangan sebagaimana dimaksud
+dalam Pasal 40 ayat l2l yang meliputi:
+1. pelanggaran yang dilakukan oleh
+Sistem Elektronik masuk dalam kategori berat
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 4O ayat (3);
+2. Penyelenggara Sistem Elektronik tidak kooperatif
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 40 ayat (4); dan/atau
+3. faktor lain yang memberatkan lebih banyak
+dengan faktor yang
+berdasarkan pertimbangan sebagaimana
+dimaksud dalam Pasal 4O ayat (5).
+(21 Dalam. . .
+Sistem
+Menteri mem
+SK No272229 A
+FRESIDEN
+REPUEUK INDONESIA
+- 31 -
+121 Dalam hal Menteri mengenakan sanksi administratif
+pemutusan akses, Menteri dapat:
+a. berkoordinasi dengan kementerian/lembaga yang
+merupakan instansi pengatur dan pengawas sektor
+terhadap Penyelenggara Sistem Elektronik; dan/atau
+b. meminta pendapat dari ahli yang relevan dengan
+pemeriksaan terhadap dugaan pelanggaran kewajiban
+pelindungan Anak dalam Penyelenggaraan Sistem
+Elektronik yang dilakukan oleh Penyelenggara Sistem
+Elektronik.
+Bagian Kedua
+Keberlakuan dan Penyampaian Keputusan Pengenaan Sanksi Administratif
+Pasal 45
+(1) Keputusan pengenaan sanksi administratif berlaku pada
+tanggal ditetapkan.
+(21 Dalam keputusan sanksi administratif dapat ditetapkan
+batas waktu mulai dan berakhirnya pengenaan sanksi
+administratif.
+(3) Keputusan sanksi administratif ditetapkan pada hari
+kerja.
+(4) Pengenaan sanksi administratif dapat ditetapkan pada
+hari selain hari ke{a karena alasan keadaan mendesak
+dan/ atau kepentingan yang sah lainnya, sehingga tidak
+dapat ditunda pada hari kerja berikutnya.
+Pasal 46
+(1) Keputusan pengenzran sanksi administratif
+kepada Penyelenggara Sistem Elektronik secara tertulis
+atau elektronik.
+l2l Keputusan sebagaimana dimaksud pada ayat (1) dapat
+disampaikan kepada pihak lain yang berkepentingan.
+(3) Dalam hal alamat kedudukan hukum atau alamat surat
+elektronik Penyelenggara Sistem Elektronik tidak terdaftar
+secara resmi di Kementerian atau telah berubah tanpa
+pemberitahuan resmi kepada Kementerian, Kementerian
+mengumumkannya dalam situs resmi Kementerian.
+Pasal 47...
+SK No272153A
+FI':EIIFII'XIIIIETItrEIA
+-32-
+Pasal 47
+(1) Penyelenggara Sistem Elektronik yang merasa dirugikan
+akibat pengenaan sanksi administratif yang dikenakan
+dapat mengajukan keberatan kepada Menteri.
+(21 Upaya keberatan sebagaimana dimaksud pada ayat (1)
+tidak menunda pelaksanaan keputusan.
+(3) Menteri menyelesaikan keberatan yang disampaikan oleh
+Penyelenggara Sistem Elektronik sebagaimana dimaksud
+pada ayat (1).
+(4) Dalam hal keberatan sebagaimana dimaksud pada ayat (1)
+diterima, Menteri menetapkan keputusan sesuai dengan
+permohonan keberatan.
+(5) Dalam hal
+Sistem Elektronik tidak
+menerima atas penyelesaian keberatan sebagaimana
+dimaksud pada ayat (1), Penyelenggara Sistem Elektronik
+dapat mengajukan gugatan kepada pengadilan tata usaha
+negara untuk menilai ada atau tidak ada unsur
+penyalahgunaan wewenang dalam keputusan dan/atau
+tindakan.
+(6) Ketentuan lebih lanjut mengenai tata cara pengajuan
+keberatan sebagaimana dimalsud pada ayat (1) sampai
+dengan ayat (4) diatur dalam Peraturan Menteri.
+BAB V
+PERAN SERTA KEMENTERIAN/ LEMBAGA DAN MASYARAKAT
+Pasal 48
+(1) Kementerian/lembaga berkoordinasi sesuai dengan tugas
+dan fungsi serta kewenangan yang diatur dalam peraturan
+perundang-undangan dalam:
+a.
+kesadaran masyarakat mengenai
+manfaat dan dampak negatif penggunaan Produk,
+Layanan, dan Fitur;
+b. memberikan layanan terintegrasi bagi Anak untuk
+memberikan pelindungan Anak 
+dalam
+Penyelenggaraan Sistem Elektronik; dan
+c. melakukan pengawasan pelindungan Anak.
+l2l Orang tua atau wali Anak, dan masyarakat berperan
+dalam pengawasan pelaksanaan pelindungan Anak dalam
+Penyelenggaraan Sistem Elektronik.
+(3) Peran...
+SK No272154A
+PRESIDEN
+REPUEUK INDONESIA
+_33_
+(3) Peran orang tua atau wali Anak sebagaimana dimaksud
+pada ayat (2) terdiri atas:
+a. membantu Anak untuk memilih Produk, layanan, dan
+Fitur yang sesuai dengan usia Anak dan
+kebutuhannya;
+b. menilai kesesuaian Produk, Layanan, dan Fitur
+dengan usia Anak yang akan menggunakan sebelum
+memberikan persetujuan;
+c. memantau penggunaan Produk, Layanan, dan Fitur;
+dan
+d. memberikan edukasi kepada Anak mengenai manfaat
+dan dampak negatif penggunaan Produk, Layanan,
+dan Fitur.
+(4) Peran masyarakat sebagaimana dimaksud pada ayat (21
+terdiri atas:
+a. memberikan edukasi kepada Anak, orang tua, atau
+wali Anak paling sedikit mengenai manfaat dan
+dampak negatif penggunaan Produk, Layanan, dan
+Fitur; dan
+b. melaporkan atau mengadukan dugaan pelanggaran
+kewajiban pelindungan Anak dalam Penyelenggaraan
+Sistem Elektronik yang dilakukan oleh
+Sistem Elektronik.
+BAB VI
+KETENTUAN PERALIHAN
+Pasal 49
+Pada saat Peraturan Pemerintah ini mulai berlaku,
+Penyelenggara Sistem Elektronik dan pihak lain yang terkait
+dengan penyelenggaraan Produk, l,ayanan, dan Fitur, wajib
+menyesuaikan dengan ketentuan tata kelola berdasarkan
+Peraturan Pemerintah ini paling lama 2 (dua) tahun sejak
+Peraturan Pemerintah ini diundangkan.
+BAB VII
+KETENTUAN PENUTUP
+Pasal 5O
+Peraturan Pemerintah ini mulai berlaku pada tanggal
+SK No272165A
+Agar
+FRESIDEN
+HEPUBLIK INDONESIA
+-34-
+Agar setiap orang mengetahuinya, memerintahkan
+pengundangan Peraturan Pemerintah ini 
+dengan
+penempatannya dalam kmbaran Negara Republik Indonesia.
+Ditetapkan di Jakarta
+pada tanggal 27 Maret2021
+,
+ttd
+PRABOWO SUBI,ANTO
+Diundangkan di Jakarta
+pada tanggal 27 Maret2025
+MENTERI SEKRETARIS NEGARA
+REPUBLIK INDONESIA,
+ttd.
+PRASETYO HADI
+LEMBARAN NEGARA REPUBLIK INDONESIA TAHUN 2025 NOMOR 36
+ sesuai dengan aslinya
+KEMENTERIAN SEKRETARIAT NEGARA
+REPUBLIK INDONESIA
+Bidang Perundang-undangan dan
+strasi Hukum,
+SK No272166A
+vanna Djaman
+tl
+E-{ilT:IfTilTITil[IEFA
+PENJEI,ASAN
+ATAS
+PERATURAN PEMERINTAH REPUBLIK INDONESIA
+NOMOR 17 TAHUN 2025
+TENTANG
+TATA KELOI,A PENYELENGGARAAN SISTEM ELEKTRONIK DALAM
+PELINDUNGAN ANAK
+UMUM
+Seiring dengan semalin meluasnya transformasi digital dan
+penerapan teknologi informasi dan komunikasi dalam berbagai aspek
+kehidupan masyarakat, Anak telah menjadi lagran dari pengguna berbagai
+Produk, Layanan, dan Fitur yang dikembangkan dan/ atau diselenggarakan
+Penyelenggara Sistem Elektronik. Komputer, laptop, tablet, telepon pintar,
+konsol gim, situs web, media sosial, dan berbagai Produk, l,ayanan, dan
+Fitur lainnya telah digunakan Anak untuk memenuhi kebutuhan atau
+kepentingannya dalam berinteraksi dan berkomunikasi di ruang digital.
+Penggunaan Produk, Layanan, dan Fitur tersebut, jika digunakan
+secara tepat, dapat memberikan manfaat besar bagi pertumbuhan dan
+perkembangan Anak. Akan tetapi, dalam berbagai situasi, Anak belum
+memiliki kapasitas atau kemampuan untuk memahami berbagai risiko
+atau potensi pelanggaran hak Anak yang mungkin terjadi dalam
+penggunaan Produk, Layanan, dan Fitur. Oleh karena itu, interaksi atau
+komunikasi yang dilakukan Anak secara elektronik dapat menimbulkan
+dampak negatif terhadap privasi, keselamatan, dan kesejahteraan Anak.
+atau penjualan data Anak untuk kepentingan pemasaran atau
+tidak sah lainnya, dan eksploitasi ekonomi atau pelecehan
+seksual terhadap Anak merupakan beberapa contoh dampak negatif yang
+dimaksud.
+Penggunaan Produk, l,ayanan, dan Fitur oleh Anak membutuhkan
+perhatian khusus dan kerja sama antara para pemangku kepentingan
+dalam memberikan pelindungan dan pemenuhan hak Anak di ruang digital
+dalam penggunaan Produk, Layanan, dan Fitur yang secara khusus
+dirancang untuk digunakan atau diakses Anak maupun Produk, Layanan,
+dan Fitur yang mungkin digunakan atau diakses oleh Anak.
+SK No272230A
+Penyelenggara
+REFUEUK INDONESIA
+-2-
+Sistem Elektronik merupakan salah satu pemangku
+kepentingan yang dimaksud dan memiliki peran penting serta tanggung
+jawab untuk menciptakan ruang digital yang lebih aman bagi Anak dalam
+menggunakan Produk, Layanan, dan Fitur untuk belajar, menjelajah, dan
+bermain sesuai dengan usia Anat sehingga pemenuhan terhadap hak Anak
+dalam ruang digital menjadi optimal.
+Bahwa Undang-Undang Nomor 11 Tahun 2008 tentang Informasi dan
+Transaksi Elektronik sebagaimana telah diubah dengan Undang-Undang
+Nomor 19 Tahun 2O16 tentang Perubahan atas Undang-Undang Nomor l1
+Tahun 2008 tentang Informasi dan Transaksi Elektronik telah mengatur
+tanggung jawab Penyelenggara Sistem Elektronik. Pertama, Penyelenggara
+Sistem Elektronik harus menyelenggarakan Sistem Elektronik secara andal
+dan aman serta bertanggung jawab terhadap beroperasinya Sistem
+Elektronik sebagaimana mestinya. Kedua, Penyelenggara Sistem Elektronik
+bertanggung jawab terhadap Penyelenggaraan Sistem Elektroniknya.
+Peraturan pelaksana dari Undang-Undang tersebut telah mengatur lebih
+lanjut mengenai tanggung jawab Penyelenggara Sistem Elektronik dalam
+menyelenggarakan Sistem Elektroniknya. Salah satu bagian penting dari
+tanggung jawab tersebut ialah memiliki tata kelola Penyelenggaraan Sistem
+Elektronik.
+Undang-Undang Nomor 1 Tahun 2024 ter:tang Perubahan Kedua atas
+Undang-Undang Nomor 1l Tahun 2OO8 tentang Informasi dan Transaksi
+Elektronik (UU ITE) mengatur tanggung jawab Penyelenggara Sistem
+Elektronik dalam memberikan pelindungan terhadap Anak yang
+menggunakan Produk, Layanan, dan Fitur. Tanggung jawab tersebut
+merupakan bagian yang tidak
+dari tanggung jawab
+Penyelenggara Sistem Elektronik yang telah diatur sebelumnya.
+Pemerintah dalam mewujudkan ruang digital yang aman bagi Anak
+memiliki peran untuk memfasilitasi pemanfaatan teknologi informasi dan
+transaksi elektronik sesuai dengan ketentuan peraturan perundang-
+undangan. Dalam hal ini, peran Pemerintah juga mencakup memfasilitasi
+pemanfaatan teknologi untuk mendukung tumbuh kembang Anak.
+Selain itu, Pemerintah juga memiliki tanggung jawab untuk melindungi
+kepentingan umum dari segala jenis gangguan sebagai akibat
+penyalahgunaan informasi elektronik dan transaksi elektronik yang
+mengganggu ketertiban umum. Kepentingan umum merupakan salah satu
+asas dalam Undang-Undang Nomor 27 Ta}nttn 2022 tentang Pelindungan
+Data Pribadi (UU PDP). Penjelasan Pasal 3 huruf c UU PDP mengatur bahwa
+yang dimaksud dengan "asas kepentingan umum' adalah bahwa dalam
+menegakkan pelindungan Data Pribadi harus memperhatikan kepentingan
+umum atau masyarakat secara luas. Anak merupakan bagian yang tidak
+dari masyarakat dan kepentingan Anak merupakan bagian
+yang tidak terpisahkan dari kepentingan umum.
+SK No272231A
+Dalam
+II
+IND
+3-
+Dalam melindungi Anak di ruang digital,
+Sistem
+Elektronik bertanggung jawab untuk memiliki dan menerapkan tata kelola
+pelindungan Anak yang menggunakan Produk, Layanan, dan Fitur yang
+dikembangkan dan/ atau diselenggarakannya. Tata kelola yang dimaksud
+merupakan bagian yang tidak terpisahkan dari tata kelola Penyelenggaraan
+Sistem Elektronik.
+Peraturan Pemerintah ini merupakan peraturan pelaksanaan untuk
+menjalankan amanat Pasal 16A UU ITE mengenai pelindungan bagi Anak
+yang
+atau mengakses Sistem Elektronik dan Pasal 168
+UU ITE mengenai pengenaan sanksi administratif. Peraturan Pemerintah
+ini disusun dengan mengadopsi standar dan praktik baik lgood prac'tiel di
+negara-negara yang telah lebih dulu menyusun kebijakan tersebut,
+khususnya Age-Appropriate Design Code. Standar dalam instrumen
+tersebut selaras dengan Geneml Data Protedion Regalation Uni Eropa, yang
+menjadi referensi utama dalam penJrusunan UU PDP. Dalam Peraturan
+Pemerintah ini diatur prinsip-prinsip dasar dan standar pelindungan Anak
+dalam penggunaan Produk, Layanan, dan Fitur yang berfokus pada
+kepentingan terbaik bagi Anak (tle best interest oftlw childl.
+Materi muatan dalam Peraturan Pemerintah ini antara lain meliputi
+Sistem Elektronik dalam pelindungan Anak, pengawasan
+Sistem Elektronik dalam pelindungan Anak, sanksi
+administratif, dan peran serta kementerian/lembaga dan masyarakat.
+PASAL DEMI PASAL
+Pasal I
+Cukup jelas.
+Pasal 2
+Ayat (1)
+Cukup jelas.
+Ayat (2)
+Yang dimaksud dengan "hak Anak sebagaimana dimaksud dalam
+peraturan perundang-undangan", antara lain hak Anak yang
+diatur dalam Konvensi tentang Hak-Hak Anak lConuention on tle
+Rights of tle Childl sebagaimana telah disahkan berdasarkan
+Keputusan Presiden Nomor 36 Tahun 199O, dan Undang-Undang
+Nomor 23 Tahun 2OO2 tentang Perlindungan 6na[ 56lagaimana
+telah beberapa kali diubah terakhir dengan Undang-Undang
+Nomor 17 Tahun 2O16 tentang Penetapan Peraturan Pemerintah
+Pengganti Undang-Undang Nomor I Tahun 2O16 tentang
+Perubahan Kedua Atas Undang-Undang Nomor 23 Tat:ur^ 2OO2
+tentang Perlindungan Anak Menjadi Undang-Undang. Beberapa
+hak Anak yang berkaitan dengan penggunaan Produk, Layanan,
+dan Fitur adalah hak atas privasi, hak atas
+Data
+Pribadi, hak untuk tidak dieksploitasi secara seksual atau
+ekonomi, hak atas kebebasan berekspresi dan menyampaikan
+pendapat.
+SK No272232A
+PRESIDEN
+REFUELIK INDONESIA
+-4-
+Pelindungan terhadap hak Anak merupakan prioritas
+Sistem Elektronik
+dengan
+kepentingan komersial Penyelenggara Sistem Elektronik.
+Yang dimaksud dengan "pelindungan terhadap hak Anak'
+termasuk pelindungan terhadap data pribadi, privasi, dan
+keamanan diri Anak baik secara fisik, mental, maupun psikis dari
+penyalahgunaan informasi elektronik dan/atau dokumen
+elektronik yang melanggar hak Anak.
+Yang dimaksud dengan "Produk, Layanan, dan Fitur yang
+dikembangkan dan/atau diselenggarakan oleh Penyelenggara
+Sistem Elektronilf adalah Produk, layanan, dan Fitur yang
+secara khusus dirancang untuk digunakan atau diakses oleh
+Anak, atau yang mungkin digunakan atau diakses oleh Anak.
+Ayat (3)
+Cukup jelas.
+Ayat (4)
+Huruf a
+Cukup jelas.
+Huruf b
+Yang dimaksud dengan "mekanisme verifikasi' adalah tata
+cara untuk memastikan bahwa pengguna yang mengakses
+Sistem Elektronik adalah Anak, dengan menggunakan
+teknologi.
+Huruf c
+Yang dimaksud dengan "mekanisme pelaporan
+penyalahgunaan' adalah tata cara pelaporan dalam sebuah
+layanan atau fitur yang dapat diakses dengan mudah oleh
+Anak, orang tua, dan/atau wali Anak.
+Pasal 3
+Ayat (1)
+Cukup jelas.
+Ayat (2)
+Hurufa
+Cukup jelas.
+Huruf b
+Yang dimaksud dengan "institusi yang ditunjuk oleh
+instansi' adalah institusi yang melaksanakan
+Penyelenggaraan Sistem Elektronik lingkup publik atas
+nama instansi yang menunjuk.
+Ayat (3)
+Cukup jelas.
+Ayat (4)
+Cukup jelas.
+Pasal 4...
+SK No 272233 A
+REPUBUK INDONESIA
+-5-
+Pasal 4
+Cukup jelas.
+Pasal 5
+Cukup jelas.
+Pasal 6
+Cukup jelas.
+Pasal 7
+Cukup jelas.
+Pasal 8
+Huruf a
+Yang dimaksud dengan "kepentingan terbaik bagi AnalC adalah
+bahwa dalam semua tahapan
+sampai dengan
+tahap
+Penyelenggara Sistem Elektronik mengutamakan pemenuhan dan
+pelindungan hak Anak sebagaimana dimaksud dalam peraturan
+perundang-undangan. Beberapa contoh kepentingan tersebut
+adalah kebutuhan Anak akan keamanan, keselamatan,
+kesehatan dan tumbuh kembang baik secara fisik maupun psikis,
+kesejahteraan, privasi, dan pelindungan Data Pribadi.
+Yang termasuk dalam "menyelenggarakan" adalah merErncErng,
+menyediakan, memasarkan, dan
+mengoperasikan.
+Huruf b
+Yang dimaksud dengan "memprioritaskan pemenuhan hak Anak
+dan pelindungan terhadap Anak misalnya mengutamakan
+privasi Anak, keselamatan Anak, dan kesejahteraan Anak serta
+mencegah dampak buruk bagi Anak di atas kepentingan
+komersial Penyelenggara Sistem Elektronik.
+Pasal 9
+Ayat (l)
+Pemberian persetqiuan dari orang tua atau wali Anak kepada
+Penyelenggara Sistem Elektronik sebelum Anak dapat
+menggunakan Produk, layanan, dan Fitur merupakan bentuk
+penerapan peran orang tua atau wali Anak dalam memberikan
+kepentingan terbaik bagi Anak.
+Persetqiuan sebagaimana dimaksud dalam ketentuan ini bersifat
+opt-in, artinya, Penyelenggara Sistem Elektronik boleh
+memberikan akses terhadap Produk, Layanan, dan Fitur kepada
+Anak setelah Penyelenggara Sistem Elektronik
+persetqjuan dari orang tua atau wali Anak.
+Produk, layanan, dan Fitur,
+SK No2722344
+Ayat(2)...
+INDONESIA
+6-
+Ayat (2)
+Persetqiuan sebagaimana dimaksud dalam ketentuan ini bersifat
+opt-out, artinya, dalam hal orang tua atau wali Anak tidak
+menyatakan penolakan, Anak dapat
+mengakses Produk, l,ayanan, dan Fitur.
+Ayat (3)
+Yang dimaksud "jangka waktu yang wajar untuk permintaan
+persetqiuan" antara lain:
+a. Dalam hal Anak belum berusia 17 (tujuh belas) tahun,
+Penyelenggara Sistem Elektronik memberikan batas waktu
+24 ldua puluh empat) jam untuk meminta persetujuan orang
+tua atau wali Anak. Sebelum orang tua atau wali Anak
+memberikan persetqiuan dalam jangka waktu tersebut,
+Penyelenggara Sistem Elektronik tidak memberikan akses
+kepada Anak untuk menggunakan atau mengakses Produk,
+Layanan, dan Fitur.
+b. Dalam hal Anak telah berusia 17 (tqluh belas) tahun,
+Penyelenggara Sistem Elektronik memberikan batas waktu
+6 (enam) jam bagi orang tua atau wali Anak untuk
+penolakan. Sebelum jangka waktu tersebut
+terlewati, Penyelenggara Sistem Elektronik tidak memberikan
+akses kepada Anak untuk menggunakan Produk, Layanan,
+dan Fitur.
+Ayat (4)
+Cukup jelas.
+Ayat (5)
+Hurufa
+Cukup jelas.
+Hurufb
+Data Pribadi Anak merupakan Data Pribadi spesifik. Ruang
+lingkup Data Pribadi Anak terkait penggunaan Produk,
+Layanan, dan Fitur antara lain:
+seperti nama asli, alias, alamat pos,
+atau
+a.
+pengidentifikasi pribadi unik, alamat protokol internet,
+alamat email, nama akun, nomor jaminan sosial, nomor
+surat izin mengemudi, nomor paspor, atau
+pengidentifikasi serupa lainnya;
+b. informasi komersial, termasuk catatan properti pribadi,
+produk atau layanan yang dibeli, diperoleh atau
+dipertimbangkan, atau riwayat atau tren pembelian atau
+konsumsi lainnya;
+c. informasibiometrik;
+d. informasi
+SK No272249 A
+REPUBUK INDONESTA
+-7 -
+informasi tentang aktivitas internet atau aktivitas
+jaringan elektronik lainnya, antara lain riwayat
+penjelajahan, riwayat pencarian, dan informasi yang
+berkaitan dengan interaksi pengguna dengan aplikasi
+atau iklan situs web internet;
+data geolokasi;
+informasi suara, visual, atau informasi serupa lainnya;
+informasi profesional atau terkait pekerjaan;
+informasi pendidikan
+kesimpulan yang diambil dari salah satu informasi atau
+kombinasi Data Pribadi yang telah diidentifikasi
+sebelumnya untuk membuat profil tentang individu Anak
+yang
+preferensi,
+psikologis, kecenderungan, perilaku,
+sikap, kecerdasan, kemampuan, dan bakatnya; dan
+j. Data Pribadi lainnya, seperti data keuangan, kode
+keamanan pribadi, kata sandi, atau kredensial akses,
+konten pertukaran komunikasi pribadi, termasuk email
+dan pesan pribadi, data kesehatan, informasi tentang
+asal ras atau etnis, keyakinan agama atau filosofis.
+Pasal 10
+Ayat (l)
+Yang dimaksud dengan "secara baku" adalah opsi yang
+ditentukan sebelumnya Qreselectedl yang diadopsi atau
+digunakan oleh Penyelenggara Sistem Elektronik untuk Produk,
+Layanan, dan Fitur.
+Pengaturan secara baku ke dalam tingkat privasi tinggi
+dimaksudkan agar hanya Data Pribadi yang benar-benar
+dibutuhkan untuk setiap tujuan pemrosesan Data Pribadi terkait
+penyelenggaraan Produk, Layanan, dan Fitur yang akan diproses.
+Maksud ini sejalan dengan prinsip pelindungan Data Pribadi,
+bahwa pengumpulan Data Pribadi dilakukan secara terbatas dan
+spesifrk. Dengan demikian, secara baku, pemrosesan Data Pribadi
+selain yang benar-benar dibutuhkan tidak dilakukan tanpa
+intervensi pengguna.
+Ayat (2)
+Yang dimaksud dengan osecara sementara" antara lain
+pengaturan tingkat privasi Produk, Layanan, dan Fitur kembali
+ke pengaturan tingkat privasi tinggi secara baku setelah Anak
+tidak lagi menggunakan atau mengakses Produk, layanan, dan
+Fitur tersebut atau setelah jangka wal*u tertentu.
+Ayat (3)
+Cukup jelas.
+Pasal 11...
+d
+e.
+f.
+c.
+h.
+i.
+SK No272250A
+EUK INDONESIA
+-8-
+Pasal 1l
+Yang dimaksud dengan oinformasi yang lengkap", antara lain
+informasi mengenai batasan minimum usia Anak dan rentang usia
+Anak yang dapat menggunakan atau mengakses Produk, layanan,
+dan Fitur, cara menggunakan atau mengakses Produk, Layanan, dan
+Fitur secara aman, kebijakan privasi dan pelindungan Data Pribadi,
+ketentuan penggunaan Produk, Layanan dan Fitur, dan standar
+komunitas.
+Yang dimaksud dengan "bahasa yang mudah dipahami" adalah
+bahasa Indonesia yang disusun sesuai dengan batasan minimum
+usia Anak dan rentang usia Anak.
+Yang dimaksud dengan "dalam format yang mudah digunakan atau
+diakses oleh Anald adalah penjelasan yang sesuai dan layak bagi
+batasan minimum usia Anak dan rentang usia Anak yang mungkin
+menggunakan atau mengakses Produk, Layanan, dan Fitur.
+Yang dimaksud dengan ocara yang mudah digunakan atau diakses
+oleh Anak atau orang tua atau wali Analf antara lain menggunakan
+pop-up yang memberikan informasi mengenai batasan minimum usia
+Anak dan rentang usia Anak yang dapat
+Layanan, dan Fitur.
+Produk,
+Pasal 12
+Ayat (1)
+Edukasi yang dapat disampaikan kepada Anak dan orang tua
+atau wali Anak, antara lain:
+a. pentingnya menjaga keamanan nomor identifikasi pribadi
+Qtersonal identification rumbefl atau kata sandi (passurord),'
+b. berbagai modus kejahatan transaksi elektronik;
+c. penggunaan Produk, Layanan, dan Fitur secara aman, seperti
+rekomendasi waktu layar (screen timel;
+d. informasi mengenai kebijakan Penyelenggara Sistem
+Elektronik terkait antara lain:
+l. perlindungan konsumen; dan
+2. kontrol orang tua atau wali Anak Qnrental antroll.
+e. dampak penggunaan Produk, Layanan, dan Fitur secara
+berlebihan.
+Ayat l2l
+Cukup jelas.
+Ayat (3)
+Cukup jelas.
+Ayat (a)
+Yang dimaksud dengan "pihak lain" antara lain tenaga pendidik,
+akademisi, atau pihak yang menyelenggarakan fungsi edukasi.
+Ayat (5)
+Cukup jelas.
+Ayat (6)
+Cukup jelas.
+Pasal 13...
+SK No272237 A
+REPUEUK INDONESIA
+-9-
+Pasal 13
+Cukup jelas.
+Pasal 14
+Cukup jelas.
+Pasal 15
+Cukup jelas.
+Pasal 16
+Cukup jelas.
+Pasal 17
+Cara, teknik, atau praktik terselubung atau tidak transparan dalam
+pengembangan atau
+dimaksudkan untuk
+Produk, layanan, dan Fitur
+atau mendorong Anak untuk
+mengikuti pola atau jalur yang Penyelenggara Sistem Elektronik pilih
+atau inginkan. Misalnya mengarahkan Anak untuk mengubah
+pengaturan privasi secara pennanen. Cara, teknik, atau praktik yang
+dimaksud dapat didasarkan pada eksploitasi bias psikologi terhadap
+Anak. Pada dasarnya, cara, teknik, atau praktik terselubung atau
+tidak transparan tersebut bertentangan dengan prinsip adil dan
+transparan dalam pelindungan Data Pribadi.
+Termasuk dalam "cara, teknik, atau praktik terselubung atau tidak
+transparan" adalah upaya untuk menyesatkan atau manipulasi Anak
+yang
+atau mengakses Produk, layanan, dan Fitur
+tersebut atau secara material mendistorsi kemampuan Anak atau
+menghalangi Anak untuk membuat keputusan atau pilihan yang
+bebas yang didasarkan pada informasi yang cukup. Contoh cara,
+teknik, atau praktik yang dimaksud adalah membuat pilihan yang
+sesuai dengan pola atau jalur yang Penyelenggara Sistem Elektronik
+pilih lebih mudah, menarik, atau lebih cepat dibandingkan pilihan
+lainnya sehingga mendorong Anak untuk memilih pilihan yang
+pertama.
+Pasal 18
+. Yang dimaksud dengan "informasi geolokasi yang tepat" adalah data
+yang berasal dari perangkat dan yang digunakan atau dimaksudkan
+untuk digunakan untuk menemukan area geografis di mana pengguna
+berada.
+Yang dimaksud dengan "sangat diperlukan" adalah bahwa
+pengumpulan geolokasi yang dimaksud merupakan bagian esensi atau
+inti dalam penyelenggaraan Produk, Layanan, dan Fitur oleh
+Sistem Elektronik yang diminta oleh Anak sesuai
+dengan kepentingan terbaik bagi Anak.
+SK No272238A
+Pasal 19...
+BUK INDONESIA
+-10-
+Pasal 19
+Ayat (1)
+Huruf a
+Yang dimaksud dengan
+dengan cara atau metode
+kecenderungan pilihan
+apapun" misalnya
+konten berdasarkan riwayat konten yang pernah diakses
+oleh Anak dalam kurun waktu tertentu.
+Huruf b
+Yang dimaksud dengan "pemrofilan Anak secara baku
+(defaul! dengan cara atau metode apapun' misalnya dengan
+mengatur bawaan Produk, Layanan, dan Fitur yang
+dikembangkan dan/atau diselenggarakan Penyelenggara
+Sistem Elektronik dalam posisi aktif secara bal<u (defaultl.
+Ayat (2)
+Yang dimaksud okepentingan terbaik bagi Anak", lihat penjelasan
+Pasal 8 huruf a.
+Ayat (3)
+Cukup jelas.
+Ayat (4)
+Yang dimaksud dengan
+berbagai aspek tentang
+Anald misalnya kecenderungan pilihan Anak terhadap sesuatu.
+Ayat (5)
+Cukup jelas.
+Pasal 2O
+Ayat (1)
+Cukup jelas.
+Ayat (2)
+Cukup jelas.
+Ayat (3)
+Cukup jelas.
+Ayat (4)
+Yang dimaksud dengan "mempertimbangkan kebutuhan Anak
+yang disesuaikan dengan tahapan tumbuh kembang berdasarkan
+batasan minimum usia Anak dan rentang usia Anak' antara lain
+adalah waktu layar (screen time) penggunaan Produk, Layanan,
+dan Fitur.
+Ayat (5)
+Cukup jelas.
+Pasal 21 ...
+SK No272239A
+BUK INDONESIA
+- 11-
+Pasal 2l
+Ayat (l)
+Huruf a
+Yang dimaksud dengan "akun pada Produk, Layanan, dan
+Fitur yang secara khusus dirancang untuk digunakan atau
+diakses oleh Anak dan memiliki profrl risiko rendah"
+misalnya akun pada Produk, l,ayanan, dan Fitur dengan
+metode pembelajaran secara daring (e-leaminglS yang
+dikembangkan oleh sekolah yang dikhususkan untuk
+peserta didik pada satuan pendidikan dasar
+untuk mendistribusikan tugas-tugas atau bahan ajar
+sekolah dari tenaga pendidik kepada peserta didik tanpa ada
+fitur komunikasi antar peserta didik.
+Huruf b
+Cukup jelas.
+Huruf c
+Pemberian persetqiuan oleh orang tua untuk Anak yang
+berusia 17 (tqiuh belas) tahun lihat penjelasan Pasal 9
+ayat (1) dan ayat (2).
+Ayat l2l
+Yang dimaksud dengan "teknologi serta
+efektif langkah teknis dan operasional bagi orang tua untuk dapat
+melakukan pengawasan terhadap penggunaan Produk, Layanan,
+dan Fitur melalui akun Analf misalnya fitur pengawasErn orang
+Eta Qnrental ontrotl.
+Pasal22
+Ayat (1)
+Termasuk dalam verifikasi usia adalah estimasi usia.
+Ayat (2)
+Risiko terhadap hak Anak merupakan aspek penilaian dalam
+Penilaian Dampak Pelindungan Data Pribadr.
+Ayat (3)
+Hurufa
+Cukup jelas.
+Hurufb
+Cukup jelas.
+Huruf c
+Cukup jelas.
+Huruf d
+Cukup jelas.
+Huruf e
+Cukup jelas.
+secara
+Huruff...
+SK No272240A
+TLITIITEItrEIf,I
+-12-
+Huruf f
+Cukup jelas.
+Huruf g
+Cukup jelas.
+Huruf h
+Kemudahan untuk dihubungi dan
+pengguna tidak
+Sistem Elektronik
+sifat inklusif bagi
+tanggung jawab
+untuk melindungi
+keamanan akses dan hak Anak.
+Ayat (4)
+Cukup jelas.
+Pasal 23
+Ayat (l)
+Yang dimaksud dengan "alat, layanan, atau fitur yang dibutuhkan
+Anak" misalnya frtur mute utords.
+Ayat(21
+Cukup jelas.
+Pasal24
+Cukup jelas.
+Pasal 25
+Cukup jelas.
+Pasal 26
+Cukup jelas.
+Pasal 27
+Ayat (1)
+Hurufa
+Yang dimaksud dengan "altivitas transaksi elektronilf
+antara lain trafik data pengaksesan Produk, l,ayanan, dan
+Fitur yang Penyelenggara Sistem Elektronik selenggarakan.
+Hurufb
+Cukup jelas.
+Huruf c
+Cukup jelas.
+Hurufd
+Cukup jelas.
+Huruf e
+Cukup jelas.
+Ayat l2l
+Cukup jelas.
+Pasal 28...
+SK No272241A
+E:l.FIIitrN
+REPUBUK INDONESIA
+-13-
+Pasal 28
+Ayat (1)
+Cukup jelas.
+Ayat (2)
+Yang dimaksud dengan "pihak" antara lain perwakilan dari
+organisasi internasional.
+Ayat (3)
+Cukup jelas.
+Ayat (4)
+Cukup jelas.
+Ayat (5)
+Cukup jelas.
+Pasal 29
+Cukup jelas.
+Pasal 3O
+Ayat (1)
+Cukup jelas.
+Ayat (2)
+Huruf a
+Cukup jelas.
+Huruf b
+Yang dimaksud
+dengan
+data, informasi
+dan/ atau dokumen" antara lain:
+1. desain, logika, fungsi dan pengujian sistem algoritma;
+2. rancangan Penilaian Dampak Pelindungan Data Pribadi
+atau Penilaian Dampak Pelindungan Data Pribadi
+yang telah ditetapkan;
+3. data yang teragregasi yang berkaitan dengan akses,
+penggunaan, atau hasil dari Produk, Layanan, dan Fitur
+tertentu;
+4. tata kelola terkait jaminan usia;
+5. studi dan laporan internal;
+6. sistem manajemen konten; dan/ atau
+7. proses manajemen pengajuan keberatan.
+Huruf c
+Cukup jelas.
+Huruf d
+Yang dimaksud dengan "pihak ketiga" antara lain
+kementerian/ lembaga lain atau pihak berkompeten.
+Penunjukan pihak ketiga dilakukan dalam hal Menteri
+memiliki keterbatasan sarana, prasarana, dan/ atau keahlian
+Huruf e...
+SK No2722424
+dalam melaksanakan
+LlK I
+-t4-
+Huruf e
+Cukup jelas.
+Huruf f
+Cukup jelas.
+Huruf g
+Cukup jelas.
+Huruf h
+Cukup jelas.
+Pasal 3l
+Cukup jelas.
+Pasal 32
+Cukup jelas.
+Pasal 33
+Cukup jelas.
+Pasal 34
+Cukup jelas.
+Pasal 35
+Cukup jelas.
+Pasal 36
+Cukup jelas.
+Pasal 37
+Huruf a
+Cukup jelas.
+Hurufb
+Yang dimaksud dengan opemberian perintah" antara lain perintah
+untuk melakukan modifikasi terhadap fitur Penyelenggara Sistem
+Elektronik.
+Huruf c
+Cukup jelas.
+Huruf d
+Cukup jelas.
+Huruf e
+Cukup jelas.
+Huruf f
+Cukup jelas.
+SK No272243 A
+Pasal 38...
+EUK INDONESIA
+-15-
+Pasal 38
+Ayat (1)
+Cukup jelas.
+Ayat (2)
+Huruf a
+Cukup jelas.
+Huruf b
+Cukup jelas.
+Huruf c
+Yang dimaksud dengan "penghentian sementara" antara
+lain:
+l. perintah kepada Penyelenggara Sistem Elektronik yang
+menyelenggarakan Produk, Layanan, dan Fitur untuk
+menghentikan penyelenggaraan Produk, Layanan, dan
+Fitur dari Sistem Elektronik Penyelenggara Sistem
+Elektronik tersebut dalam jangka waktu tertentu
+sehingga tidak dapat digunakan atau diakses lagi oleh
+Anak dalam jangka waktu tersebut; dan/atau
+2. perintah kepada Penyelenggara Sistem Elektronik yang
+memfasilitasi pendistribusian Produk, Layanan, dan
+Fitur untuk menghentikan distribusi dalam jangka
+waktu tertentu sehingga tidak dapat digunakan atau
+diakses lagi oleh Anak dalam jangka waktu tersebut.
+Hurufd
+Yang dimaksud dengan "pemutusan akses" antara lain
+perintah kepada Penyelenggara Sistem Elektronik untuk
+melakukan penarikan Produk, Layanan, dan Fitur dari pasar
+sehingga tidak dapat digunakan atau diakses lagi oleh Anak.
+Ayat (s)
+Sanksi administratif dalam Peraturan Pemerintah ini diatur
+secara kumulatif-alternatif. Pengenaan sanksi administratif
+tersebut dimaksudkan untuk memberikan efek jera bagi
+Penyelenggara Sistem Elektronik yang melakukan pelanggaran,
+Penyelenggara Sistem Elektronik lain untuk tidak
+melakukan pelanggaran terhadap kewajiban pelindungan Anak
+dalam Penyelenggaraan Sistem Elektronik, dan membangun
+ekosistem ruang digital yang aman, bersih, produktif, dan
+kondusif bagi Anak dan pemenuhan hak Anak. Oleh karena itu,
+Pengenaan sanksi terhadap pelanggaran kewajiban pelindungan
+Anak dalam Penyelenggaraan Sistem Elektronik dapat dikenakan
+tidak secara berjenj ang.
+Ayat (4)
+Cukup jelas.
+SK No272?A4A
+Pasal 39...
+trITTXTTIITTI+frI
+- 16-
+Pasal 39
+Cukup jelas.
+Pasal 40
+Cukup jelas.
+Pasal 41
+Ayat (1)
+Hurufa
+Yang dimaksud dengan pelanggaran dengan kategori ringan
+misalnya berupa Produk, Layanan, dan Fitur telah
+dipasarkan tanpa mengatur ke dalam konfrgurasi tingkat
+tinggi tetapi belum ada Anak yang menggunakan sehingga
+belum ada Anak yang terkena dampak akibat dari
+pelanggaran tersebut.
+Huruf b
+Cukup jelas.
+Huruf c
+Cukup jelas.
+Ayat (2)
+Cukup jelas.
+Ayat (3)
+Cukup jelas.
+Ayat (4)
+Cukup jelas.
+Ayat (5)
+Cukup jelas.
+Pasal 42
+Ayat (1)
+Huruf a
+Cukup jelas.
+Huruf b
+Angka 1
+Yang dimaksud dengan pelanggaran dengan kategori
+berat misalnya
+Sistem Elektronik
+cara, teknik, atau
+praktik
+atau tidak transparan dalam
+pengembangan atau penyelenggaraan Produk, Layanan,
+dan Fitur dengan jumlah Anak yang terkena dampak
+bersifat masif.
+Angka 2
+Cukup jelas.
+Angka 3
+Cukup jelas.
+Ayatl2l...
+atau
+SK No2722454
+PRESIDEN
+REFUBLIK INOONESIA
+-t7-
+Ayat (2)
+Cukup jelas.
+Ayat (3)
+Cukup jelas.
+Pasal 43
+Cukup jelas.
+Pasal 44
+Cukup jelas.
+Pasal 45
+Ayat (1)
+Cukup jelas.
+Ayat (2)
+Cukup jelas.
+Ayat (3)
+Cukup jelas.
+Ayat (4)
+Yang dimaksud dengan "alasan keadaan mendesalf antara lain
+bencana alam, bencana nonalam, kerusuhan,
+gangguan / ancaman ketenteraman dan ketertiban umum,
+keamanan, dan gangguan/ ancaman lainnya yang dapat
+mengakibatkan terganggunya penyelenggaraan pemerintahan.
+Yang dimaksud dengan "alasan kepentingan yang sah lainnya"
+adalah kebutuhan atau keperluan untuk melindungi Anak
+dan/atau hak Anak.
+Dengan contoh dalam hal berdasarkan pemeriksaan
+Penyelenggara Sistem Elektronik dikenakan sanksi berupa
+pemutusan akses terhadap Produk, Layanan, dan Fitur, maka
+untuk mencegah dampak negatif bagi Anak akibat pelanggaran
+yang dilakukan oleh Penyelenggara Sistem Elektronik yang
+penetapan sanksi administratifnya dikenakan tanpa
+memperhitungkan hari ke{a.
+Pasal 46
+Cukup jelas.
+Pasal 47
+Cukup jelas.
+Pasal 48
+Cukup jelas.
+Pasal 49...
+SK No272246 A
+ET*.{I'I{I
+K INDONESIA
+-18-
+Pasal 49
+Cukup jelas.
+Pasal 50
+Cukup jelas.
+TAMBAHAN LEMBARAN NEGARA REPUBLIK INDONESIA NOMOR 7105
+SK No272247 A
