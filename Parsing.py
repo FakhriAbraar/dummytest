@@ -43,7 +43,7 @@ def extract_and_clean_pdf(pdf_path):
 # --- CARA PENGGUNAAN ---
 if __name__ == "__main__":
     # Ganti dengan path PDF hukum kamu (misal: "PP_TUNAS_No_17_2025.pdf")
-    pdf_file_path = "dokumen_hukum.pdf" 
+    pdf_file_path = "UU_Nomor_17_Tahun_2025.pdf" 
     
     hasil_teks = extract_and_clean_pdf(pdf_file_path)
     
