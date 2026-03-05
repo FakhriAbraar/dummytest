@@ -14,14 +14,11 @@ dependencies = [
   "yarl >=1.22.0,<2",
   "ujson >=5.11.0,<6",
   "httptools >=0.7.1,<1",
-  # MongoDB (async)
   "motor >=3.7.0,<4",
   "pymongo >=4.15.4,<5",
-  # SQLAlchemy (async) + PostgreSQL driver
   "sqlalchemy[asyncio] >=2.0.0,<3",
   "asyncpg >=0.30.0,<1",
   "alembic >=1.16.0,<2",
-  # Qdrant vector database
   "qdrant-client >=1.14.0,<2",
 ]
 
@@ -75,48 +72,46 @@ env = [
 
 [tool.ruff]
 target-version = "py313"
-# List of enabled rulsets.
-# See https://docs.astral.sh/ruff/rules/ for more information.
-lint.select = [ "E",     # Error
-    "F",     # Pyflakes
-    "W",     # Pycodestyle
-    "C90",   # McCabe complexity
-    "I",     # Isort
-    "N",     # pep8-naming
-    "D",     # Pydocstyle
-    "ANN",   # Pytype annotations
-    "S",     # Bandit
-    "B",     # Bugbear
-    "C4",    # Comprehensions
-    "ISC",   # Implicit string concat
-    "PIE",   # Unnecessary code
-    "T20",   # Catch prints
-    "PYI",   # validate pyi files
-    "Q",     # Checks for quotes
-    "RSE",   # Checks raise statements
-    "RET",   # Checks return statements
-    "SLF",   # Self checks
-    "SIM",   # Simplificator
-    "PTH",   # Pathlib checks
-    "ERA",   # Checks for commented out code
-    "PL",    # PyLint checks
-    "RUF",   # Specific to Ruff checks
-	"FA102", # Future annotations
-	"UP",	 # Python updates
+lint.select = [ "E",
+    "F",
+    "W",
+    "C90",
+    "I",
+    "N",
+    "D",
+    "ANN",
+    "S",
+    "B",
+    "C4",
+    "ISC",
+    "PIE",
+    "T20",
+    "PYI",
+    "Q",
+    "RSE",
+    "RET",
+    "SLF",
+    "SIM",
+    "PTH",
+    "ERA",
+    "PL",
+    "RUF",
+	"FA102",
+	"UP",
 ]
 lint.ignore = [
-    "D105",    # Missing docstring in magic method
-    "D107",    # Missing docstring in __init__
-    "B008",    # Do not perform function calls in argument defaults
-    "D211",    # No blank lines allowed before class docstring
-    "D212",    # Multi-line docstring summary should start at the first line
-    "D401",    # First line should be in imperative mood
-    "D104",    # Missing docstring in public package
-    "D100",    # Missing docstring in public module
-    "D202",    # No blank lines allowed after function docstring
-    "ANN401",  # typing.Any are disallowed in `**kwargs
-    "PLR0913", # Too many arguments for function call
-    "D106",    # Missing docstring in public nested class
+    "D105",
+    "D107",
+    "B008",
+    "D211",
+    "D212",
+    "D401",
+    "D104",
+    "D100",
+    "D202",
+    "ANN401",
+    "PLR0913",
+    "D106",
 ]
 exclude = [
     ".venv/"
@@ -126,8 +121,8 @@ line-length = 88
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = [
-    "S101",    # Use of assert detected
-	"PLC0415", # Import outside toplevel
+    "S101",
+	"PLC0415",
 ]
 
 [tool.ruff.lint.pydocstyle]

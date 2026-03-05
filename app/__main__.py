@@ -1,4 +1,3 @@
-"""Application entrypoint."""
 
 from __future__ import annotations
 
@@ -8,7 +7,6 @@ from app.settings import settings
 
 
 def main() -> None:
-    """Entrypoint of the application."""
     uvicorn.run(
         "app.web.application:get_app",
         workers=settings.workers_count,

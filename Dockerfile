@@ -1,9 +1,5 @@
 FROM ghcr.io/astral-sh/uv:0.9.12-bookworm AS uv
 
-# -----------------------------------
-# STAGE 1: prod stage
-# Only install main dependencies
-# -----------------------------------
 FROM python:3.13-slim-bookworm AS prod
 
 ENV UV_COMPILE_BYTECODE=1
@@ -28,10 +24,6 @@ RUN --mount=from=uv,source=/usr/local/bin/uv,target=/bin/uv \
 
 CMD ["/usr/local/bin/python", "-m", "app"]
 
-# -----------------------------------
-# STAGE 3: development build
-# Includes dev dependencies
-# -----------------------------------
 FROM prod AS dev
 
 RUN --mount=from=uv,source=/usr/local/bin/uv,target=/bin/uv \

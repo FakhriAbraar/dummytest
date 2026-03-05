@@ -5,13 +5,6 @@ from app.web.lifespan import lifespan_setup
 
 
 def get_app() -> FastAPI:
-    """
-    Get FastAPI application.
-
-    This is the main constructor of an application.
-
-    :return: application.
-    """
     app = FastAPI(
         title="pad",
         lifespan=lifespan_setup,
@@ -20,7 +13,6 @@ def get_app() -> FastAPI:
         openapi_url="/api/openapi.json",
     )
 
-    # Main router for the API.
     app.include_router(router=api_router, prefix="/api")
 
     return app
