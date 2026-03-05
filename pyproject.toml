@@ -112,6 +112,9 @@ lint.ignore = [
     "ANN401",
     "PLR0913",
     "D106",
+    "D101",
+    "D102",
+    "D103",
 ]
 exclude = [
     ".venv/"

@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import enum
@@ -12,7 +11,6 @@ TEMP_DIR = Path(gettempdir())
 
 
 class LogLevel(enum.StrEnum):
-
     NOTSET = "NOTSET"
     DEBUG = "DEBUG"
     INFO = "INFO"

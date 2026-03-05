@@ -7,7 +7,6 @@ from app.settings import settings
 
 
 class InterceptHandler(logging.Handler):
-
     def emit(self, record: logging.LogRecord) -> None:  # pragma: no cover
         try:
             level: str | int = logger.level(record.levelname).name

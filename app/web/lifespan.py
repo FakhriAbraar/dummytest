@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 from collections.abc import AsyncGenerator
@@ -9,6 +8,7 @@ from fastapi import FastAPI
 from app.db.mongo import connect_mongo, disconnect_mongo
 from app.db.sql import connect_postgres, disconnect_postgres
 from app.db.vector import connect_qdrant, disconnect_qdrant
+
 
 @asynccontextmanager
 async def lifespan_setup(
