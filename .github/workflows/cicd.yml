@@ -22,6 +22,15 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - cmd: ruff-format
+            run: uv run ruff format --check .
+          - cmd: ruff
+            run: uv run ruff check .
+          - cmd: mypy
+            run: uv run mypy .
     steps:
       - uses: actions/checkout@v4
 
@@ -38,14 +47,8 @@ jobs:
       - name: Install deps
         run: uv sync --all-groups
 
-      - name: Ruff format check
-        run: uv run ruff format --check .
-
-      - name: Ruff lint
-        run: uv run ruff check .
-
-      - name: Mypy type check
-        run: uv run mypy .
+      - name: Run ${{ matrix.cmd }}
+        run: ${{ matrix.run }}
 
   pytest:
     name: Tests
