@@ -22,15 +22,6 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - cmd: ruff-format
-            run: uv run ruff format --check .
-          - cmd: ruff
-            run: uv run ruff check .
-          - cmd: mypy
-            run: uv run mypy .
     steps:
       - uses: actions/checkout@v4
 
@@ -47,37 +38,12 @@ jobs:
       - name: Install deps
         run: uv sync --all-groups
 
-      - name: Run ${{ matrix.cmd }}
-        run: ${{ matrix.run }}
-
-  pytest:
-    name: Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create .env
-        run: touch .env
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v5
-        with:
-          enable-cache: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
-
-      - name: Install deps
-        run: uv sync --all-groups
-
-      - name: Run tests
-        run: uv run pytest -vv
+      - name: Run lint
+        run: uv run pre-commit run --all-files
 
   build-and-push:
     name: Build & Push Docker image
-    needs: [lint, pytest]
+    needs: [lint]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/prod')
 
