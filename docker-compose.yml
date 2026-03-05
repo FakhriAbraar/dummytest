@@ -1,0 +1,96 @@
+services:
+  api: &main_app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: pad:${PAD_VERSION:-latest}
+    restart: always
+    env_file:
+      - path: .env
+        required: false
+    depends_on:
+      mongo:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    environment:
+      PAD_HOST: 0.0.0.0
+      # MongoDB
+      PAD_MONGO_HOST: pad-mongo
+      PAD_MONGO_PORT: 27017
+      PAD_MONGO_USER: pad
+      PAD_MONGO_PASS: pad
+      PAD_MONGO_DB: pad
+      # PostgreSQL
+      PAD_POSTGRES_HOST: pad-postgres
+      PAD_POSTGRES_PORT: 5432
+      PAD_POSTGRES_USER: pad
+      PAD_POSTGRES_PASS: pad
+      PAD_POSTGRES_DB: pad
+      # Qdrant
+      PAD_QDRANT_HOST: pad-qdrant
+      PAD_QDRANT_PORT: 6333
+
+  # ── MongoDB ──────────────────────────────────────────────────────
+  mongo:
+    image: mongo:7.0
+    hostname: pad-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "pad"
+      MONGO_INITDB_ROOT_PASSWORD: "pad"
+    command: "mongod"
+    volumes:
+      - pad-mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 40
+
+  # ── PostgreSQL ───────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    hostname: pad-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "pad"
+      POSTGRES_PASSWORD: "pad"
+      POSTGRES_DB: "pad"
+    volumes:
+      - pad-postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pad -d pad"]
+      interval: 10s
+      timeout: 5s
+      retries: 40
+
+  # ── Qdrant ────────────────────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    hostname: pad-qdrant
+    restart: always
+    volumes:
+      - pad-qdrant-data:/qdrant/storage
+    ports:
+      - "6333:6333" # REST / gRPC-web
+      - "6334:6334" # gRPC
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:6333/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 40
+
+volumes:
+  pad-mongo-data:
+    name: pad-mongo-data
+  pad-postgres-data:
+    name: pad-postgres-data
+  pad-qdrant-data:
+    name: pad-qdrant-data

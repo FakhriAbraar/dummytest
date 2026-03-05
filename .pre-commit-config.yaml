@@ -1,0 +1,30 @@
+---
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-format
+        name: Format with Ruff
+        entry: .venv/Scripts/ruff.exe format
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: ruff
+        name: Check with Ruff
+        entry: .venv/Scripts/ruff.exe
+        language: system
+        pass_filenames: false
+        always_run: true
+        args: ["check", "app", "tests", "--fix"]
+
+      - id: mypy
+        name: Validate types with MyPy
+        entry: .venv/Scripts/mypy.exe
+        language: system
+        types: [python]
+        pass_filenames: false
+        args:
+          - "app"
+          - "tests"
