@@ -1,11 +1,16 @@
+"""Application entrypoint."""
+
+from __future__ import annotations
+
 import uvicorn
-from pad.settings import settings
+
+from app.settings import settings
 
 
 def main() -> None:
     """Entrypoint of the application."""
     uvicorn.run(
-        "pad.web.application:get_app",
+        "app.web.application:get_app",
         workers=settings.workers_count,
         host=settings.host,
         port=settings.port,
