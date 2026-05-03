@@ -70,8 +70,8 @@ class RegulationDocument(Base):
     rag_chunks: Mapped[list[RagChunk]] = relationship(
         "RagChunk", back_populates="regulation"
     )
-    classifications: Mapped[list[Classification]] = relationship(
-        "Classification", back_populates="regulation"
+    engine_decisions: Mapped[list[EngineDecision]] = relationship(
+        "EngineDecision", back_populates="regulation"
     )
 
 
@@ -155,6 +155,8 @@ class Content(Base):
     crawl_timestamp: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     publish_timestamp: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     raw_metadata: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    engine_status: Mapped[str | None] = mapped_column(String(20))
+    final_rating: Mapped[str | None] = mapped_column(String(10))
 
     account: Mapped[Account] = relationship("Account", back_populates="contents")
     classifications: Mapped[list[Classification]] = relationship(
@@ -162,6 +164,9 @@ class Content(Base):
     )
     content_keywords: Mapped[list[ContentKeyword]] = relationship(
         "ContentKeyword", back_populates="content"
+    )
+    engine_decision: Mapped[EngineDecision | None] = relationship(
+        "EngineDecision", back_populates="content", uselist=False
     )
 
 
@@ -176,7 +181,6 @@ class TrendingKeyword(Base):
     source: Mapped[str | None] = mapped_column(String(100))
     trend_score: Mapped[float | None] = mapped_column(Float)
     trend_status: Mapped[str | None] = mapped_column(String(50))
-    embedding_vector: Mapped[str | None] = mapped_column(String(255))
     detected_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
@@ -222,8 +226,8 @@ class IGRSRules(Base):
     age_rating_minimal: Mapped[str] = mapped_column(String(10), nullable=False)
     dominant_modality: Mapped[str] = mapped_column(String(50), nullable=False, default="VISUAL")
 
-    classifications: Mapped[list[Classification]] = relationship(
-        "Classification", back_populates="igrs_rule"
+    engine_decisions: Mapped[list[EngineDecision]] = relationship(
+        "EngineDecision", back_populates="igrs_rule"
     )
 
 
@@ -239,13 +243,7 @@ class Classification(Base):
     agent_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("ai_agent.agent_id", ondelete="CASCADE"), nullable=False
     )
-    igrs_rule_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("igrs_rules.id", ondelete="RESTRICT"), nullable=False
-    )
-    regulation_id: Mapped[int | None] = mapped_column(
-        Integer, ForeignKey("regulation_document.regulation_id", ondelete="SET NULL")
-    )
-    category: Mapped[str | None] = mapped_column(String(10))
+    kategori_tebakan_ai: Mapped[str | None] = mapped_column(String(100))
     reasoning_category: Mapped[str | None] = mapped_column(String(200))
     unsafe_reason: Mapped[str | None] = mapped_column(Text)
     confidence_score: Mapped[float | None] = mapped_column(Float)
@@ -255,9 +253,33 @@ class Classification(Base):
 
     content: Mapped[Content] = relationship("Content", back_populates="classifications")
     agent: Mapped[AiAgent] = relationship("AiAgent", back_populates="classifications")
-    igrs_rule: Mapped[IGRSRules] = relationship(
-        "IGRSRules", back_populates="classifications"
+
+
+class EngineDecision(Base):
+    __tablename__ = "engine_decision"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    content_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("content.content_id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    igrs_rule_id: Mapped[int | None] = mapped_column(
+        Integer, ForeignKey("igrs_rules.id", ondelete="RESTRICT")
+    )
+    regulation_id: Mapped[int | None] = mapped_column(
+        Integer, ForeignKey("regulation_document.regulation_id", ondelete="SET NULL")
+    )
+    final_kategori: Mapped[str | None] = mapped_column(String(100))
+    final_rating: Mapped[str | None] = mapped_column(String(10))
+    is_vetoed: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    content: Mapped[Content] = relationship("Content", back_populates="engine_decision")
+    igrs_rule: Mapped[IGRSRules | None] = relationship(
+        "IGRSRules", back_populates="engine_decisions"
     )
     regulation: Mapped[RegulationDocument | None] = relationship(
-        "RegulationDocument", back_populates="classifications"
+        "RegulationDocument", back_populates="engine_decisions"
     )

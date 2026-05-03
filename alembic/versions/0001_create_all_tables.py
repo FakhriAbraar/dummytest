@@ -122,6 +122,8 @@ def upgrade() -> None:
         sa.Column("crawl_timestamp", sa.DateTime(timezone=True), nullable=True),
         sa.Column("publish_timestamp", sa.DateTime(timezone=True), nullable=True),
         sa.Column("raw_metadata", postgresql.JSONB(astext_type=sa.Text()), nullable=True),
+        sa.Column("engine_status", sa.String(20), nullable=True),
+        sa.Column("final_rating", sa.String(10), nullable=True),
         sa.ForeignKeyConstraint(
             ["account_id"], ["account.account_id"], ondelete="CASCADE"
         ),
@@ -136,7 +138,6 @@ def upgrade() -> None:
         sa.Column("source", sa.String(100), nullable=True),
         sa.Column("trend_score", sa.Float(), nullable=True),
         sa.Column("trend_status", sa.String(50), nullable=True),
-        sa.Column("embedding_vector", sa.String(255), nullable=True),
         sa.Column("detected_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("expires_at", sa.DateTime(timezone=True), nullable=True),
         sa.ForeignKeyConstraint(["agent_id"], ["ai_agent.agent_id"], ondelete="CASCADE"),
@@ -180,9 +181,7 @@ def upgrade() -> None:
         sa.Column("classification_id", sa.Integer(), autoincrement=True, nullable=False),
         sa.Column("content_id", sa.Integer(), nullable=False),
         sa.Column("agent_id", sa.Integer(), nullable=False),
-        sa.Column("igrs_rule_id", sa.Integer(), nullable=False),
-        sa.Column("regulation_id", sa.Integer(), nullable=True),
-        sa.Column("category", sa.String(10), nullable=True),
+        sa.Column("kategori_tebakan_ai", sa.String(100), nullable=True),
         sa.Column("reasoning_category", sa.String(200), nullable=True),
         sa.Column("unsafe_reason", sa.Text(), nullable=True),
         sa.Column("confidence_score", sa.Float(), nullable=True),
@@ -193,17 +192,35 @@ def upgrade() -> None:
         sa.ForeignKeyConstraint(
             ["agent_id"], ["ai_agent.agent_id"], ondelete="CASCADE"
         ),
+        sa.PrimaryKeyConstraint("classification_id"),
+    )
+
+    op.create_table(
+        "engine_decision",
+        sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
+        sa.Column("content_id", sa.Integer(), nullable=False),
+        sa.Column("igrs_rule_id", sa.Integer(), nullable=True),
+        sa.Column("regulation_id", sa.Integer(), nullable=True),
+        sa.Column("final_kategori", sa.String(100), nullable=True),
+        sa.Column("final_rating", sa.String(10), nullable=True),
+        sa.Column("is_vetoed", sa.Boolean(), nullable=False, server_default="false"),
+        sa.Column("decided_at", sa.DateTime(timezone=True), nullable=True),
+        sa.ForeignKeyConstraint(
+            ["content_id"], ["content.content_id"], ondelete="CASCADE"
+        ),
         sa.ForeignKeyConstraint(
             ["igrs_rule_id"], ["igrs_rules.id"], ondelete="RESTRICT"
         ),
         sa.ForeignKeyConstraint(
             ["regulation_id"], ["regulation_document.regulation_id"], ondelete="SET NULL"
         ),
-        sa.PrimaryKeyConstraint("classification_id"),
+        sa.PrimaryKeyConstraint("id"),
+        sa.UniqueConstraint("content_id", name="uq_engine_decision_content"),
     )
 
 
 def downgrade() -> None:
+    op.drop_table("engine_decision")
     op.drop_table("classification")
     op.drop_index("ix_igrs_rules_kategori_age", table_name="igrs_rules")
     op.drop_table("igrs_rules")
