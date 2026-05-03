@@ -7,6 +7,8 @@ from fastapi import FastAPI
 
 from app.db.mongo import connect_mongo, disconnect_mongo
 from app.db.sql import connect_postgres, disconnect_postgres
+from app.db.vector import connect_qdrant, disconnect_qdrant
+from app.db.minio import connect_minio, disconnect_minio
 
 
 @asynccontextmanager
@@ -15,6 +17,8 @@ async def lifespan_setup(
 ) -> AsyncGenerator[None]:  # pragma: no cover
     await connect_postgres()
     await connect_mongo()
+    await connect_qdrant()
+    await connect_minio()
 
     app.middleware_stack = None
     app.middleware_stack = app.build_middleware_stack()
@@ -23,3 +27,4 @@ async def lifespan_setup(
 
     await disconnect_mongo()
     await disconnect_postgres()
+    await disconnect_minio()

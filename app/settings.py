@@ -85,6 +85,18 @@ class Settings(BaseSettings):
             path="/postgres",
         )
 
+    minio_host: str = "localhost"
+    minio_port: int = 9000
+    minio_access_key: str = "minioadmin"
+    minio_secret_key: str = "minioadmin"
+    minio_bucket: str = "pad-bucket"
+    minio_use_ssl: bool = False
+
+    @property
+    def minio_url(self) -> str:
+        scheme = "https" if self.minio_use_ssl else "http"
+        return f"{scheme}://{self.minio_host}:{self.minio_port}"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="PAD_",

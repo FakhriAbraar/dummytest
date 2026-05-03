@@ -1,10 +1,12 @@
 from fastapi.routing import APIRouter
 
 from app.web.api import monitoring
+from app.web.api import crawler
 from app.web.api import classification
 from app.web.api import engine
 
 api_router = APIRouter()
 api_router.include_router(monitoring.router)
+api_router.include_router(crawler.router, prefix="/crawler", tags=["crawler"])
 api_router.include_router(classification.router)
 api_router.include_router(engine.router)

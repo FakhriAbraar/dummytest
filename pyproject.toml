@@ -19,6 +19,8 @@ dependencies = [
   "sqlalchemy[asyncio] >=2.0.0,<3",
   "asyncpg >=0.30.0,<1",
   "alembic >=1.16.0,<2",
+  "qdrant-client >=1.14.0,<2",
+  "minio >=7.2.0,<8",
 ]
 
 [dependency-groups]
