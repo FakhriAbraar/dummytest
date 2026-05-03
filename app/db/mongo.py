@@ -20,7 +20,19 @@ def get_mongo_db() -> AsyncIOMotorDatabase:  # type: ignore[type-arg]
 
 async def connect_mongo() -> None:
     global _mongo_client  # noqa: PLW0603
-    _mongo_client = AsyncIOMotorClient(str(settings.mongo_url))
+    if settings.mongo_user and settings.mongo_pass:
+        _mongo_client = AsyncIOMotorClient(
+            host=settings.mongo_host,
+            port=settings.mongo_port,
+            username=settings.mongo_user,
+            password=settings.mongo_pass,
+            authSource="admin",
+        )
+    else:
+        _mongo_client = AsyncIOMotorClient(
+            host=settings.mongo_host,
+            port=settings.mongo_port,
+        )
     await _mongo_client.admin.command("ping")
 
 

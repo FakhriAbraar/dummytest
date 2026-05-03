@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import asyncio
+import re
 from logging.config import fileConfig
 
 from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy import pool
+from sqlalchemy import pool, text
 
 from alembic import context
 
@@ -15,9 +16,11 @@ if config.config_file_name is not None:
 
 from app.settings import settings  # noqa: E402
 from app.db.sql import Base  # noqa: E402
-import app.db.models  # noqa: E402, F401 – registers all ORM models with Base.metadata
+from app.models import models as _  # noqa: E402, F401
 
 target_metadata = Base.metadata
+
+_SAFE_IDENTIFIER = re.compile(r"^[A-Za-z0-9_]+$")
 
 
 def run_migrations_offline() -> None:
@@ -28,12 +31,9 @@ def run_migrations_offline() -> None:
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
     )
-
     with context.begin_transaction():
         context.run_migrations()
 
-
-from sqlalchemy import text
 
 def do_run_migrations(connection):  # type: ignore[no-untyped-def]
     context.configure(connection=connection, target_metadata=target_metadata)
@@ -42,44 +42,46 @@ def do_run_migrations(connection):  # type: ignore[no-untyped-def]
 
 
 async def ensure_database_exists() -> None:
-    """Check if the database exists and automatically create it if it doesn't."""
-    db_url = str(settings.postgres_url)
-    db_name = settings.postgres_db
-    
-    # Use the postgres superuser (as provided by the user) to have CREATEDB privileges
-    admin_url = "postgresql+asyncpg://postgres:12345678@localhost:5432/postgres"
+    if not settings.postgres_admin_pass:
+        return
 
-    # CREATE DATABASE cannot run inside a transaction block, hence AUTOCOMMIT
-    engine = create_async_engine(admin_url, isolation_level="AUTOCOMMIT")
+    db_name = settings.postgres_db
+    db_user = settings.postgres_user
+
+    if not _SAFE_IDENTIFIER.match(db_name) or not _SAFE_IDENTIFIER.match(db_user):
+        print(f"Skipping auto-create: unsafe identifier in db_name='{db_name}'")
+        return
+
+    engine = create_async_engine(
+        str(settings.postgres_admin_url), isolation_level="AUTOCOMMIT"
+    )
     try:
         async with engine.connect() as conn:
             result = await conn.execute(
-                text(f"SELECT 1 FROM pg_database WHERE datname = '{db_name}'")
+                text("SELECT 1 FROM pg_database WHERE datname = :dbname"),
+                {"dbname": db_name},
             )
             if not result.scalar():
-                print(f"Database '{db_name}' not found. Auto-creating using postgres superuser...")
+                print(f"Database '{db_name}' not found — creating...")
                 await conn.execute(
-                    text(f"CREATE DATABASE {db_name} OWNER {settings.postgres_user}")
+                    text(f"CREATE DATABASE {db_name} OWNER {db_user}")
                 )
-                print(f"Database '{db_name}' created successfully.")
-    except Exception as e:
-        print(f"Warning during auto-create DB: {e}")
+                print(f"Database '{db_name}' created.")
+    except Exception as exc:
+        print(f"Warning: auto-create DB skipped — {exc}")
     finally:
         await engine.dispose()
 
 
 async def run_migrations_online() -> None:
-    # Attempt to auto-create the database if missing
     await ensure_database_exists()
-    
+
     connectable = create_async_engine(
         str(settings.postgres_url),
         poolclass=pool.NullPool,
     )
-
     async with connectable.connect() as connection:
         await connection.run_sync(do_run_migrations)
-
     await connectable.dispose()
 
 
