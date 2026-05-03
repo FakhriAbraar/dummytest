@@ -5,7 +5,7 @@ import asyncio
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from app.models.models import IGRSRules
+from app.db.tables import IGRSRules
 from app.settings import settings
 
 IGRS_DATA: list[dict[str, str]] = [

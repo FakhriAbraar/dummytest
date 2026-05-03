@@ -16,7 +16,7 @@ if config.config_file_name is not None:
 
 from app.settings import settings  # noqa: E402
 from app.db.sql import Base  # noqa: E402
-from app.models import models as _  # noqa: E402, F401
+from app.db import tables as _  # noqa: E402, F401
 
 target_metadata = Base.metadata
 

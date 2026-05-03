@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from httpx import AsyncClient
 from starlette import status
 
-from app.models.models import Classification, IGRSRules
+from app.db.tables import Classification, IGRSRules
 
 
 # ---------------------------------------------------------------------------

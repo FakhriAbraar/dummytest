@@ -6,7 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from app.models.models import AiAgent, Classification, Content, EngineDecision, IGRSRules
+from app.db.tables import AiAgent, Classification, Content, EngineDecision, IGRSRules
 from app.services.classification import get_igrs_rule_by_kategori
 
 CONFIDENCE_THRESHOLD = 0.75

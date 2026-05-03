@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.models import Classification, IGRSRules
+from app.db.tables import Classification, IGRSRules
 
 _igrs_cache: dict[str, IGRSRules] = {}
 

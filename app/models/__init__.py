@@ -1,4 +1,4 @@
-from app.models.models import (
+from app.db.tables import (
     Account,
     AgentExecutionLog,
     AiAgent,

@@ -7,7 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.sql import get_db_session
-from app.models.models import Content
+from app.db.tables import Content
 from app.services.engine import get_engine_decision, run_engine_decision
 from app.web.api.engine.schemas import ContentEngineStatus, EngineDecisionOut, IGRSRuleOut
 
