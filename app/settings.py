@@ -31,18 +31,25 @@ class Settings(BaseSettings):
 
     mongo_host: str = "localhost"
     mongo_port: int = 27017
-    mongo_user: str = "pad"
-    mongo_pass: str = "pad"  # noqa: S105
+    mongo_user: str | None = None
+    mongo_pass: str | None = None  # noqa: S105
     mongo_db: str = "pad"
 
     @property
     def mongo_url(self) -> URL:
+        if self.mongo_user and self.mongo_pass:
+            return URL.build(
+                scheme="mongodb",
+                host=self.mongo_host,
+                port=self.mongo_port,
+                user=self.mongo_user,
+                password=self.mongo_pass,
+                path=f"/{self.mongo_db}",
+            )
         return URL.build(
             scheme="mongodb",
             host=self.mongo_host,
             port=self.mongo_port,
-            user=self.mongo_user,
-            password=self.mongo_pass,
             path=f"/{self.mongo_db}",
         )
 
@@ -52,6 +59,9 @@ class Settings(BaseSettings):
     postgres_pass: str = "pad"  # noqa: S105
     postgres_db: str = "pad"
     postgres_echo: bool = False
+
+    postgres_admin_user: str = "postgres"
+    postgres_admin_pass: str = ""  # noqa: S105
 
     @property
     def postgres_url(self) -> URL:
@@ -64,16 +74,16 @@ class Settings(BaseSettings):
             path=f"/{self.postgres_db}",
         )
 
-    qdrant_host: str = "localhost"
-    qdrant_port: int = 6333
-    qdrant_grpc_port: int = 6334
-    qdrant_api_key: str | None = None
-    qdrant_https: bool = False
-
     @property
-    def qdrant_url(self) -> str:
-        scheme = "https" if self.qdrant_https else "http"
-        return f"{scheme}://{self.qdrant_host}:{self.qdrant_port}"
+    def postgres_admin_url(self) -> URL:
+        return URL.build(
+            scheme="postgresql+asyncpg",
+            host=self.postgres_host,
+            port=self.postgres_port,
+            user=self.postgres_admin_user,
+            password=self.postgres_admin_pass,
+            path="/postgres",
+        )
 
     model_config = SettingsConfigDict(
         env_file=".env",

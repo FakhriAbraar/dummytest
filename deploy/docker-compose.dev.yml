@@ -2,9 +2,7 @@ services:
   api:
     ports:
       - "8000:8000"
-    build:
-      context: .
     volumes:
       - .:/app/src/
     environment:
-      PAD_RELOAD: "True"
+      PAD_RELOAD: "true"
