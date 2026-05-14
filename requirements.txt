@@ -1,0 +1,24 @@
+# Web Framework & Server
+fastapi
+uvicorn[standard]
+
+# Agentic AI & Workflow
+langgraph
+groq
+
+# Database & Vector Search
+qdrant-client
+psycopg2-binary      # Buat PostgreSQL (Chat History & Logs) 
+sqlalchemy           # ORM buat manage DB [cite: 414, 845, 962]
+
+# Machine Learning & Embeddings
+sentence-transformers
+torch                # Backend buat embedding model
+
+# Automation & Utilities
+apscheduler          # Stop kontak otomatis buat crawler
+python-dotenv        # Manage API Key dan config
+pydantic             # Validasi data schema
+
+# Crawler (Target Integrasi Fase 2)
+playwright           # Buat content pengerukan [cite: 933]

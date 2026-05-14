@@ -1,0 +1,6 @@
+{
+  "reportMissingImports": "warning",
+  "reportMissingModuleSource": "none",
+  "reportGeneralTypeIssues": "warning",
+  "reportAttributeAccessIssue": "warning"
+}

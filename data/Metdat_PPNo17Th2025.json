@@ -1,0 +1,452 @@
+[
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB I KETENTUAN UMUM",
+    "pasal": "Pasal 1",
+    "tags": ["Definisi Anak", "Sistem Elektronik", "PSE", "Data Pribadi", "Penilaian Dampak", "Badan Publik"],
+    "konten": "Dalam Peraturan Pemerintah ini yang dimaksud dengan:\n1. Anak yang menggunakan atau mengakses produk, layanan, dan fitur yang selanjutnya disebut Anak adalah seseorang yang belum berusia 18 (delapan belas) tahun.\n2. Sistem Elektronik adalah serangkaian perangkat dan prosedur elektronik yang berfungsi mempersiapkan, mengumpulkan, mengolah, menganalisis, menyimpan, menampilkan, mengumumkan, mengirimkan, dan/atau menyebarkan informasi elektronik.\n3. Penyelenggaraan Sistem Elektronik adalah pemanfaatan Sistem Elektronik oleh penyelenggara negara, orang, badan usaha, dan/atau masyarakat.\n4. Penyelenggara Sistem Elektronik adalah setiap orang, penyelenggara negara, badan usaha, dan masyarakat yang menyediakan, mengelola, dan/atau mengoperasikan Sistem Elektronik, baik secara sendiri-sendiri maupun bersama-sama kepada pengguna Sistem Elektronik untuk keperluan dirinya dan/atau keperluan pihak lain.\n5. Produk, Layanan, dan Fitur adalah setiap Produk, Layanan, dan/atau Fitur yang dikembangkan dan/atau diselenggarakan oleh Penyelenggara Sistem Elektronik yang terhubung dengan internet atau memiliki kemampuan untuk terhubung dengan internet.\n6. Data Pribadi adalah data tentang orang perseorangan yang teridentifikasi atau dapat diidentifikasi secara tersendiri atau dikombinasi dengan informasi lainnya baik secara langsung maupun tidak langsung melalui Sistem Elektronik atau nonelektronik.\n7. Penilaian Dampak Pelindungan Data Pribadi adalah hasil analisa atau reviu yang dilakukan secara sistematis untuk menilai dan memitigasi risiko yang dapat muncul dari praktik pemrosesan Data Pribadi yang dilakukan Penyelenggara Sistem Elektronik terhadap Anak dalam penyelenggaraan Produk, Layanan, dan Fitur.\n8. Orang adalah orang perseorangan, baik warga negara Indonesia, warga negara asing, maupun badan hukum.\n9. Badan Publik adalah lembaga eksekutif, legislatif, yudikatif, dan badan lain yang fungsi dan tugas pokoknya berkaitan dengan penyelenggaraan negara, yang sebagian atau seluruh dananya bersumber dari Anggaran Pendapatan dan Belanja Negara dan/atau Anggaran Pendapatan dan Belanja Daerah, atau organisasi nonpemerintah sepanjang sebagian atau seluruh dananya bersumber dari Anggaran Pendapatan dan Belanja Negara dan/atau Anggaran Pendapatan dan Belanja Daerah, sumbangan masyarakat, dan/atau luar negeri.\n10. Menteri adalah menteri yang menyelenggarakan urusan pemerintahan di bidang komunikasi dan informasi.\n11. Kementerian adalah kementerian yang menyelenggarakan urusan pemerintahan di bidang komunikasi dan informasi. [cite: 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 44, 45, 46]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 2",
+    "tags": ["Kewajiban Pelindungan", "Verifikasi Usia", "Mekanisme Pelaporan", "Langkah Teknis"],
+    "konten": "(1) Penyelenggara Sistem Elektronik wajib memberikan pelindungan bagi Anak yang menggunakan atau mengakses Sistem Elektronik.\n(2) Pelindungan sebagaimana dimaksud pada ayat (1) meliputi pelindungan terhadap hak Anak sebagaimana dimaksud dalam peraturan perundang-undangan mengenai penggunaan Produk, Layanan, dan Fitur yang dikembangkan dan/atau diselenggarakan oleh Penyelenggara Sistem Elektronik.\n(3) Dalam memberikan Produk, Layanan, dan Fitur bagi Anak, Penyelenggara Sistem Elektronik wajib menerapkan teknologi dan langkah teknis operasional untuk memberikan pelindungan sebagaimana dimaksud pada ayat (1) dari tahap pengembangan sampai dengan tahap Penyelenggaraan Sistem Elektronik.\n(4) Dalam memberikan pelindungan sebagaimana dimaksud pada ayat (1), Penyelenggara Sistem Elektronik wajib menyediakan:\na. informasi mengenai batasan minimum usia Anak yang dapat menggunakan produk atau layanannya;\nb. mekanisme verifikasi pengguna Anak; dan\nc. mekanisme pelaporan penyalahgunaan Produk, Layanan, dan Fitur yang melanggar atau berpotensi melanggar hak Anak. [cite: 50, 51, 52, 53, 54, 61, 62, 63, 64, 65, 66]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 3",
+    "tags": ["Klasifikasi PSE", "PSE Publik", "PSE Privat"],
+    "konten": "(1) Penyelenggara Sistem Elektronik sebagaimana dimaksud dalam Pasal 2 terdiri atas:\na. Penyelenggara Sistem Elektronik lingkup publik; dan\nb. Penyelenggara Sistem Elektronik lingkup privat.\n(2) Penyelenggara Sistem Elektronik lingkup publik sebagaimana dimaksud pada ayat (1) huruf a meliputi:\na. instansi; dan\nb. institusi yang ditunjuk oleh instansi.\n(3) Penyelenggara Sistem Elektronik lingkup privat sebagaimana dimaksud pada ayat (1) huruf b, merupakan Penyelenggara Sistem Elektronik sebagaimana diatur dalam peraturan perundang-undangan, yang mengembangkan dan/atau menyelenggarakan Produk, Layanan, dan Fitur yang secara khusus dirancang untuk digunakan atau diakses oleh Anak, atau yang mungkin digunakan atau diakses oleh Anak.\n(4) Dalam hal Penyelenggara Sistem Elektronik lingkup publik merupakan institusi yang ditunjuk oleh instansi sebagaimana dimaksud pada ayat (2) huruf b, yang mengembangkan dan/atau menyelenggarakan Produk, Layanan, dan Fitur yang secara khusus dirancang untuk digunakan atau diakses oleh Anak, atau yang mungkin digunakan atau diakses oleh Anak, tunduk pada ketentuan Peraturan Pemerintah ini. [cite: 67, 68, 69, 70, 71, 72, 73, 74, 75]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 4",
+    "tags": ["Produk Layanan Anak", "Indikator Pengguna Anak", "Desain Menarik Anak"],
+    "konten": "(1) Produk, Layanan, dan Fitur sebagaimana dimaksud dalam Pasal 2 meliputi:\na. Produk, Layanan, dan Fitur yang secara khusus dirancang untuk digunakan atau diakses oleh Anak; atau\nb. Produk, Layanan, dan Fitur yang mungkin digunakan atau diakses oleh Anak.\n(2) Produk, Layanan, dan Fitur yang mungkin digunakan atau diakses oleh Anak sebagaimana dimaksud pada ayat (1) huruf b didasarkan pada indikator:\na. syarat, ketentuan, aturan, atau kebijakan yang dipublikasikan atau disusun dalam suatu dokumen internal Penyelenggara Sistem Elektronik menunjukkan bahwa Produk, Layanan, dan Fitur dimaksudkan untuk dapat digunakan atau diakses oleh Anak;\nb. terdapat bukti kuat bahwa komposisi pengguna yang mengakses secara rutin Produk, Layanan, dan Fitur tersebut adalah Anak;\nc. iklan terkait Produk, Layanan, dan Fitur ditujukan kepada Anak;\nd. elemen desain dari Produk, Layanan, dan Fitur dibuat atau ditampilkan sedemikian rupa sehingga menarik untuk Anak gunakan atau akses; dan/atau\ne. Produk, Layanan, dan Fitur secara substansial serupa atau sama dengan Produk, Layanan, dan Fitur yang telah terbukti digunakan atau diakses oleh Anak.\n(3) Indikator penilaian yang menunjukkan Produk, Layanan, dan Fitur yang mungkin digunakan atau diakses oleh Anak sebagaimana dimaksud pada ayat (2) ditetapkan dengan Keputusan Menteri. [cite: 76, 77, 78, 79, 84, 85, 87, 88, 89, 91, 92]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 5",
+    "tags": ["Penilaian Risiko", "Risiko Tinggi", "Risiko Rendah", "Pornografi", "Adiksi", "Kesehatan Psikologis"],
+    "konten": "(1) Produk, Layanan, dan Fitur sebagaimana dimaksud dalam Pasal 4 ayat (1) dinilai tingkat risikonya terhadap Anak.\n(2) Tingkat risiko sebagaimana dimaksud pada ayat (1) terdiri atas:\na. tingkat risiko tinggi; atau\nb. tingkat risiko rendah.\n(3) Penilaian tingkat risiko sebagaimana dimaksud pada ayat (1) dilakukan berdasarkan aspek sebagai berikut:\na. berkontak dengan orang lain yang tidak dikenal;\nb. terpapar pada konten pornografi, konten kekerasan, konten yang berbahaya bagi keselamatan nyawa, dan konten lain yang tidak sesuai peruntukan Anak;\nc. eksploitasi Anak sebagai konsumen;\nd. mengancam keamanan Data Pribadi Anak;\ne. menimbulkan adiksi;\nf. gangguan kesehatan psikologis Anak; dan\ng. gangguan fisiologis Anak.\n(4) Jika Produk, Layanan, dan Fitur memiliki nilai tingkat risiko tinggi pada salah satu atau lebih aspek sebagaimana dimaksud pada ayat (3), Produk, Layanan, dan Fitur tersebut dikategorikan memiliki profil risiko tinggi.\n(5) Jika Produk, Layanan, dan Fitur memiliki nilai tingkat risiko rendah pada semua aspek sebagaimana dimaksud pada ayat (3), Produk, Layanan, dan Fitur tersebut dikategorikan memiliki profil risiko rendah.\n(6) Penyelenggara Sistem Elektronik wajib melakukan penilaian mandiri terhadap aspek sebagaimana dimaksud pada ayat (3) dalam Produk, Layanan, dan Fitur yang dikembangkan dan/atau diselenggarakan oleh Penyelenggara Sistem Elektronik.\n(7) Penyelenggara Sistem Elektronik melaporkan hasil penilaian mandiri sebagaimana dimaksud pada ayat (6) kepada Menteri.\n(8) Menteri melakukan verifikasi terhadap hasil penilaian mandiri yang disampaikan oleh Penyelenggara Sistem Elektronik sebagaimana dimaksud pada ayat (7).\n(9) Berdasarkan verifikasi sebagaimana dimaksud pada ayat (8), Menteri menetapkan profil risiko Produk, Layanan, dan Fitur yang dikembangkan dan/atau diselenggarakan oleh Penyelenggara Sistem Elektronik. [cite: 93, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 113, 114, 115, 118, 120, 121, 122]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 6",
+    "tags": ["Tata Cara Penilaian Risiko", "Peraturan Menteri"],
+    "konten": "Ketentuan lebih lanjut mengenai tata cara penilaian tingkat risiko dan penilaian mandiri terhadap Produk, Layanan, dan Fitur sebagaimana dimaksud dalam Pasal 5 diatur dalam Peraturan Menteri. [cite: 123, 124]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 7",
+    "tags": ["Kewajiban Pelindungan", "Persetujuan Orang Tua", "Dampak Pelindungan Data", "Privasi Tinggi Baku", "Pemrofilan Anak", "Geolokasi"],
+    "konten": "(1) Dalam memberikan pelindungan Anak sebagaimana dimaksud dalam Pasal 2 ayat (1), ayat (2), dan ayat (3), Penyelenggara Sistem Elektronik melaksanakan kewajiban yang meliputi:\na. mendapatkan persetujuan dari orang tua atau wali Anak;\nb. menyusun Penilaian Dampak Pelindungan Data Pribadi;\nc. mengonfigurasi pengaturan Produk, Layanan, dan Fitur yang secara khusus dirancang untuk digunakan atau diakses oleh Anak atau yang mungkin digunakan atau diakses oleh Anak dalam tingkat privasi tinggi secara baku;\nd. memberikan informasi yang lengkap, benar, akurat, dan tidak menyesatkan bagi pengguna untuk memahami Produk, Layanan, dan Fitur;\ne. melakukan edukasi dan pemberdayaan ekosistem digital;\nf. memberikan notifikasi berupa tanda atau sinyal dalam pemantauan aktivitas atau pelacakan lokasi Anak dari Produk, Layanan, dan Fitur;\ng. memberikan pilihan fungsi yang sesuai dengan kapasitas dan usia Anak;\nh. menentukan secara tegas pihak yang bertanggung jawab atas pemrosesan Data Pribadi Anak dalam penyediaan mainan atau perangkat yang memungkinkan mainan atau perangkat tersebut terhubung dengan internet;\ni. memastikan bahwa pihak yang ditunjuk atau bekerja sama dengan Penyelenggara Sistem Elektronik memenuhi ketentuan pelindungan Anak; dan\nj. menunjuk pejabat atau petugas yang melaksanakan fungsi pelindungan Data Pribadi.\n(2) Dalam memberikan pelindungan Anak sebagaimana dimaksud dalam Pasal 2 ayat (1), ayat (2), dan ayat (3), Penyelenggara Sistem Elektronik dilarang:\na. menggunakan atau menerapkan cara, teknik, atau praktik terselubung atau tidak transparan dalam pengembangan atau penyelenggaraan Produk, Layanan, dan Fitur;\nb. mengumpulkan informasi geolokasi yang tepat dari Anak; dan\nc. melakukan pemrofilan Anak.\n(3) Penyusunan Penilaian Dampak Pelindungan Data Pribadi sebagaimana dimaksud pada ayat (1) huruf b dan penunjukan pejabat atau petugas yang melaksanakan fungsi pelindungan Data Pribadi sebagaimana dimaksud pada ayat (1) huruf j, dilaksanakan sesuai dengan ketentuan peraturan perundang-undangan. [cite: 125, 126, 127, 128, 129, 134, 135, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 8",
+    "tags": ["Kepentingan Terbaik Anak", "Pemenuhan Hak Anak"],
+    "konten": "Dalam melaksanakan pelindungan sebagaimana dimaksud dalam Pasal 2, Penyelenggara Sistem Elektronik:\na. mempertimbangkan kepentingan terbaik bagi Anak dalam mengembangkan dan/atau menyelenggarakan Produk, Layanan, dan Fitur yang secara khusus dirancang untuk digunakan atau diakses oleh Anak, atau yang mungkin digunakan atau diakses oleh Anak; dan\nb. memprioritaskan pemenuhan hak Anak dan pelindungan terhadap Anak dibandingkan dengan kepentingan komersial Penyelenggara Sistem Elektronik. [cite: 147, 148, 149, 155]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 9",
+    "tags": ["Persetujuan Orang Tua", "Batas Usia 17 Tahun", "Penolakan Persetujuan", "Penghapusan Data Anak"],
+    "konten": "(1) Penyelenggara Sistem Elektronik wajib mendapatkan persetujuan dari orang tua atau wali Anak sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf a, sebelum Anak dapat menggunakan Produk, Layanan, dan Fitur.\n(2) Dalam hal Penyelenggara Sistem Elektronik menyelenggarakan Produk, Layanan, dan Fitur untuk Anak berusia paling rendah 17 (tujuh belas) tahun, Penyelenggara Sistem Elektronik dapat meminta persetujuan dari Anak sebelum Anak dapat menggunakan Produk, Layanan, dan Fitur tersebut, dengan wajib memberi notifikasi kepada orang tua atau wali Anak untuk meminta konfirmasi.\n(3) Penyelenggara Sistem Elektronik memberikan jangka waktu yang wajar untuk permintaan persetujuan sebagaimana dimaksud pada ayat (1) dan notifikasi sebagaimana dimaksud pada ayat (2).\n(4) Dalam hal orang tua atau wali Anak menolak memberikan persetujuan sebagaimana dimaksud pada ayat (3), Penyelenggara Sistem Elektronik dilarang menyediakan Produk, Layanan, dan Fitur kepada Anak.\n(5) Dalam hal orang tua atau wali Anak menolak memberikan persetujuan sebagaimana dimaksud pada ayat (4), maka:\na. persetujuan yang diberikan Anak batal demi hukum; dan\nb. Penyelenggara Sistem Elektronik wajib menghapus Data Pribadi Anak. [cite: 157, 159, 160, 161, 164, 165, 166, 167, 168]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 10",
+    "tags": ["Pengaturan Privasi Tinggi", "Konfigurasi Baku", "Pembaruan Fitur"],
+    "konten": "(1) Penyelenggara Sistem Elektronik wajib mengonfigurasi pengaturan Produk, Layanan, dan Fitur yang secara khusus dirancang untuk digunakan atau diakses oleh Anak atau yang mungkin digunakan atau diakses oleh Anak dalam tingkat privasi tinggi secara baku sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf c.\n(2) Penyelenggara Sistem Elektronik dapat memberikan pilihan untuk mengatur tingkat privasi sebagaimana dimaksud pada ayat (1) secara permanen atau sementara sesuai dengan Penilaian Dampak Pelindungan Data Pribadi.\n(3) Dalam hal Penyelenggara Sistem Elektronik akan melakukan pembaruan terhadap Produk, Layanan, dan Fitur, Penyelenggara Sistem Elektronik wajib:\na. mempertahankan pilihan pengaturan privasi yang telah Anak lakukan sebelum Produk, Layanan, dan Fitur diperbarui; atau\nb. mengonfigurasi pengaturan Produk, Layanan, dan Fitur yang dimaksud ke dalam tingkat privasi tinggi secara baku. [cite: 169, 170, 175, 176, 177, 178]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 11",
+    "tags": ["Informasi Akurat", "Bahasa Mudah Dipahami"],
+    "konten": "Penyelenggara Sistem Elektronik wajib memberikan informasi yang lengkap, benar, akurat, dan tidak menyesatkan bagi pengguna untuk memahami Produk, Layanan, dan Fitur sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf d yang dikembangkan dan/atau diselenggarakan oleh Penyelenggara Sistem Elektronik dengan bahasa yang mudah dipahami serta dalam format dan dengan cara yang mudah digunakan atau diakses oleh Anak atau orang tua atau wali Anak. [cite: 179, 180]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 12",
+    "tags": ["Edukasi", "Pemberdayaan Ekosistem Digital", "Literasi Digital", "Laporan Edukasi"],
+    "konten": "(1) Penyelenggara Sistem Elektronik wajib melakukan edukasi dan pemberdayaan ekosistem digital sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf e dalam rangka pelindungan dan pemenuhan hak Anak.\n(2) Edukasi sebagaimana dimaksud pada ayat (1) dilaksanakan kepada Anak dan orang tua atau wali Anak yang menggunakan atau mengakses Produk, Layanan, dan Fitur yang dikembangkan dan/atau diselenggarakan oleh Penyelenggara Sistem Elektronik.\n(3) Pemberdayaan ekosistem digital dilakukan oleh Penyelenggara Sistem Elektronik lingkup privat sebagaimana dimaksud pada ayat (1) dilaksanakan melalui:\na. peningkatan literasi digital kepada masyarakat;\nb. peningkatan kompetensi karyawan terkait pelindungan anak; dan/atau\nc. pengembangan sarana dan prasarana yang mendukung literasi digital Anak dan/atau masyarakat, sesuai dengan profil risiko sebagaimana dimaksud dalam Pasal 5 ayat (9).\n(4) Edukasi dan pemberdayaan ekosistem digital sebagaimana dimaksud pada ayat (2) dan ayat (3) dapat melibatkan masyarakat dan/atau pihak lain.\n(5) Penyelenggara Sistem Elektronik wajib melaporkan pelaksanaan edukasi dan pemberdayaan ekosistem digital sebagaimana dimaksud pada ayat (1) secara berkala paling sedikit 1 (satu) kali dalam 1 (satu) tahun kepada Menteri.\n(6) Menteri melakukan evaluasi terhadap laporan pelaksanaan edukasi dan pemberdayaan ekosistem digital sebagaimana dimaksud pada ayat (5). [cite: 183, 184, 185, 186, 187, 188, 191, 197, 198, 199, 200]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 13",
+    "tags": ["Notifikasi Pelacakan Anak", "Pemantauan Aktivitas"],
+    "konten": "Dalam hal Penyelenggara Sistem Elektronik menyediakan Produk, Layanan, dan Fitur bagi orang tua atau wali Anak, atau pengguna lain untuk memantau aktivitas Anak, atau melacak lokasi Anak, Penyelenggara Sistem Elektronik wajib memberikan notifikasi berupa tanda atau sinyal sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf f yang jelas kepada Anak ketika Anak tersebut sedang dipantau atau dilacak. [cite: 201, 202]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 14",
+    "tags": ["Fungsi Sesuai Kapasitas Anak"],
+    "konten": "Penyelenggara Sistem Elektronik wajib memberikan pilihan fungsi yang sesuai dengan kapasitas dan usia Anak sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf g yang menggunakan atau mengakses Produk, Layanan, dan Fitur. [cite: 203, 204]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 15",
+    "tags": ["Mainan Terhubung Internet", "Internet of Things", "Tanggung Jawab Pemrosesan Data"],
+    "konten": "Dalam hal Penyelenggara Sistem Elektronik menyediakan mainan atau perangkat yang memungkinkan mainan atau perangkat tersebut terhubung dengan internet untuk memproses Data Pribadi Anak, Penyelenggara Sistem Elektronik tersebut wajib menentukan secara tegas pihak yang bertanggung jawab atas pemrosesan Data Pribadi Anak sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf h sesuai dengan ruang lingkup tanggung jawabnya. [cite: 205, 206]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 16",
+    "tags": ["Pihak Ketiga", "Kerja Sama PSE"],
+    "konten": "Dalam hal Penyelenggara Sistem Elektronik menunjuk atau bekerja sama dengan pihak lain untuk mengembangkan atau menyelenggarakan Produk, Layanan, dan Fitur, Penyelenggara Sistem Elektronik wajib memastikan bahwa pihak yang ditunjuk atau bekerja sama dengan Penyelenggara Sistem Elektronik memenuhi ketentuan pelindungan Anak sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf i dalam penyelenggaraan Produk, Layanan, dan Fitur. [cite: 210, 211]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 17",
+    "tags": ["Larangan Praktik Terselubung", "Dark Patterns", "Manipulasi Pengungkapan Data"],
+    "konten": "Penyelenggara Sistem Elektronik dilarang menggunakan atau menerapkan cara, teknik, atau praktik terselubung atau tidak transparan dalam pengembangan atau penyelenggaraan Produk, Layanan, dan Fitur sebagaimana dimaksud dalam Pasal 7 ayat (2) huruf a yang mendorong Anak untuk:\na. memberikan atau mengungkapkan Data Pribadi lebih dari yang diperlukan Anak dalam menggunakan mengakses Produk, Layanan, dan Fitur; atau\nb. melepaskan atau mengurangi fungsi pelindungan privasi; atau\nc. melakukan tindakan yang diketahui atau sepatutnya diketahui oleh Penyelenggara Sistem Elektronik yang dapat menimbulkan bahaya bagi kesehatan fisik, kesehatan mental, atau kesejahteraan Anak. [cite: 212, 213, 214, 216, 218]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 18",
+    "tags": ["Larangan Pengumpulan Geolokasi", "Pelacakan Lokasi Baku"],
+    "konten": "Penyelenggara Sistem Elektronik dilarang mengumpulkan informasi geolokasi yang tepat dari Anak sebagaimana dimaksud dalam Pasal 7 ayat (2) huruf b meliputi:\na. pengumpulan informasi geolokasi yang tepat dari Anak secara baku, kecuali pengumpulan informasi geolokasi tersebut sangat diperlukan oleh Penyelenggara Sistem Elektronik untuk menyediakan Produk, Layanan, dan Fitur yang diminta oleh Anak, dan hanya untuk waktu terbatas; dan/atau\nb. pengumpulan informasi geolokasi yang tepat dari Anak yang menggunakan atau mengakses Produk, Layanan, dan Fitur, tanpa memberikan tanda yang jelas kepada Anak tersebut selama pengumpulan bahwa informasi geolokasi yang dimaksud sedang dikumpulkan. [cite: 219, 220, 221, 223]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 19",
+    "tags": ["Larangan Pemrofilan Anak", "Pengecualian Pemrofilan"],
+    "konten": "(1) Penyelenggara Sistem Elektronik dilarang melakukan pemrofilan Anak sebagaimana dimaksud dalam Pasal 7 ayat (2) huruf c meliputi:\na. pemrofilan dengan cara atau metode apapun, seperti untuk tujuan penawaran produk atau layanan atau tujuan lain; atau\nb. pemrofilan Anak secara baku (default) dengan cara atau metode apapun.\n(2) Larangan sebagaimana dimaksud pada ayat (1) huruf a dikecualikan dalam hal Penyelenggara Sistem Elektronik dapat menunjukkan alasan kuat bahwa pemrofilan tersebut untuk kepentingan terbaik bagi Anak.\n(3) Larangan sebagaimana dimaksud pada ayat (1) huruf b dikecualikan dalam hal:\na. Penyelenggara Sistem Elektronik dapat menunjukkan alasan kuat bahwa pemrofilan tersebut untuk kepentingan terbaik bagi Anak; atau\nb. pemrofilan merupakan bagian esensi atau inti dalam penyediaan Produk, Layanan dan merupakan fitur yang diminta oleh Anak secara aktif dan sadar.\n(4) Pemrofilan Anak sebagaimana dimaksud pada ayat (1) merupakan pemrosesan Data Pribadi Anak dalam berbagai bentuk dan cara untuk mengidentifikasi, mengevaluasi, atau memprediksi berbagai aspek tentang Anak.\n(5) Dalam hal pemrofilan dilakukan berdasarkan permintaan Anak sebagaimana dimaksud pada ayat (3) huruf b, Penyelenggara Sistem Elektronik menjamin tersedianya teknologi serta berfungsinya secara efektif langkah teknis dan operasional untuk melindungi Anak dari setiap dampak bahaya bagi Anak. [cite: 228, 229, 234, 235, 236, 237, 238, 239, 240, 241]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 20",
+    "tags": ["Batasan Minimum Usia", "Pengelompokan Usia Anak"],
+    "konten": "(1) Dalam melaksanakan kewajiban menyediakan informasi mengenai batasan minimum usia Anak yang dapat menggunakan produk atau layanannya sebagaimana dimaksud dalam Pasal 2 ayat (4) huruf a, Penyelenggara Sistem Elektronik menyediakan informasi mengenai batasan minimum usia Anak yang dapat menggunakan Produk, Layanan, dan Fitur.\n(2) Batasan minimum usia Anak sebagaimana dimaksud pada ayat (1) berusia paling rendah 3 (tiga) tahun dengan pengelompokan rentang usia Anak yang meliputi:\na. usia 3 (tiga) hingga 5 (lima) tahun;\nb. usia 6 (enam) hingga 9 (sembilan) tahun;\nc. usia 10 (sepuluh) hingga 12 (dua belas) tahun;\nd. usia 13 (tiga belas) hingga 15 (lima belas) tahun; dan\ne. usia 16 (enam belas) hingga belum berusia 18 (delapan belas) tahun.\n(3) Dalam penyediaan informasi mengenai batasan minimum usia Anak dan rentang usia Anak yang dapat menggunakan produk atau layanannya sebagaimana dimaksud pada ayat (1) dan ayat (2), Penyelenggara Sistem Elektronik wajib memastikan bahwa Produk, Layanan, dan Fitur yang dikembangkan dan/atau diselenggarakannya sesuai dengan batasan minimum usia Anak dan rentang usia Anak yang menggunakan atau mengakses, atau yang mungkin menggunakan atau mengakses Produk, Layanan, dan Fitur tersebut.\n(4) Dalam memastikan pelaksanaan kewajiban sebagaimana dimaksud pada ayat (1), Penyelenggara Sistem Elektronik mempertimbangkan kebutuhan Anak yang disesuaikan dengan tahapan tumbuh kembang berdasarkan batasan minimum usia Anak dan rentang usia Anak sebagaimana dimaksud pada ayat (2).\n(5) Ketentuan lebih lanjut mengenai batasan minimum usia Anak dan rentang usia Anak sebagaimana dimaksud pada ayat (2) diatur dalam Peraturan Menteri. [cite: 242, 243, 244, 251, 253, 255, 258, 259, 260, 261]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 21",
+    "tags": ["Kepemilikan Akun Anak", "Pengawasan Akun Anak"],
+    "konten": "(1) Penyelenggara Sistem Elektronik yang mengharuskan atau mensyaratkan mendaftar atau memiliki akun untuk menggunakan atau mengakses Produk, Layanan, dan Fitur wajib mengikuti batasan minimum usia Anak sesuai ketentuan sebagai berikut:\na. Anak berusia di bawah 13 (tiga belas) tahun sebagaimana dimaksud dalam Pasal 20 ayat (2) huruf a, huruf b, dan huruf c dapat memiliki akun pada Produk, Layanan, dan Fitur yang secara khusus dirancang untuk digunakan atau diakses oleh Anak dan memiliki profil risiko rendah dengan persetujuan orang tua.\nb. Anak berusia 13 (tiga belas) tahun hingga belum berusia 16 (enam belas) tahun sebagaimana dimaksud dalam Pasal 20 ayat (2) huruf d dapat memiliki akun hanya pada Produk, Layanan, dan Fitur yang memiliki profil risiko rendah dengan persetujuan orang tua.\nc. Anak berusia 16 (enam belas) tahun hingga belum berusia 18 (delapan belas) tahun sebagaimana dimaksud dalam Pasal 20 ayat (2) huruf e dapat memiliki akun untuk Produk, Layanan, dan Fitur dengan persetujuan orang tua.\n(2) Penyelenggara Sistem Elektronik wajib menjamin tersedianya teknologi serta berfungsinya secara efektif langkah teknis dan operasional bagi orang tua untuk dapat melakukan pengawasan terhadap penggunaan Produk, Layanan, dan Fitur melalui akun Anak. [cite: 262, 263, 264, 265, 270, 271]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 22",
+    "tags": ["Mekanisme Verifikasi Usia", "Pembersihan Data Verifikasi"],
+    "konten": "(1) Dalam melaksanakan kewajiban menyediakan mekanisme verifikasi pengguna Anak sebagaimana dimaksud dalam Pasal 2 ayat (4) huruf b, Penyelenggara Sistem Elektronik menerapkan langkah teknis dan operasional untuk melakukan verifikasi usia Anak yang menggunakan atau mengakses Produk, Layanan, dan Fitur sesuai dengan batasan minimum usia Anak dan rentang usia Anak sebagaimana dimaksud dalam Pasal 20 dan Pasal 21.\n(2) Tingkat jaminan kepastian verifikasi usia Anak sebagaimana dimaksud pada ayat (1) disesuaikan dengan risiko terhadap hak Anak yang mungkin muncul dari penyelenggaraan Produk, Layanan, dan Fitur.\n(3) Dalam melakukan verifikasi usia Anak sebagaimana dimaksud pada ayat (1), Penyelenggara Sistem Elektronik wajib:\na. melindungi privasi dan Data Pribadi para pengguna khususnya Anak yang menggunakan atau mengakses Produk, Layanan, dan Fitur sesuai dengan ketentuan peraturan perundang-undangan;\nb. menyepadankan mekanisme verifikasi usia Anak dengan risiko yang muncul dari penyelenggaraan Produk, Layanan, dan Fitur;\nc. menyesuaikan mekanisme verifikasi usia Anak dengan batasan minimum usia Anak dan rentang usia Anak sebagaimana dimaksud dalam Pasal 20 dan Pasal 21;\nd. mengamankan Sistem Elektronik dan mencegah pengungkapan secara tidak sah atau pelanggaran keamanan Data Pribadi;\ne. memproses data yang dikumpulkan hanya untuk kepentingan verifikasi usia Anak sebagaimana dimaksud pada ayat (1) dan tidak untuk kepentingan lain;\nf. menghapus data yang digunakan untuk verifikasi setelah tujuan verifikasi usia Anak terpenuhi, kecuali penyimpanan data dimungkinkan berdasarkan ketentuan peraturan perundang-undangan;\ng. memberikan mekanisme dan pemulihan yang layak bagi para pengguna untuk mengajukan keberatan atau mengubah keputusan Penyelenggara Sistem Elektronik dalam hal usia aktual pengguna tidak sesuai dengan usia yang diidentifikasi; dan\nh. mudah dihubungi dan inklusif bagi pengguna dengan karakteristik terlindungi.\n(4) Dalam hal Penyelenggara Sistem Elektronik tidak dapat melakukan verifikasi usia Anak sebagaimana dimaksud pada ayat (1) sesuai dengan persyaratan sebagaimana dimaksud pada ayat (3), Penyelenggara Sistem Elektronik wajib menerapkan langkah teknis operasional untuk memberikan pelindungan terhadap privasi dan Data Pribadi yang diberikan kepada Anak terhadap semua pengguna Produk, Layanan, dan Fitur. [cite: 272, 273, 274, 276, 277, 278, 279, 280, 285, 286, 287, 289, 290]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB II PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Kewajiban Penyelenggara Sistem Elektronik",
+    "pasal": "Pasal 23",
+    "tags": ["Mekanisme Pelaporan Penyalahgunaan", "Tindak Lanjut Laporan"],
+    "konten": "(1) Dalam melaksanakan kewajiban menyediakan mekanisme pelaporan penyalahgunaan Produk, Layanan, dan Fitur yang melanggar atau berpotensi melanggar hak Anak sebagaimana dimaksud dalam Pasal 2 ayat (4) huruf c, Penyelenggara Sistem Elektronik wajib menyediakan alat, layanan, atau fitur yang dibutuhkan Anak yang dapat dengan mudah digunakan atau diakses oleh Anak atau oleh orang tua atau wali Anak tersebut untuk menolong Anak melaksanakan hak Anak, atau menyampaikan laporan atau aduan mengenai permasalahan yang dialami Anak terkait Produk, Layanan, dan Fitur.\n(2) Penyelenggara Sistem Elektronik wajib memiliki dan menerapkan langkah teknis operasional dalam menindaklanjuti laporan atau aduan sebagaimana dimaksud pada ayat (1). [cite: 291, 292, 293]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 24",
+    "tags": ["Kewenangan Pengawasan", "Kewenangan Menteri"],
+    "konten": "(1) Pengawasan pelaksanaan tata kelola Penyelenggaraan Sistem Elektronik dalam pelindungan Anak sebagaimana dimaksud dalam Peraturan Pemerintah ini dilaksanakan oleh Menteri.\n(2) Dalam melakukan pengawasan sebagaimana dimaksud pada ayat (1), Menteri berwenang:\na. melakukan pemantauan dan/atau penelusuran terhadap pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nb. menerima laporan atau aduan terkait dugaan pelanggaran kewajiban pelindungan Anak yang dilakukan oleh Penyelenggara Sistem Elektronik dalam Penyelenggaraan Sistem Elektronik;\nc. melakukan pemeriksaan untuk menindaklanjuti pemantauan dan/atau penelusuran sebagaimana dimaksud dalam huruf a dan/atau laporan atau aduan sebagaimana dimaksud dalam huruf b; dan\nd. melakukan pengendalian berdasarkan hasil pemeriksaan sebagaimana dimaksud dalam huruf c. [cite: 298, 299, 301, 303, 304, 306, 307, 308, 309, 311]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 25",
+    "tags": ["Penyerahan Data", "Perlindungan Informasi Pemeriksaan"],
+    "konten": "(1) Keterangan, data, informasi, dan/atau dokumen yang disediakan dan/atau diserahkan oleh Penyelenggara Sistem Elektronik untuk kepentingan pelaksanaan pengawasan sebagaimana dimaksud dalam Pasal 24.\n(2) Perlindungan terhadap keterangan, data, informasi, dan/atau dokumen sebagaimana dimaksud pada ayat (1) dilaksanakan sesuai dengan ketentuan peraturan perundang-undangan. [cite: 314, 315, 316]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kesatu Umum",
+    "pasal": "Pasal 26",
+    "tags": ["Tahapan Penanganan Pelanggaran", "Sanksi Administratif Pengawasan"],
+    "konten": "(1) Penanganan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik dilaksanakan dengan tahapan sebagai berikut:\na. temuan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik; dan\nb. pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik.\n(2) Temuan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik sebagaimana dimaksud pada ayat (1) huruf a dapat berasal dari:\na. hasil pemantauan dan/atau penelusuran sebagaimana dimaksud dalam Pasal 24 ayat (2) huruf a; dan/atau\nb. laporan atau aduan sebagaimana dimaksud dalam Pasal 24 ayat (2) huruf b.\n(3) Pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik sebagaimana dimaksud pada ayat (1) huruf b didasarkan pada temuan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik sebagaimana dimaksud pada ayat (2).\n(4) Pengenaan sanksi administratif didasarkan pada hasil pemeriksaan sebagaimana dimaksud pada ayat (1) huruf b. [cite: 317, 318, 324, 325, 326, 327, 328, 329, 330]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kedua Pemantauan dan/atau Penelusuran",
+    "pasal": "Pasal 27",
+    "tags": ["Tata Cara Pemantauan", "Berbagi Informasi", "Peringatan PSE"],
+    "konten": "(1) Pemantauan dan/atau penelusuran sebagaimana dimaksud dalam Pasal 26 ayat (2) huruf a dilakukan melalui:\na. pemantauan aktivitas transaksi elektronik Penyelenggara Sistem Elektronik dalam mematuhi kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik;\nb. penelusuran Orang terkait dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik;\nc. pengumpulan dan permintaan keterangan, data, informasi, dan/atau dokumen terkait pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik;\nd. tindakan berbagi informasi dengan kementerian/lembaga dan/atau institusi penegak hukum terkait pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik; dan\ne. pemberian peringatan kepada Penyelenggara Sistem Elektronik mengenai praktik penyelenggaraan Produk, Layanan, dan Fitur yang dinilai berpotensi melanggar hak Anak.\n(2) Ketentuan lebih lanjut mengenai tata cara pemantauan dan/atau penelusuran sebagaimana dimaksud pada ayat (1) diatur dalam Peraturan Menteri. [cite: 331, 332, 333, 336, 337, 338, 339, 345, 346, 347]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Ketiga Laporan atau Aduan",
+    "pasal": "Pasal 28",
+    "tags": ["Tata Cara Pelaporan", "Pihak Pelapor", "Lampiran Bukti Aduan"],
+    "konten": "(1) Laporan atau aduan sebagaimana dimaksud dalam Pasal 26 ayat (2) huruf b disampaikan kepada Menteri secara tertulis atau elektronik.\n(2) Laporan sebagaimana dimaksud pada ayat (1) disampaikan oleh Orang, Badan Publik, atau pihak yang mengetahui tindakan atau perbuatan Penyelenggara Sistem Elektronik diduga telah, sedang, atau akan melanggar kewajiban berdasarkan ketentuan dalam Peraturan Pemerintah ini.\n(3) Aduan sebagaimana dimaksud pada ayat (1) disampaikan oleh seseorang atau pihak yang merasa mengalami kerugian akibat tindakan atau perbuatan Penyelenggara Sistem Elektronik yang diduga melanggar kewajiban berdasarkan ketentuan dalam Peraturan Pemerintah ini.\n(4) Laporan atau aduan sebagaimana dimaksud pada ayat (1) disampaikan dengan melampirkan dokumen dan informasi lengkap dan benar terkait:\na. identitas seseorang atau pihak yang mengajukan laporan atau aduan;\nb. identitas Penyelenggara Sistem Elektronik;\nc. dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan; dan\nd. keterangan dan/atau bukti yang memuat fakta, data, atau petunjuk terjadinya pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik.\n(5) Kementerian memberikan tanda bukti penerimaan laporan atau aduan kepada seseorang atau pihak yang mengajukan laporan atau aduan. [cite: 351, 352, 353, 354, 355, 356, 357, 359, 362, 367]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Keempat Pemeriksaan Pendahuluan",
+    "pasal": "Pasal 29",
+    "tags": ["Jangka Waktu Pemeriksaan", "Klarifikasi Aduan", "Penghentian Pemeriksaan"],
+    "konten": "(1) Kementerian melakukan pemeriksaan pendahuluan terhadap dokumen pelaporan atau pengaduan sebagaimana dimaksud dalam Pasal 28 ayat (4) paling lama 3 (tiga) hari kerja sejak diterimanya laporan atau aduan.\n(2) Kementerian menentukan jangka waktu penyelesaian pemeriksaan pendahuluan berdasarkan:\na. tingkat kesulitan penanganan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nb. jumlah Anak yang terkena dampak atau mungkin terdampak akibat insiden dari dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik; dan/atau\nc. kelengkapan dokumen dan informasi sebagaimana dimaksud dalam Pasal 28 ayat (4).\n(3) Dalam hal Kementerian menyimpulkan berdasarkan hasil pemeriksaan pendahuluan terdapat kekurangan dokumen dan/atau informasi sebagaimana dimaksud dalam Pasal 28 ayat (4), Kementerian memberitahukan secara tertulis atau elektronik kepada Orang, Badan Publik, atau pihak yang menyampaikan laporan atau seseorang atau pihak yang menyampaikan aduan untuk melengkapi dokumen dan/atau informasi yang dimaksud.\n(4) Dalam hal Kementerian menyimpulkan berdasarkan hasil pemeriksaan pendahuluan memerlukan klarifikasi, validasi, atau penjelasan mengenai dokumen dan/atau informasi sebagaimana dimaksud dalam Pasal 28 ayat (4), Kementerian berwenang memanggil Orang, Badan Publik, atau pihak yang menyampaikan laporan atau seseorang atau pihak yang menyampaikan aduan untuk mendapatkan keterangan, data, informasi, dan/atau dokumen yang diperlukan.\n(5) Pemeriksaan sebagaimana dimaksud pada ayat (4) dituangkan dalam berita acara pemeriksaan pendahuluan.\n(6) Dalam hal Kementerian menyimpulkan berdasarkan hasil pemeriksaan pendahuluan yang dituangkan dalam bentuk berita acara pemeriksaan pendahuluan, terdapat cukup informasi untuk menindaklanjuti laporan atau aduan, Kementerian melakukan pemeriksaan lanjutan.\n(7) Dalam hal Kementerian menyimpulkan berdasarkan hasil pemeriksaan pendahuluan tidak terdapat cukup informasi untuk menindaklanjuti laporan atau aduan, Kementerian berwenang menghentikan pemeriksaan dan menyampaikan pemberitahuan secara tertulis atau elektronik kepada Orang, Badan Publik, atau pihak yang menyampaikan laporan atau seseorang atau pihak yang menyampaikan aduan.\n(8) Dalam hal Kementerian menyimpulkan berdasarkan hasil pemeriksaan pendahuluan Kementerian tidak berwenang menindaklanjuti laporan atau aduan, Kementerian menyampaikan pemberitahuan secara tertulis atau elektronik hal yang dimaksud kepada Orang, Badan Publik, atau pihak yang menyampaikan laporan atau seseorang atau pihak yang menyampaikan aduan.\n(9) Dalam menyelesaikan pemeriksaan pendahuluan, Kementerian dapat:\na. berkoordinasi dengan kementerian/lembaga dan/atau institusi penegak hukum yang berkaitan dengan objek pemeriksaan; dan/atau\nb. meminta pendapat ahli yang relevan dengan pemeriksaan pendahuluan.\n(10) Ketentuan lebih lanjut mengenai tata cara pemeriksaan pendahuluan diatur dalam Peraturan Menteri. [cite: 368, 369, 370, 371, 372, 373, 375, 376, 377, 382, 385, 386, 387, 390, 391, 392]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kelima Pemeriksaan Lanjutan",
+    "pasal": "Pasal 30",
+    "tags": ["Prosedur Pemeriksaan Lanjutan", "Pemanggilan Ahli", "Akses Data Sistem Elektronik"],
+    "konten": "(1) Kementerian melakukan pemeriksaan lanjutan terhadap dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik berdasarkan hasil pemantauan dan/atau penelusuran sebagaimana dimaksud dalam Pasal 27 ayat (1) dan hasil pemeriksaan pendahuluan sebagaimana dimaksud dalam Pasal 29 ayat (6).\n(2) Dalam rangka melakukan pemeriksaan lanjutan sebagaimana dimaksud pada ayat (1), Kementerian melaksanakan:\na. pemanggilan dan menghadirkan setiap Penyelenggara Sistem Elektronik, Orang, dan/atau Badan Publik yang terkait dengan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nb. permintaan keterangan, data, informasi, dan/atau dokumen dari setiap Penyelenggara Sistem Elektronik, Orang dan/atau Badan Publik terkait dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nc. pemanggilan dan menghadirkan ahli yang diperlukan untuk dimintakan keterangan atau keahliannya dalam penanganan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nd. pemeriksaan terhadap Sistem Elektronik, sarana, ruang, dan/atau tempat yang digunakan Penyelenggara Sistem Elektronik, termasuk memperoleh akses terhadap data dalam penanganan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik dan/atau menunjuk pihak ketiga;\ne. pemberian perintah kepada Penyelenggara Sistem Elektronik dalam rangka tindak lanjut hasil pemeriksaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik;\nf. penilaian terhadap kepatuhan pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik sebagaimana dimaksud dalam Peraturan Pemerintah ini;\ng. pelaporan dugaan tindak pidana yang diketahui atau ditemukan berdasarkan hasil pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik kepada aparat penegak hukum; dan\nh. berbagi informasi dengan kementerian/lembaga dan/atau institusi penegak hukum terkait pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik. [cite: 393, 394, 395, 401, 403, 404, 405, 407, 408, 409, 410, 416]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kelima Pemeriksaan Lanjutan",
+    "pasal": "Pasal 31",
+    "tags": ["Tata Cara Pemanggilan PSE", "Alamat Kedudukan Hukum Resmi"],
+    "konten": "(1) Kementerian melakukan pemanggilan kepada Penyelenggara Sistem Elektronik yang diduga melakukan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik melalui pemberitahuan secara tertulis atau elektronik.\n(2) Pemberitahuan secara tertulis sebagaimana dimaksud pada ayat (1) disampaikan melalui alamat kedudukan hukum yang telah terdaftar secara resmi pada Kementerian.\n(3) Pemberitahuan secara elektronik sebagaimana dimaksud pada ayat (1) disampaikan melalui surat elektronik yang terdaftar secara resmi pada Kementerian dan/atau media elektronik lainnya yang ditentukan oleh Kementerian.\n(4) Dalam hal alamat kedudukan hukum atau alamat surat elektronik Penyelenggara Sistem Elektronik tidak terdaftar secara resmi di Kementerian atau telah berubah tanpa pemberitahuan resmi kepada Kementerian, Kementerian mengumumkan dalam situs resmi Kementerian dan dianggap sebagai surat pemberitahuan. [cite: 417, 420, 421, 424, 425]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kelima Pemeriksaan Lanjutan",
+    "pasal": "Pasal 32",
+    "tags": ["Tujuan Pemanggilan", "Ketidakhadiran PSE", "Konsekuensi Sanksi"],
+    "konten": "(1) Pemanggilan kepada Penyelenggara Sistem Elektronik sebagaimana dimaksud dalam Pasal 31 pada ayat (1) dilakukan untuk:\na. menyampaikan adanya dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik;\nb. memberikan kesempatan kepada Penyelenggara Sistem Elektronik untuk memberikan keterangan, pembelaan diri, dan/atau pendapatnya; dan\nc. memberitahukan konsekuensi sanksi administratif yang dapat dikenakan atas pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik.\n(2) Pemanggilan terhadap Penyelenggara Sistem Elektronik yang diduga melakukan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik sebagaimana dimaksud pada ayat (1) dilakukan paling banyak 3 (tiga) kali.\n(3) Dalam hal Penyelenggara Sistem Elektronik tidak hadir setelah dipanggil sebagaimana dimaksud pada ayat (2), Penyelenggara Sistem Elektronik dikenakan sanksi administratif berdasarkan alat bukti dan keterangan yang ada tanpa dilakukan pemeriksaan terhadap Penyelenggara Sistem Elektronik. [cite: 426, 427, 428, 429, 430, 432, 437]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kelima Pemeriksaan Lanjutan",
+    "pasal": "Pasal 33",
+    "tags": ["Berita Acara Pemeriksaan Lanjutan"],
+    "konten": "(1) Pemeriksaan terhadap Penyelenggara Sistem Elektronik yang diduga melakukan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik dituangkan dalam berita acara pemeriksaan lanjutan.\n(2) Pemeriksaan terhadap Orang, Badan Publik, ahli, atau pihak lain yang memberikan keterangan yang dibutuhkan dalam pemeriksaan lanjutan dituangkan dalam berita acara pemeriksaan lanjutan. [cite: 438, 439, 440]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kelima Pemeriksaan Lanjutan",
+    "pasal": "Pasal 34",
+    "tags": ["Koordinasi Penegak Hukum"],
+    "konten": "Dalam melakukan pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik, Kementerian dapat berkoordinasi dengan kementerian/lembaga dan/atau institusi penegak hukum yang berkaitan dengan objek pemeriksaan. [cite: 441, 443]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kelima Pemeriksaan Lanjutan",
+    "pasal": "Pasal 35",
+    "tags": ["Informasi Akurat Pemeriksaan", "Penolakan Memberikan Data"],
+    "konten": "(1) Penyelenggara Sistem Elektronik harus memberikan atau menyerahkan keterangan, data, informasi, dan/atau dokumen yang benar, akurat, lengkap, dan tidak menyesatkan dalam pemeriksaan.\n(2) Dalam hal Penyelenggara Sistem Elektronik tidak dapat memberikan atau menyerahkan keterangan, data, informasi, dan/atau dokumen pada waktu pemeriksaan, Penyelenggara Sistem Elektronik memberikan atau menyerahkannya pada waktu yang ditentukan oleh Kementerian.\n(3) Dalam hal Penyelenggara Sistem Elektronik tidak memberikan, tidak menyerahkan, atau menolak untuk memberikan atau menyerahkan keterangan, data, informasi, dan/atau dokumen yang diperlukan untuk kepentingan pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik pada waktu yang ditentukan oleh Kementerian, Kementerian berwenang mengenakan sanksi administratif terhadap dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik berdasarkan alat bukti atau keterangan yang ada.\n(4) Pemberian atau penyerahan keterangan, data, informasi, dan/atau dokumen yang tidak benar, tidak akurat, tidak lengkap, atau menyesatkan dalam pemeriksaan merupakan dasar bagi Kementerian dalam menilai tingkat kepatuhan pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik dan/atau untuk mengenakan sanksi administratif yang lebih berat. [cite: 444, 445, 447, 452, 453]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Kelima Pemeriksaan Lanjutan",
+    "pasal": "Pasal 36",
+    "tags": ["Tata Cara Pemanggilan", "Peraturan Menteri"],
+    "konten": "Ketentuan lebih lanjut mengenai pemeriksaan lanjutan, pemanggilan Penyelenggara Sistem Elektronik, dan tata cara pemeriksaan sebagaimana dimaksud dalam Pasal 30 sampai dengan Pasal 35 diatur dalam Peraturan Menteri. [cite: 454, 455]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB III PENGAWASAN PENYELENGGARAAN SISTEM ELEKTRONIK DALAM PELINDUNGAN ANAK, Bagian Keenam Pengendalian",
+    "pasal": "Pasal 37",
+    "tags": ["Bentuk Pengendalian Pengawasan", "Publikasi Pelanggaran"],
+    "konten": "Pengendalian sebagaimana dimaksud dalam Pasal 24 ayat (2) huruf d dilakukan melalui:\na. pengenaan sanksi administratif atas pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nb. pemberian perintah kepada Penyelenggara Sistem Elektronik dalam rangka tindak lanjut hasil pemeriksaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nc. penilaian terhadap kepatuhan pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik;\nd. publikasi atas pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik dan hasil penilaian kepatuhan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik;\ne. pelaporan dugaan tindak pidana yang diketahui atau ditemukan berdasarkan hasil pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik kepada aparat penegak hukum yang dilakukan oleh Penyelenggara Sistem Elektronik; dan\nf. berbagi informasi dengan kementerian/lembaga dan/atau institusi penegak hukum dalam rangka kepatuhan pelaksanaan kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik. [cite: 456, 457, 458, 459, 460, 461, 466, 467, 469]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kesatu Sanksi Administratif",
+    "pasal": "Pasal 38",
+    "tags": ["Jenis Sanksi Administratif", "Denda Administratif", "Penghentian Sementara", "Pemutusan Akses", "Pengumuman Publik"],
+    "konten": "(1) Pelanggaran terhadap ketentuan Pasal 2, Pasal 5 ayat (6), Pasal 7 ayat (1) huruf a dan huruf c sampai dengan huruf i, Pasal 9 ayat (1), ayat (2), ayat (4), dan ayat (5) huruf b, Pasal 10 ayat (1) dan ayat (3), Pasal 11, Pasal 12 ayat (1) dan ayat (5), Pasal 13, Pasal 14, Pasal 15, Pasal 16, Pasal 17, Pasal 18, Pasal 19 ayat (1), Pasal 20 ayat (1) dan ayat (3), Pasal 21 ayat (1) dan ayat (2), Pasal 22 ayat (1), ayat (3), dan ayat (4), Pasal 23 ayat (1) dan ayat (2) dikenai sanksi administratif.\n(2) Sanksi administratif sebagaimana dimaksud pada ayat (1) dapat berupa:\na. teguran tertulis;\nb. denda administratif;\nc. penghentian sementara; dan/atau\nd. pemutusan akses.\n(3) Pelanggaran terhadap ketentuan sebagaimana dimaksud pada ayat (1) dapat dikenakan satu atau lebih sanksi administratif.\n(4) Menteri berwenang menginformasikan atau mengumumkan pengenaan sanksi administratif terhadap Penyelenggara Sistem Elektronik kepada masyarakat melalui situs resmi Kementerian. [cite: 470, 471, 472, 473, 474, 476, 478, 479, 480, 481, 482, 487]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kesatu Sanksi Administratif",
+    "pasal": "Pasal 39",
+    "tags": ["Sanksi Pelindungan Data Pribadi"],
+    "konten": "Jenis sanksi administratif serta tahapan pengenaan sanksi administratif terhadap pelanggaran sebagaimana dimaksud dalam Pasal 7 ayat (1) huruf b dan huruf j diatur dalam peraturan perundang-undangan di bidang pelindungan Data Pribadi. [cite: 488, 489]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kesatu Sanksi Administratif",
+    "pasal": "Pasal 40",
+    "tags": ["Pertimbangan Sanksi", "Kategori Pelanggaran Berat Ringan", "Mitigasi Risiko", "Sikap Kooperatif PSE"],
+    "konten": "(1) Sanksi administratif sebagaimana dimaksud dalam Pasal 38 ayat (2) dikenakan oleh Menteri.\n(2) Dalam pengenaan sanksi sebagaimana dimaksud pada ayat (1), Menteri mempertimbangkan:\na. kategori berat atau ringannya pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik;\nb. tindakan kooperatif Penyelenggara Sistem Elektronik dalam pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik; dan\nc. faktor lain yang memberatkan atau meringankan.\n(3) Kategori berat atau ringannya pelanggaran sebagaimana dimaksud pada ayat (2) huruf a diukur dengan mempertimbangkan:\na. jangka waktu atau lamanya pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik terjadi;\nb. jumlah Anak yang terkena dampak akibat pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik oleh Penyelenggara Sistem Elektronik; dan/atau\nc. dampak dari pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik terhadap Anak dan/atau hak Anak.\n(4) Tindakan kooperatif sebagaimana dimaksud pada ayat (2) huruf b diukur dengan mempertimbangkan:\na. pemberitahuan secara resmi dari Penyelenggara Sistem Elektronik mengenai pelanggaran terhadap kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektroniknya;\nb. Penyelenggara Sistem Elektronik memberikan atau menyerahkan keterangan, data, informasi, dan/atau dokumen yang benar, akurat, lengkap, dan tidak menyesatkan dalam pemeriksaan sebagaimana dimaksud dalam Pasal 35 ayat (1); dan\nc. kehadiran Penyelenggara Sistem Elektronik dalam pemeriksaan berdasarkan pemanggilan sebagaimana dimaksud dalam Pasal 32.\n(5) Faktor lain sebagaimana dimaksud pada ayat (2) huruf c diukur dengan mempertimbangkan:\na. tindakan Penyelenggara Sistem Elektronik dalam menangani dampak atau memitigasi risiko yang muncul akibat pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik, setelah pelanggaran tersebut diketahui oleh Penyelenggara Sistem Elektronik sebelum pelanggaran tersebut diperiksa oleh Menteri; dan\nb. riwayat pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan Penyelenggara Sistem Elektronik.\n(6) Dalam mempertimbangkan faktor sebagaimana dimaksud pada ayat (2) huruf a, huruf b, dan huruf c, Menteri dapat berkoordinasi dengan kementerian/lembaga terkait.\n(7) Pengenaan sanksi administratif sebagaimana dimaksud pada ayat (1) tidak menghapuskan tanggung jawab pidana dan/atau perdata. [cite: 492, 493, 494, 495, 496, 498, 499, 500, 501, 506, 507, 508, 511, 512, 515, 517, 518, 519]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kesatu Sanksi Administratif",
+    "pasal": "Pasal 41",
+    "tags": ["Teguran Tertulis", "Batas Waktu Teguran", "Tindakan Tertentu Sanksi"],
+    "konten": "(1) Menteri mengenakan sanksi administratif berupa teguran tertulis sebagaimana dimaksud dalam Pasal 38 ayat (2) huruf a dalam hal berdasarkan hasil pemeriksaan disimpulkan bahwa:\na. pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik masuk dalam kategori ringan berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (3);\nb. Penyelenggara Sistem Elektronik kooperatif dalam pemeriksaan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (4); dan\nc. faktor lain yang meringankan lebih banyak dibandingkan dengan faktor yang memberatkan berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (5).\n(2) Selain kewenangan sebagaimana dimaksud pada ayat (1), Menteri berwenang mengenakan sanksi administratif berupa teguran tertulis sebagaimana dimaksud dalam Pasal 38 ayat (2) huruf a yang berisi perintah kepada Penyelenggara Sistem Elektronik untuk melakukan tindakan tertentu dalam rangka memenuhi kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik.\n(3) Sanksi administratif berupa teguran tertulis dikenakan paling banyak 2 (dua) kali.\n(4) Dalam hal sanksi administratif berupa teguran tertulis dikenakan paling banyak 2 (dua) kali sebagaimana dimaksud pada ayat (3), jangka waktu antara teguran tertulis pertama dan teguran tertulis kedua adalah 7 (tujuh) hari kerja.\n(5) Dalam hal Menteri mengenakan sanksi administratif disertai dengan perintah kepada Penyelenggara Sistem Elektronik untuk melakukan tindakan tertentu dalam rangka memenuhi kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik, Menteri berwenang menentukan jangka waktu teguran tertulis pertama dan teguran tertulis kedua. [cite: 520, 521, 522, 527, 529, 530, 533, 534, 535]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kesatu Sanksi Administratif",
+    "pasal": "Pasal 42",
+    "tags": ["Denda Administratif", "Pengabaian Teguran", "PNBP"],
+    "konten": "(1) Menteri mengenakan sanksi administratif berupa denda administratif sebagaimana dimaksud dalam Pasal 38 ayat (2) huruf b dalam hal berdasarkan hasil pemeriksaan disimpulkan Penyelenggara Sistem Elektronik:\na. tidak memenuhi teguran tertulis kedua sebagaimana dimaksud dalam Pasal 41; atau\nb. memenuhi pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (2) yang meliputi: 1. pelanggaran yang dilakukan oleh Penyelenggara Sistem Elektronik masuk dalam kategori berat berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (3); 2. Penyelenggara Sistem Elektronik tidak kooperatif berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (4); dan/atau 3. faktor lain yang memberatkan lebih banyak dibandingkan dengan faktor yang meringankan berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (5).\n(2) Besaran denda administratif dan tata cara penghitungan denda administratif dilaksanakan sesuai dengan ketentuan peraturan perundang-undangan di bidang penerimaan negara bukan pajak.\n(3) Dalam pengenaan sanksi administratif berupa denda administratif sebagaimana dimaksud dalam Pasal 38 ayat (2) huruf b, Menteri berwenang memberikan perintah kepada Penyelenggara Sistem Elektronik untuk melakukan tindakan tertentu dalam rangka memenuhi kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik. [cite: 536, 537, 538, 540, 547, 550, 551, 552, 553]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kesatu Sanksi Administratif",
+    "pasal": "Pasal 43",
+    "tags": ["Penghentian Sementara Produk Layanan"],
+    "konten": "(1) Menteri mengenakan sanksi administratif berupa penghentian sementara sebagaimana dimaksud dalam Pasal 38 ayat (2) huruf c dalam hal berdasarkan hasil pemeriksaan disimpulkan Penyelenggara Sistem Elektronik:\na. tidak memenuhi kewajiban denda administratif sebagaimana dimaksud dalam Pasal 42; dan/atau\nb. memenuhi pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (2) yang meliputi: 1. pelanggaran kewajiban yang dilakukan oleh Penyelenggara Sistem Elektronik masuk dalam kategori berat berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (3); 2. Penyelenggara Sistem Elektronik tidak kooperatif berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (4); dan/atau 3. faktor lain yang memberatkan lebih banyak dibandingkan dengan faktor yang meringankan berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (5).\n(2) Penghentian sementara sebagaimana dimaksud pada ayat (1) dilakukan terhadap Produk, Layanan, dan/atau Fitur.\n(3) Jangka waktu penghentian sementara sebagaimana dimaksud pada ayat (1) ditentukan oleh Menteri.\n(4) Dalam pengenaan sanksi administratif berupa penghentian sementara sebagaimana dimaksud pada ayat (1), Menteri berwenang memberikan perintah kepada Penyelenggara Sistem Elektronik untuk melakukan tindakan tertentu dalam rangka memenuhi kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik.\n(5) Dalam menentukan jangka waktu penghentian sementara, Menteri mempertimbangkan jangka waktu upaya Penyelenggara Sistem Elektronik untuk melaksanakan perintah sebagaimana dimaksud pada ayat (4). [cite: 554, 555, 556, 557, 558, 559, 568, 569, 570, 571, 572]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kesatu Sanksi Administratif",
+    "pasal": "Pasal 44",
+    "tags": ["Pemutusan Akses", "Pendapat Ahli Sanksi Berat"],
+    "konten": "(1) Menteri mengenakan sanksi administratif berupa pemutusan akses sebagaimana dimaksud dalam Pasal 38 ayat (2) huruf d dalam hal berdasarkan hasil pemeriksaan disimpulkan Penyelenggara Sistem Elektronik:\na. tidak memenuhi kewajiban denda administratif sebagaimana dimaksud dalam Pasal 42;\nb. tidak memenuhi perintah sebagaimana dimaksud dalam pasal 43 ayat (4); dan/atau\nc. memenuhi pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (2) yang meliputi: 1. pelanggaran yang dilakukan oleh Penyelenggara Sistem Elektronik masuk dalam kategori berat berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (3); 2. Penyelenggara Sistem Elektronik tidak kooperatif berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (4); dan/atau 3. faktor lain yang memberatkan lebih banyak dibandingkan dengan faktor yang meringankan berdasarkan pertimbangan sebagaimana dimaksud dalam Pasal 40 ayat (5).\n(2) Dalam hal Menteri mengenakan sanksi administratif pemutusan akses, Menteri dapat:\na. berkoordinasi dengan kementerian/lembaga yang merupakan instansi pengatur dan pengawas sektor terhadap Penyelenggara Sistem Elektronik; dan/atau\nb. meminta pendapat dari ahli yang relevan dengan pemeriksaan terhadap dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik. [cite: 573, 574, 575, 576, 578, 579, 582, 583, 587, 588, 589]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kedua Keberlakuan dan Penyampaian Keputusan Pengenaan Sanksi Administratif",
+    "pasal": "Pasal 45",
+    "tags": ["Keberlakuan Sanksi Administratif", "Keadaan Mendesak"],
+    "konten": "(1) Keputusan pengenaan sanksi administratif berlaku pada tanggal ditetapkan.\n(2) Dalam keputusan sanksi administratif dapat ditetapkan batas waktu mulai dan berakhirnya pengenaan sanksi administratif.\n(3) Keputusan sanksi administratif ditetapkan pada hari kerja.\n(4) Pengenaan sanksi administratif dapat ditetapkan pada hari selain hari kerja karena alasan keadaan mendesak dan/atau kepentingan yang sah lainnya, sehingga tidak dapat ditunda pada hari kerja berikutnya. [cite: 590, 591, 600, 601, 602, 603]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kedua Keberlakuan dan Penyampaian Keputusan Pengenaan Sanksi Administratif",
+    "pasal": "Pasal 46",
+    "tags": ["Penyampaian Sanksi Tertulis Elektronik", "Pengumuman Situs Kementerian"],
+    "konten": "(1) Keputusan pengenaan sanksi administratif disampaikan kepada Penyelenggara Sistem Elektronik secara tertulis atau elektronik.\n(2) Keputusan sebagaimana dimaksud pada ayat (1) dapat disampaikan kepada pihak lain yang berkepentingan.\n(3) Dalam hal alamat kedudukan hukum atau alamat surat elektronik Penyelenggara Sistem Elektronik tidak terdaftar secara resmi di Kementerian atau telah berubah tanpa pemberitahuan resmi kepada Kementerian, Kementerian mengumumkannya dalam situs resmi Kementerian. [cite: 604, 605, 606, 607]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB IV SANKSI ADMINISTRATIF, Bagian Kedua Keberlakuan dan Penyampaian Keputusan Pengenaan Sanksi Administratif",
+    "pasal": "Pasal 47",
+    "tags": ["Pengajuan Keberatan Sanksi", "Penyelesaian Keberatan", "Gugatan PTUN"],
+    "konten": "(1) Penyelenggara Sistem Elektronik yang merasa dirugikan akibat pengenaan sanksi administratif yang dikenakan dapat mengajukan keberatan kepada Menteri.\n(2) Upaya keberatan sebagaimana dimaksud pada ayat (1) tidak menunda pelaksanaan keputusan.\n(3) Menteri menyelesaikan keberatan yang disampaikan oleh Penyelenggara Sistem Elektronik sebagaimana dimaksud pada ayat (1).\n(4) Dalam hal keberatan sebagaimana dimaksud pada ayat (1) diterima, Menteri menetapkan keputusan sesuai dengan permohonan keberatan.\n(5) Dalam hal Penyelenggara Sistem Elektronik tidak menerima atas penyelesaian keberatan sebagaimana dimaksud pada ayat (1), Penyelenggara Sistem Elektronik dapat mengajukan gugatan kepada pengadilan tata usaha negara untuk menilai ada atau tidak ada unsur penyalahgunaan wewenang dalam keputusan dan/atau tindakan.\n(6) Ketentuan lebih lanjut mengenai tata cara pengajuan keberatan sebagaimana dimaksud pada ayat (1) sampai dengan ayat (4) diatur dalam Peraturan Menteri. [cite: 617, 618, 619, 620, 621, 622, 623]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB V PERAN SERTA KEMENTERIAN/LEMBAGA DAN MASYARAKAT",
+    "pasal": "Pasal 48",
+    "tags": ["Peran Kementerian Lembaga", "Peran Orang Tua", "Peran Masyarakat"],
+    "konten": "(1) Kementerian/lembaga berkoordinasi sesuai dengan tugas dan fungsi serta kewenangan yang diatur dalam peraturan perundang-undangan dalam:\na. meningkatkan kesadaran masyarakat mengenai manfaat dan dampak negatif penggunaan Produk, Layanan, dan Fitur;\nb. memberikan layanan terintegrasi bagi Anak untuk memberikan pelindungan Anak dalam Penyelenggaraan Sistem Elektronik; dan\nc. melakukan pengawasan pelindungan Anak.\n(2) Orang tua atau wali Anak, dan masyarakat berperan dalam pengawasan pelaksanaan pelindungan Anak dalam Penyelenggaraan Sistem Elektronik.\n(3) Peran orang tua atau wali Anak sebagaimana dimaksud pada ayat (2) terdiri atas:\na. membantu Anak untuk memilih Produk, Layanan, dan Fitur yang sesuai dengan usia Anak dan kebutuhannya;\nb. menilai kesesuaian Produk, Layanan, dan Fitur dengan usia Anak yang akan menggunakan sebelum memberikan persetujuan;\nc. memantau penggunaan Produk, Layanan, dan Fitur; dan\nd. memberikan edukasi kepada Anak mengenai manfaat dan dampak negatif penggunaan Produk, Layanan, dan Fitur.\n(4) Peran masyarakat sebagaimana dimaksud pada ayat (2) terdiri atas:\na. memberikan edukasi kepada Anak, orang tua, atau wali Anak paling sedikit mengenai manfaat dan dampak negatif penggunaan Produk, Layanan, dan Fitur; dan\nb. melaporkan atau mengadukan dugaan pelanggaran kewajiban pelindungan Anak dalam Penyelenggaraan Sistem Elektronik yang dilakukan oleh Penyelenggara Sistem Elektronik. [cite: 624, 625, 626, 627, 628, 629, 630, 632, 638, 639, 640, 641, 642, 643, 644, 646]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB VI KETENTUAN PERALIHAN",
+    "pasal": "Pasal 49",
+    "tags": ["Masa Penyesuaian Transisi", "Jangka Waktu Peralihan"],
+    "konten": "Pada saat Peraturan Pemerintah ini mulai berlaku, Penyelenggara Sistem Elektronik dan pihak lain yang terkait dengan penyelenggaraan Produk, Layanan, dan Fitur, wajib menyesuaikan dengan ketentuan tata kelola berdasarkan Peraturan Pemerintah ini paling lama 2 (dua) tahun sejak Peraturan Pemerintah ini diundangkan. [cite: 647, 648, 649, 650]"
+  },
+  {
+    "document_title": "PP Nomor 17 Tahun 2025",
+    "document_type": "Peraturan Pemerintah",
+    "domain": "Pelindungan Anak & Sistem Elektronik",
+    "bab": "BAB VII KETENTUAN PENUTUP",
+    "pasal": "Pasal 50",
+    "tags": ["Masa Berlaku Peraturan", "Diundangkan"],
+    "konten": "Peraturan Pemerintah ini mulai berlaku pada tanggal diundangkan. [cite: 651, 652, 653, 654]"
+  }
+]

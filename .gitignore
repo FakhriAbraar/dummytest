@@ -10,6 +10,11 @@ __pycache__/
 # C extensions
 *.so
 
+# Machine Learning Models
+models/**/*.gguf
+models/**/*.bin
+models/**/*.pt
+
 # Distribution / packaging
 .Python
 build/

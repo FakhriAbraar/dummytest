@@ -1,0 +1,62 @@
+[
+  {
+    "input": "ada yg open b0c1l area sby? dm ya, vcs juga boleh tpi no sc4m",
+    "output": ["open b0c1l", "vcs", "sc4m", "sby"]
+  },
+  {
+    "input": "dek ntar malem main epep bareng om yuk, menang dapet top up diamond gratis, tapi sambil pap TT ya hehe",
+    "output": ["epep", "top up diamond", "pap TT", "grooming"]
+  },
+  {
+    "input": "Selamat pagi bapak/ibu, bagaimana prosedur resmi melaporkan penipuan online ke Komdigi?",
+    "output": []
+  },
+  {
+    "input": "🔥🔥💦💦 L0li Indo ready rek!!! 🤫🤫 link tele di bio jgn sampai kehabisan 🔞🔞🍑",
+    "output": ["L0li Indo", "link tele", "bio"]
+  },
+  {
+    "input": "Need rp dom buat main brutal nsfw sama chara minor gue, no limit ya.",
+    "output": ["rp dom", "brutal nsfw", "chara minor", "no limit"]
+  },
+  {
+    "input": "Kalo lu ga mau pidio lu kesebar ke grup sekolah, tf 500k sekarang ke dana gue atau gw viralkan lonte.",
+    "output": ["pidio kesebar", "tf 500k", "dana", "viralkan", "sextortion"]
+  },
+  {
+    "input": "jual asupan s3rag4m prmuka durasi panjng, muarah meriah mase cek pinnd",
+    "output": ["jual asupan", "s3rag4m prmuka", "pinnd"]
+  },
+  {
+    "input": "Dicari talent cewek umur 12-15 tahun buat casting model majalah, syarat wajib kirim foto full body no busana ke email ini.",
+    "output": ["talent cewek 12-15 tahun", "casting model", "foto full body no busana"]
+  },
+  {
+    "input": "P, open BO area sby, rate 300k exc, ready anak smp, minat pc.",
+    "output": ["open BO", "rate 300k exc", "anak smp", "pc"]
+  },
+  {
+    "input": "Anjir kemaren gue main ometv dapet bocil lagi coli wkwkwk ngakak sumpah.",
+    "output": ["ometv", "bocil", "coli"]
+  },
+  {
+    "input": "Bagi link dong suhu, yang kemaren viral di twitter baju merah.",
+    "output": ["link", "suhu", "viral di twitter"]
+  },
+  {
+    "input": "Open jasa joki ML tier mitik, bonus akun alter isi konten premium anak sekolahan. PM for price.",
+    "output": ["joki ML", "akun alter", "konten premium anak sekolahan", "PM"]
+  },
+  {
+    "input": "Hati-hati penipuan berkedok yayasan panti asuhan, banyak yang minta sumbangan fiktif.",
+    "output": ["penipuan panti asuhan", "sumbangan fiktif"]
+  },
+  {
+    "input": "Cari mutualan RP telegram yg bisa diajak NS, khusus uname uke manis.",
+    "output": ["mutualan RP telegram", "NS", "uname uke"]
+  },
+  {
+    "input": "w0i g1la lu ya m4sa 4n4k k3cil d1suruh b3g1tu4n!!! l4p0rin k3 p0lis1 s3k4r4ng jg",
+    "output": ["4n4k k3cil", "b3g1tu4n"]
+  }
+]

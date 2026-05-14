@@ -6,23 +6,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from app.db.tables import AiAgent, Classification, Content, EngineDecision, IGRSRules
+from app.db.tables import AiAgent, Classification, Content, EngineDecision
 from app.services.classification import get_igrs_rule_by_kategori
-
-CONFIDENCE_THRESHOLD = 0.75
+from app.services.resolver import resolve_ai_conflict
 
 _TEXT_AGENT_TYPE = "keyword_model"
 _VISUAL_AGENT_TYPE = "classifier"
-
-_SAFE_RATINGS: frozenset[str] = frozenset({"SU"})
-
-
-def _engine_status_from_rule(rule: IGRSRules | None) -> str:
-    if rule is None:
-        return "ANOMALY"
-    if rule.kategori_ai == "SAFE" or rule.age_rating_minimal in _SAFE_RATINGS:
-        return "SAFE"
-    return "VIOLATION"
 
 
 async def run_engine_decision(
@@ -36,61 +25,52 @@ async def run_engine_decision(
         )
     ).all()
 
-    tim1 = next(
-        (clf for clf, ag in rows if ag.agent_type == _TEXT_AGENT_TYPE), None
-    )
-    tim3 = next(
-        (clf for clf, ag in rows if ag.agent_type == _VISUAL_AGENT_TYPE), None
-    )
+    tim1 = next((clf for clf, ag in rows if ag.agent_type == _TEXT_AGENT_TYPE), None)
+    tim3 = next((clf for clf, ag in rows if ag.agent_type == _VISUAL_AGENT_TYPE), None)
 
-    tim1_ok = tim1 is not None and (tim1.confidence_score or 0.0) >= CONFIDENCE_THRESHOLD
-    tim3_ok = tim3 is not None and (tim3.confidence_score or 0.0) >= CONFIDENCE_THRESHOLD
+    dict_tim1 = {
+        "kategori": tim1.kategori_tebakan_ai or "SAFE" if tim1 else "SAFE",
+        "predicted_rating": None,
+        "confidence_score": float(tim1.confidence_score or 0.0) if tim1 else 0.0,
+        "reason": (tim1.unsafe_reason or tim1.reasoning_category or "Tidak ada teks") if tim1 else "",
+    }
 
-    winning_clf: Classification | None = None
-    engine_status: str
+    dict_tim3 = {
+        "kategori": tim3.kategori_tebakan_ai or "SAFE" if tim3 else "SAFE",
+        "predicted_rating": None,
+        "confidence_score": float(tim3.confidence_score or 0.0) if tim3 else 0.0,
+        "reason": (tim3.unsafe_reason or tim3.reasoning_category or "Tidak ada visual") if tim3 else "",
+    }
 
-    if not tim1_ok and not tim3_ok:
-        engine_status = "NEEDS_REVIEW"
+    # PRE-RESOLVER: MENENTUKAN DAKWAAN UTAMA
+    if dict_tim1["kategori"] == "SAFE" and dict_tim3["kategori"] == "SAFE":
+        kategori_suspect = "SAFE"
+    elif dict_tim1["kategori"] == "SAFE":
+        kategori_suspect = str(dict_tim3["kategori"])
+    elif dict_tim3["kategori"] == "SAFE":
+        kategori_suspect = str(dict_tim1["kategori"])
     else:
-        if tim1_ok and tim3_ok:
-            rule3 = await get_igrs_rule_by_kategori(
-                tim3.kategori_tebakan_ai or "", session
-            )
-            rule1 = await get_igrs_rule_by_kategori(
-                tim1.kategori_tebakan_ai or "", session
-            )
-            mod3 = rule3.dominant_modality if rule3 else "VISUAL"
-            mod1 = rule1.dominant_modality if rule1 else "TEXT"
+        # Dual Violation: Adu Confidence
+        tim3_conf: float = float(tim3.confidence_score or 0.0) if tim3 else 0.0
+        tim1_conf: float = float(tim1.confidence_score or 0.0) if tim1 else 0.0
+        kategori_suspect = str(dict_tim3["kategori"]) if tim3_conf > tim1_conf else str(dict_tim1["kategori"])
 
-            if mod3 == "VISUAL" and mod1 != "VISUAL":
-                winning_clf = tim3
-            elif mod1 == "TEXT" and mod3 != "TEXT":
-                winning_clf = tim1
-            else:
-                winning_clf = (
-                    tim3
-                    if (tim3.confidence_score or 0.0) >= (tim1.confidence_score or 0.0)
-                    else tim1
-                )
-        elif tim3_ok:
-            winning_clf = tim3
-        else:
-            winning_clf = tim1
+    rule_suspect = await get_igrs_rule_by_kategori(kategori_suspect, session)
 
-        rule = await get_igrs_rule_by_kategori(
-            winning_clf.kategori_tebakan_ai or "", session  # type: ignore[union-attr]
-        )
-        engine_status = _engine_status_from_rule(rule)
+    dict_rule = {
+        "dominant_modality": rule_suspect.dominant_modality if rule_suspect else "EQUAL",
+        "age_rating_minimal": rule_suspect.age_rating_minimal if rule_suspect else "SU",
+    }
 
-    rule = (
-        await get_igrs_rule_by_kategori(
-            winning_clf.kategori_tebakan_ai or "", session
-        )
-        if winning_clf
-        else None
+    final_decision = resolve_ai_conflict(
+        text_result=dict_tim1,
+        visual_result=dict_tim3,
+        igrs_rule=dict_rule,
     )
-    final_rating = rule.age_rating_minimal if rule else None
-    final_kategori = winning_clf.kategori_tebakan_ai if winning_clf else None
+
+    final_rule = await get_igrs_rule_by_kategori(final_decision["kategori_final"], session)
+
+    engine_status = "NEEDS_REVIEW" if final_decision["rating_final"] == "UNRATED" else "PROCESSED"
 
     existing = (
         await session.execute(
@@ -101,27 +81,29 @@ async def run_engine_decision(
     if existing is None:
         decision = EngineDecision(
             content_id=content_id,
-            igrs_rule_id=rule.id if rule else None,
-            final_kategori=final_kategori,
-            final_rating=final_rating,
-            is_vetoed=False,
+            igrs_rule_id=final_rule.id if final_rule else None,
+            final_kategori=final_decision["kategori_final"],
+            final_rating=final_decision["rating_final"],
+            is_vetoed=final_decision["veto_applied"],
             decided_at=datetime.now(timezone.utc),
         )
         session.add(decision)
     else:
-        existing.igrs_rule_id = rule.id if rule else None
-        existing.final_kategori = final_kategori
-        existing.final_rating = final_rating
+        existing.igrs_rule_id = final_rule.id if final_rule else None
+        existing.final_kategori = final_decision["kategori_final"]
+        existing.final_rating = final_decision["rating_final"]
+        existing.is_vetoed = final_decision["veto_applied"]
         existing.decided_at = datetime.now(timezone.utc)
         decision = existing
 
     content_row = await session.get(Content, content_id)
     if content_row:
         content_row.engine_status = engine_status
-        content_row.final_rating = final_rating
+        content_row.final_rating = final_decision["rating_final"]
 
     await session.commit()
     await session.refresh(decision)
+
     return decision
 
 

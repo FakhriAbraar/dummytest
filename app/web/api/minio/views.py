@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException, status, UploadFile, File
-from minio import Minio
 
-from app.db.minio import get_minio_client
 from app.services.minio import (
     create_bucket,
     delete_bucket,
@@ -33,8 +31,6 @@ def health_check() -> None:
 
 # @router.get("/list-bucket", summary="List all buckets")
 async def list_buckets_endpoint() -> list[str]:
-    # """List all buckets"""
-    minio_client = get_minio_client()
     return await list_buckets()
 
 
@@ -69,10 +65,13 @@ async def delete_bucket_endpoint(
 async def upload_file_endpoint(
     file: UploadFile = File(...),
 ) -> MinioUploadFileResponse:
-    # """Upload file"""
-    response = await upload_file(
-        file=file, 
-    )
+    response = await upload_file(file=file)
+
+    if response.get("status") == "error":
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=response.get("message", "Upload gagal."),
+        )
 
     return MinioUploadFileResponse.model_validate(response)
 

@@ -1,0 +1,686 @@
+[
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB I KETENTUAN UMUM",
+    "pasal": "Pasal 1",
+    "tags": ["Definisi", "Data Pribadi", "Pelindungan Data Pribadi", "Pengendali Data Pribadi", "Prosesor Data Pribadi", "Subjek Data Pribadi", "Korporasi", "Badan Publik", "Organisasi Internasional"],
+    "konten": "Dalam Undang-Undang ini yang dimaksud dengan:\n1. Data Pribadi adalah data tentang orang perseorangan yang teridentifikasi atau dapat diidentifikasi secara tersendiri atau dikombinasi dengan informasi lainnya baik secara langsung maupun tidak langsung melalui sistem elektronik atau nonelektronik.\n2. Pelindungan Data Pribadi adalah keseluruhan upaya untuk melindungi Data Pribadi dalam rangkaian pemrosesan Data Pribadi guna menjamin hak konstitusional subjek Data Pribadi.\n3. Informasi adalah keterangan, pernyataan, gagasan, dan tanda-tanda yang mengandung nilai, makna, dan pesan, baik data, fakta, maupun penjelasannya yang dapat dilihat, didengar, dan dibaca yang disajikan dalam berbagai kemasan dan format sesuai dengan perkembangan teknologi informasi dan komunikasi secara elektronik ataupun nonelektronik.\n4. Pengendali Data Pribadi adalah setiap orang, badan publik, dan organisasi internasional yang bertindak sendiri-sendiri atau bersama-sama dalam menentukan tujuan dan melakukan kendali pemrosesan Data Pribadi.\n5. Prosesor Data Pribadi adalah setiap orang, badan publik, dan organisasi internasional yang bertindak sendiri-sendiri atau bersama-sama dalam melakukan pemrosesan Data Pribadi atas nama Pengendali Data Pribadi.\n6. Subjek Data Pribadi adalah orang perseorangan yang pada dirinya melekat Data Pribadi.\n7. Setiap Orang adalah orang perseorangan atau korporasi.\n8. Korporasi adalah kumpulan orang dan/atau kekayaan yang terorganisasi baik yang berbadan hukum maupun tidak berbadan hukum.\n9. Badan Publik adalah lembaga eksekutif, legislatif, yudikatif, dan badan lain yang fungsi dan tugas pokoknya berkaitan dengan penyelenggaraan negara, yang sebagian atau seluruh dananya bersumber dari Anggaran Pendapatan dan Belanja Negara dan/atau Anggaran Pendapatan dan Belanja Daerah, atau organisasi nonpemerintah sepanjang sebagian atau seluruh dananya bersumber dari Anggaran Pendapatan dan Belanja Negara dan/atau Anggaran Pendapatan dan Belanja Daerah, sumbangan masyarakat, dan/atau luar negeri.\n10. Organisasi Internasional adalah organisasi yang diakui sebagai subjek hukum internasional dan mempunyai kapasitas untuk membuat perjanjian internasional.\n11. Pemerintah Pusat yang selanjutnya disebut Pemerintah adalah Presiden Republik Indonesia yang memegang kekuasaan pemerintahan Negara Republik Indonesia sebagaimana dimaksud dalam Undang-Undang Dasar Negara Republik Indonesia Tahun 1945."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB I KETENTUAN UMUM",
+    "pasal": "Pasal 2",
+    "tags": ["Ruang Lingkup Keberlakuan", "Yurisdiksi Hukum", "Pengecualian Kegiatan Pribadi"],
+    "konten": "(1) Undang-Undang ini berlaku untuk Setiap Orang, Badan Publik, dan Organisasi Internasional yang melakukan perbuatan hukum sebagaimana diatur dalam Undang-Undang ini:\na. yang berada di wilayah hukum Negara Republik Indonesia; dan\nb. di luar wilayah hukum Negara Republik Indonesia, yang memiliki akibat hukum:\n1. di wilayah hukum Negara Republik Indonesia; dan/atau\n2. bagi Subjek Data Pribadi warga negara Indonesia di luar wilayah hukum Negara Republik Indonesia.\n(2) Undang-Undang ini tidak berlaku untuk pemrosesan Data Pribadi oleh orang perseorangan dalam kegiatan pribadi atau rumah tangga."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB II ASAS",
+    "pasal": "Pasal 3",
+    "tags": ["Asas Pelindungan", "Kepastian Hukum", "Kepentingan Umum", "Kemanfaatan", "Kehati-hatian", "Keseimbangan", "Pertanggungjawaban", "Kerahasiaan"],
+    "konten": "Undang-Undang ini berasaskan:\na. pelindungan;\nb. kepastian hukum;\nc. kepentingan umum;\nd. kemanfaatan;\ne. kehati-hatian;\nf. keseimbangan;\ng. pertanggungjawaban; dan\nh. kerahasiaan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB III JENIS DATA PRIBADI",
+    "pasal": "Pasal 4",
+    "tags": ["Jenis Data Pribadi", "Data Pribadi Spesifik", "Data Pribadi Umum", "Data Kesehatan", "Data Biometrik", "Data Genetika", "Catatan Kejahatan", "Data Anak", "Data Keuangan Pribadi"],
+    "konten": "(1) Data Pribadi terdiri atas:\na. Data Pribadi yang bersifat spesifik; dan\nb. Data Pribadi yang bersifat umum.\n(2) Data Pribadi yang bersifat spesifik sebagaimana dimaksud pada ayat (1) huruf a meliputi:\na. data dan informasi kesehatan;\nb. data biometrik;\nc. data genetika;\nd. catatan kejahatan;\ne. data anak;\nf. data keuangan pribadi; dan/atau\ng. data lainnya sesuai dengan ketentuan peraturan perundang-undangan.\n(3) Data Pribadi yang bersifat umum sebagaimana dimaksud pada ayat (1) huruf b meliputi:\na. nama lengkap;\nb. jenis kelamin;\nc. kewarganegaraan;\nd. agama;\ne. status perkawinan; dan/atau\nf. Data Pribadi yang dikombinasikan untuk mengidentifikasi seseorang."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 5",
+    "tags": ["Hak Subjek Data Pribadi", "Hak Mendapat Informasi", "Tujuan Penggunaan Data", "Akuntabilitas"],
+    "konten": "Subjek Data Pribadi berhak mendapatkan Informasi tentang kejelasan identitas, dasar kepentingan hukum, tujuan permintaan dan penggunaan Data Pribadi, dan akuntabilitas pihak yang meminta Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 6",
+    "tags": ["Hak Subjek Data", "Perbaikan Data", "Pembaruan Data"],
+    "konten": "Subjek Data Pribadi berhak melengkapi, memperbarui, dan/atau memperbaiki kesalahan dan/atau ketidakakuratan Data Pribadi tentang dirinya sesuai dengan tujuan pemrosesan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 7",
+    "tags": ["Hak Subjek Data", "Akses Data Pribadi", "Salinan Data Pribadi"],
+    "konten": "Subjek Data Pribadi berhak mendapatkan akses dan memperoleh salinan Data Pribadi tentang dirinya sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 8",
+    "tags": ["Hak Subjek Data", "Pengakhiran Pemrosesan", "Penghapusan Data", "Pemusnahan Data"],
+    "konten": "Subjek Data Pribadi berhak untuk mengakhiri pemrosesan, menghapus, dan/atau memusnahkan Data Pribadi tentang dirinya sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 9",
+    "tags": ["Hak Subjek Data", "Penarikan Persetujuan"],
+    "konten": "Subjek Data Pribadi berhak menarik kembali persetujuan pemrosesan Data Pribadi tentang dirinya yang telah diberikan kepada Pengendali Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 10",
+    "tags": ["Hak Subjek Data", "Keberatan Keputusan Otomatis", "Pemrofilan"],
+    "konten": "(1) Subjek Data Pribadi berhak untuk mengajukan keberatan atas tindakan pengambilan keputusan yang hanya didasarkan pada pemrosesan secara otomatis, termasuk pemrofilan, yang menimbulkan akibat hukum atau berdampak signifikan pada Subjek Data Pribadi.\n(2) Ketentuan lebih lanjut mengenai pengajuan keberatan atas pemrosesan secara otomatis sebagaimana dimaksud pada ayat (1) diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 11",
+    "tags": ["Hak Subjek Data", "Penundaan Pemrosesan", "Pembatasan Pemrosesan"],
+    "konten": "Subjek Data Pribadi berhak menunda atau membatasi pemrosesan Data Pribadi secara proporsional sesuai dengan tujuan pemrosesan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 12",
+    "tags": ["Hak Subjek Data", "Gugatan", "Ganti Rugi Pelanggaran"],
+    "konten": "(1) Subjek Data Pribadi berhak menggugat dan menerima ganti rugi atas pelanggaran pemrosesan Data Pribadi tentang dirinya sesuai dengan ketentuan peraturan perundang-undangan.\n(2) Ketentuan lebih lanjut mengenai pelanggaran pemrosesan Data Pribadi dan tata cara pengenaan ganti rugi sebagaimana dimaksud pada ayat (1) diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 13",
+    "tags": ["Hak Subjek Data", "Portabilitas Data", "Pengiriman Data Pribadi"],
+    "konten": "(1) Subjek Data Pribadi berhak mendapatkan dan/atau menggunakan Data Pribadi tentang dirinya dari Pengendali Data Pribadi dalam bentuk yang sesuai dengan struktur dan/atau format yang lazim digunakan atau dapat dibaca oleh sistem elektronik.\n(2) Subjek Data Pribadi berhak menggunakan dan mengirimkan Data Pribadi tentang dirinya ke Pengendali Data Pribadi lainnya, sepanjang sistem yang digunakan dapat saling berkomunikasi secara aman sesuai dengan prinsip Pelindungan Data Pribadi berdasarkan Undang-Undang ini.\n(3) Ketentuan lebih lanjut mengenai hak Subjek Data Pribadi untuk menggunakan dan mengirimkan Data Pribadi sebagaimana dimaksud pada ayat (2) diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 14",
+    "tags": ["Mekanisme Pelaksanaan Hak", "Permohonan Subjek Data"],
+    "konten": "Pelaksanaan hak Subjek Data Pribadi sebagaimana dimaksud dalam Pasal 6 sampai dengan Pasal 11 diajukan melalui permohonan tercatat yang disampaikan secara elektronik atau nonelektronik kepada Pengendali Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IV HAK SUBJEK DATA PRIBADI",
+    "pasal": "Pasal 15",
+    "tags": ["Pengecualian Hak Subjek Data", "Pertahanan Keamanan", "Penegakan Hukum", "Kepentingan Umum"],
+    "konten": "(1) Hak-hak Subjek Data Pribadi sebagaimana dimaksud dalam Pasal 8, Pasal 9, Pasal 10 ayat (1), Pasal 11, dan Pasal 13 ayat (1) dan ayat (2) dikecualikan untuk:\na. kepentingan pertahanan dan keamanan nasional;\nb. kepentingan proses penegakan hukum;\nc. kepentingan umum dalam rangka penyelenggaraan negara;\nd. kepentingan pengawasan sektor jasa keuangan, moneter, sistem pembayaran, dan stabilitas sistem keuangan yang dilakukan dalam rangka penyelenggaraan negara; atau\ne. kepentingan statistik dan penelitian ilmiah.\n(2) Pengecualian sebagaimana dimaksud pada ayat (1) dilaksanakan hanya dalam rangka pelaksanaan ketentuan Undang-Undang."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB V PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 16",
+    "tags": ["Ruang Lingkup Pemrosesan", "Prinsip Pelindungan Data", "Keamanan Data", "Masa Retensi", "Akuntabilitas Pemrosesan"],
+    "konten": "(1) Pemrosesan Data Pribadi meliputi:\na. pemerolehan dan pengumpulan;\nb. pengolahan dan penganalisisan;\nc. penyimpanan;\nd. perbaikan dan pembaruan;\ne. penampilan, pengumuman, transfer, penyebarluasan, atau pengungkapan; dan/atau\nf. penghapusan atau pemusnahan.\n(2) Pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1) dilakukan sesuai dengan prinsip Pelindungan Data Pribadi meliputi:\na. pengumpulan Data Pribadi dilakukan secara terbatas dan spesifik, sah secara hukum, dan transparan;\nb. pemrosesan Data Pribadi dilakukan sesuai dengan tujuannya;\nc. pemrosesan Data Pribadi dilakukan dengan menjamin hak Subjek Data Pribadi;\nd. pemrosesan Data Pribadi dilakukan secara akurat, lengkap, tidak menyesatkan, mutakhir, dan dapat dipertanggungjawabkan;\ne. pemrosesan Data Pribadi dilakukan dengan melindungi keamanan Data Pribadi dari pengaksesan yang tidak sah, pengungkapan yang tidak sah, pengubahan yang tidak sah, penyalahgunaan, perusakan, dan/atau penghilangan Data Pribadi;\nf. pemrosesan Data Pribadi dilakukan dengan memberitahukan tujuan dan aktivitas pemrosesan, serta kegagalan Pelindungan Data Pribadi;\ng. Data Pribadi dimusnahkan dan/atau dihapus setelah masa retensi berakhir atau berdasarkan permintaan Subjek Data Pribadi, kecuali ditentukan lain oleh peraturan perundang-undangan; dan\nh. pemrosesan Data Pribadi dilakukan secara bertanggung jawab dan dapat dibuktikan secara jelas.\n(3) Ketentuan lebih lanjut mengenai pelaksanaan pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1) diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB V PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 17",
+    "tags": ["Pengolahan Data Visual", "CCTV", "Fasilitas Pelayanan Publik", "Larangan Identifikasi"],
+    "konten": "(1) Pemasangan alat pemroses atau pengolah data visual di tempat umum dan/atau pada fasilitas pelayanan publik dilakukan dengan ketentuan:\na. untuk tujuan keamanan, pencegahan bencana, dan/atau penyelenggaraan lalu lintas atau pengumpulan, analisis, dan pengaturan Informasi lalu lintas;\nb. harus menampilkan Informasi pada area yang telah dipasang alat pemroses atau pengolah data visual; dan\nc. tidak digunakan untuk mengidentifikasi seseorang.\n(2) Ketentuan sebagaimana dimaksud pada ayat (1) huruf b dan huruf c dikecualikan untuk pencegahan tindak pidana dan proses penegakan hukum sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB V PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 18",
+    "tags": ["Pemrosesan Bersama", "Joint Controller", "Perjanjian Pengendali"],
+    "konten": "(1) Pemrosesan Data Pribadi dapat dilakukan oleh 2 (dua) atau lebih Pengendali Data Pribadi.\n(2) Dalam hal Pemrosesan Data Pribadi dilakukan oleh 2 (dua) atau lebih Pengendali Data Pribadi harus memenuhi syarat minimal:\na. terdapat perjanjian antara para Pengendali Data Pribadi yang memuat peran, tanggung jawab, dan hubungan antar-Pengendali Data Pribadi;\nb. terdapat tujuan yang saling berkaitan dan cara pemrosesan Data Pribadi yang ditentukan secara bersama; dan\nc. terdapat narahubung yang ditunjuk secara bersama-sama."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 19",
+    "tags": ["Subjek Kewajiban", "Kategori Pengendali dan Prosesor"],
+    "konten": "Pengendali Data Pribadi dan Prosesor Data Pribadi meliputi:\na. Setiap Orang;\nb. Badan Publik; dan\nc. Organisasi Internasional."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 20",
+    "tags": ["Dasar Pemrosesan", "Legal Basis", "Persetujuan Eksplisit", "Kepentingan Vital", "Kepentingan Umum"],
+    "konten": "(1) Pengendali Data Pribadi wajib memiliki dasar pemrosesan Data Pribadi.\n(2) Dasar pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1) meliputi:\na. persetujuan yang sah secara eksplisit dari Subjek Data Pribadi untuk 1 (satu) atau beberapa tujuan tertentu yang telah disampaikan oleh Pengendali Data Pribadi kepada Subjek Data Pribadi;\nb. pemenuhan kewajiban perjanjian dalam hal Subjek Data Pribadi merupakan salah satu pihak atau untuk memenuhi permintaan Subjek Data Pribadi pada saat akan melakukan perjanjian;\nc. pemenuhan kewajiban hukum dari Pengendali Data Pribadi sesuai dengan ketentuan peraturan perundang-undangan;\nd. pemenuhan pelindungan kepentingan vital Subjek Data Pribadi;\ne. pelaksanaan tugas dalam rangka kepentingan umum, pelayanan publik, atau pelaksanaan kewenangan Pengendali Data Pribadi berdasarkan peraturan perundang-undangan; dan/atau\nf. pemenuhan kepentingan yang sah lainnya dengan memperhatikan tujuan, kebutuhan, dan keseimbangan kepentingan Pengendali Data Pribadi dan hak Subjek Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 21",
+    "tags": ["Informasi Persetujuan", "Transparansi Pemrosesan", "Perubahan Informasi"],
+    "konten": "(1) Dalam hal pemrosesan Data Pribadi berdasarkan persetujuan sebagaimana dimaksud dalam Pasal 20 ayat (2) huruf a, Pengendali Data Pribadi wajib menyampaikan Informasi mengenai:\na. legalitas dari pemrosesan Data Pribadi;\nb. tujuan pemrosesan Data Pribadi;\nc. jenis dan relevansi Data Pribadi yang akan diproses;\nd. jangka waktu retensi dokumen yang memuat Data Pribadi;\ne. rincian mengenai Informasi yang dikumpulkan;\nf. jangka waktu pemrosesan Data Pribadi; dan\ng. hak Subjek Data Pribadi.\n(2) Dalam hal terdapat perubahan Informasi sebagaimana dimaksud pada ayat (1), Pengendali Data Pribadi wajib memberitahukan kepada Subjek Data Pribadi sebelum terjadi perubahan Informasi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 22",
+    "tags": ["Syarat Persetujuan Tertulis", "Validitas Persetujuan", "Persetujuan Batal Demi Hukum"],
+    "konten": "(1) Persetujuan pemrosesan Data Pribadi dilakukan melalui persetujuan tertulis atau terekam.\n(2) Persetujuan sebagaimana dimaksud pada ayat (1) dapat disampaikan secara elektronik atau nonelektronik.\n(3) Persetujuan sebagaimana dimaksud pada ayat (1) mempunyai kekuatan hukum yang sama.\n(4) Dalam hal persetujuan sebagaimana dimaksud pada ayat (1) memuat tujuan lain, permintaan persetujuan harus memenuhi ketentuan:\na. dapat dibedakan secara jelas dengan hal lainnya;\nb. dibuat dengan format yang dapat dipahami dan mudah diakses; dan\nc. menggunakan bahasa yang sederhana dan jelas.\n(5) Persetujuan yang tidak memenuhi ketentuan sebagaimana dimaksud pada ayat (1) dan ayat (4) dinyatakan batal demi hukum."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 23",
+    "tags": ["Klausul Perjanjian", "Batal Demi Hukum"],
+    "konten": "Klausul perjanjian yang di dalamnya terdapat permintaan pemrosesan Data Pribadi yang tidak memuat persetujuan yang sah secara eksplisit dari Subjek Data Pribadi dinyatakan batal demi hukum."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 24",
+    "tags": ["Bukti Persetujuan", "Kewajiban Menunjukkan Bukti"],
+    "konten": "Dalam melakukan pemrosesan Data Pribadi, Pengendali Data Pribadi wajib menunjukkan bukti persetujuan yang telah diberikan oleh Subjek Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 25",
+    "tags": ["Data Anak", "Pemrosesan Khusus", "Persetujuan Orang Tua"],
+    "konten": "(1) Pemrosesan Data Pribadi anak diselenggarakan secara khusus.\n(2) Pemrosesan Data Pribadi anak sebagaimana dimaksud pada ayat (1) wajib mendapat persetujuan dari orang tua anak dan/atau wali anak sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 26",
+    "tags": ["Data Penyandang Disabilitas", "Pemrosesan Khusus", "Persetujuan"],
+    "konten": "(1) Pemrosesan Data Pribadi penyandang disabilitas diselenggarakan secara khusus.\n(2) Pemrosesan Data Pribadi penyandang disabilitas sebagaimana dimaksud pada ayat (1) dilakukan melalui komunikasi dengan menggunakan cara tertentu sesuai dengan ketentuan perundang-undangan.\n(3) Pemrosesan Data Pribadi penyandang disabilitas sebagaimana dimaksud pada ayat (2) wajib mendapat persetujuan dari penyandang disabilitas dan/atau wali penyandang disabilitas sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 27",
+    "tags": ["Kewajiban Pengendali", "Terbatas dan Spesifik", "Sah Secara Hukum", "Transparan"],
+    "konten": "Pengendali Data Pribadi wajib melakukan pemrosesan Data Pribadi secara terbatas dan spesifik, sah secara hukum, dan transparan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 28",
+    "tags": ["Kewajiban Pengendali", "Kesesuaian Tujuan"],
+    "konten": "Pengendali Data Pribadi wajib melakukan pemrosesan Data Pribadi sesuai dengan tujuan pemrosesan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 29",
+    "tags": ["Kewajiban Pengendali", "Akurasi Data", "Kelengkapan Data", "Konsistensi Data", "Verifikasi Data"],
+    "konten": "(1) Pengendali Data Pribadi wajib memastikan akurasi, kelengkapan, dan konsistensi Data Pribadi sesuai dengan ketentuan peraturan perundang-undangan.\n(2) Dalam memastikan akurasi, kelengkapan, dan konsistensi Data Pribadi sebagaimana dimaksud pada ayat (1) Pengendali Data Pribadi wajib melakukan verifikasi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 30",
+    "tags": ["Kewajiban Pengendali", "Pembaruan Data", "Perbaikan Kesalahan", "Batas Waktu Perbaikan"],
+    "konten": "(1) Pengendali Data Pribadi wajib memperbarui dan/atau memperbaiki kesalahan dan/atau ketidakakuratan Data Pribadi paling lambat 3x24 (tiga kali dua puluh empat) jam terhitung sejak Pengendali Data Pribadi menerima permintaan pembaruan dan/atau perbaikan Data Pribadi.\n(2) Pengendali Data Pribadi wajib memberitahukan hasil pembaruan dan/atau perbaikan Data Pribadi kepada Subjek Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 31",
+    "tags": ["Kewajiban Pengendali", "Perekaman Kegiatan", "Log Pemrosesan"],
+    "konten": "Pengendali Data Pribadi wajib melakukan perekaman terhadap seluruh kegiatan pemrosesan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 32",
+    "tags": ["Kewajiban Pengendali", "Akses Rekam Jejak", "Batas Waktu Akses"],
+    "konten": "(1) Pengendali Data Pribadi wajib memberikan akses kepada Subjek Data Pribadi terhadap Data Pribadi yang diproses beserta rekam jejak pemrosesan Data Pribadi sesuai dengan jangka waktu penyimpanan Data Pribadi.\n(2) Akses sebagaimana dimaksud pada ayat (1) diberikan paling lambat 3x24 (tiga kali dua puluh empat) jam terhitung sejak Pengendali Data Pribadi menerima permintaan akses."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 33",
+    "tags": ["Kewajiban Pengendali", "Penolakan Akses", "Keamanan", "Pertahanan Nasional"],
+    "konten": "Pengendali Data Pribadi wajib menolak memberikan akses perubahan terhadap Data Pribadi kepada Subjek Data Pribadi dalam hal:\na. membahayakan keamanan, kesehatan fisik, atau kesehatan mental Subjek Data Pribadi dan/atau orang lain;\nb. berdampak pada pengungkapan Data Pribadi milik orang lain; dan/atau\nc. bertentangan dengan kepentingan pertahanan dan keamanan nasional."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 34",
+    "tags": ["Penilaian Dampak", "Risiko Tinggi", "Pengambilan Keputusan Otomatis", "Pemrofilan"],
+    "konten": "(1) Pengendali Data Pribadi wajib melakukan penilaian dampak Pelindungan Data Pribadi dalam hal pemrosesan Data Pribadi memiliki potensi risiko tinggi terhadap Subjek Data Pribadi.\n(2) Pemrosesan Data Pribadi memiliki potensi risiko tinggi sebagaimana dimaksud pada ayat (1) meliputi:\na. pengambilan keputusan secara otomatis yang memiliki akibat hukum atau dampak yang signifikan terhadap Subjek Data Pribadi;\nb. pemrosesan atas Data Pribadi yang bersifat spesifik;\nc. pemrosesan Data Pribadi dalam skala besar;\nd. pemrosesan Data Pribadi untuk kegiatan evaluasi, penskoran, atau pemantauan yang sistematis terhadap Subjek Data Pribadi;\ne. pemrosesan Data Pribadi untuk kegiatan pencocokan atau penggabungan sekelompok data;\nf. penggunaan teknologi baru dalam pemrosesan Data Pribadi; dan/atau\ng. pemrosesan Data Pribadi yang membatasi pelaksanaan hak Subjek Data Pribadi.\n(3) Ketentuan lebih lanjut mengenai penilaian dampak Pelindungan Data Pribadi diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 35",
+    "tags": ["Keamanan Data Pribadi", "Langkah Teknis", "Tingkat Keamanan"],
+    "konten": "Pengendali Data Pribadi wajib melindungi dan memastikan keamanan Data Pribadi yang diprosesnya, dengan melakukan:\na. penyusunan dan penerapan langkah teknis operasional untuk melindungi Data Pribadi dari gangguan pemrosesan Data Pribadi yang bertentangan dengan ketentuan peraturan perundang-undangan; dan\nb. penentuan tingkat keamanan Data Pribadi dengan memperhatikan sifat dan risiko dari Data Pribadi yang harus dilindungi dalam pemrosesan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 36",
+    "tags": ["Kerahasiaan Data Pribadi"],
+    "konten": "Dalam melakukan pemrosesan Data Pribadi, Pengendali Data Pribadi wajib menjaga kerahasiaan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 37",
+    "tags": ["Pengawasan Internal", "Pihak Terlibat"],
+    "konten": "Pengendali Data Pribadi wajib melakukan pengawasan terhadap setiap pihak yang terlibat dalam pemrosesan Data Pribadi di bawah kendali Pengendali Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 38",
+    "tags": ["Pelindungan Pemrosesan Tidak Sah"],
+    "konten": "Pengendali Data Pribadi wajib melindungi Data Pribadi dari pemrosesan yang tidak sah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 39",
+    "tags": ["Pencegahan Akses Tidak Sah", "Sistem Keamanan"],
+    "konten": "(1) Pengendali Data Pribadi wajib mencegah Data Pribadi diakses secara tidak sah.\n(2) Pencegahan sebagaimana dimaksud pada ayat (1) dilakukan dengan menggunakan sistem keamanan terhadap Data Pribadi yang diproses dan/atau memproses Data Pribadi menggunakan sistem elektronik secara andal, aman, dan bertanggung jawab.\n(3) Pencegahan sebagaimana dimaksud pada ayat (2) dilakukan sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 40",
+    "tags": ["Penghentian Pemrosesan", "Penarikan Persetujuan"],
+    "konten": "(1) Pengendali Data Pribadi wajib menghentikan pemrosesan Data Pribadi dalam hal Subjek Data Pribadi menarik kembali persetujuan pemrosesan Data Pribadi.\n(2) Penghentian pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1) dilakukan paling lambat 3x24 (tiga kali dua puluh empat) jam terhitung sejak Pengendali Data Pribadi menerima permintaan penarikan kembali persetujuan pemrosesan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 41",
+    "tags": ["Penundaan Pemrosesan", "Pembatasan Pemrosesan", "Pengecualian Penundaan"],
+    "konten": "(1) Pengendali Data Pribadi wajib melakukan penundaan dan pembatasan pemrosesan Data Pribadi baik sebagian maupun seluruhnya paling lambat 3x24 (tiga kali dua puluh empat) jam terhitung sejak Pengendali Data Pribadi menerima permintaan penundaan dan pembatasan pemrosesan Data Pribadi.\n(2) Penundaan dan pembatasan pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1) dikecualikan dalam hal:\na. terdapat ketentuan peraturan perundang-undangan yang tidak memungkinkan dilakukan penundaan dan pembatasan pemrosesan Data Pribadi;\nb. dapat membahayakan keselamatan pihak lain; dan/atau\nc. Subjek Data Pribadi terikat perjanjian tertulis dengan Pengendali Data Pribadi yang tidak memungkinkan dilakukan penundaan dan pembatasan pemrosesan Data Pribadi.\n(3) Pengendali Data Pribadi wajib memberitahukan telah dilaksanakan penundaan dan pembatasan pemrosesan Data Pribadi kepada Subjek Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 42",
+    "tags": ["Pengakhiran Pemrosesan", "Masa Retensi"],
+    "konten": "(1) Pengendali Data Pribadi wajib mengakhiri pemrosesan Data Pribadi dalam hal:\na. telah mencapai masa retensi;\nb. tujuan pemrosesan Data Pribadi telah tercapai; atau\nc. terdapat permintaan dari Subjek Data Pribadi.\n(2) Pengakhiran pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1) dilakukan sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 43",
+    "tags": ["Penghapusan Data Pribadi", "Tujuan Tercapai"],
+    "konten": "(1) Pengendali Data Pribadi wajib menghapus Data Pribadi dalam hal:\na. Data Pribadi tidak lagi diperlukan untuk pencapaian tujuan pemrosesan Data Pribadi;\nb. Subjek Data Pribadi telah melakukan penarikan kembali persetujuan pemrosesan Data Pribadi;\nc. terdapat permintaan dari Subjek Data Pribadi; atau\nd. Data Pribadi diperoleh dan/atau diproses dengan cara melawan hukum.\n(2) Penghapusan Data Pribadi sebagaimana dimaksud pada ayat (1) dilakukan sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 44",
+    "tags": ["Pemusnahan Data Pribadi", "Jadwal Retensi"],
+    "konten": "(1) Pengendali Data Pribadi wajib memusnahkan Data Pribadi dalam hal:\na. telah habis masa retensinya dan berketerangan dimusnahkan berdasarkan jadwal retensi arsip;\nb. terdapat permintaan dari Subjek Data Pribadi;\nc. tidak berkaitan dengan penyelesaian proses hukum suatu perkara; dan/atau\nd. Data Pribadi diperoleh dan/atau diproses dengan cara melawan hukum.\n(2) Pemusnahan Data Pribadi sebagaimana dimaksud pada ayat (1) dilakukan sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 45",
+    "tags": ["Pemberitahuan Penghapusan", "Pemberitahuan Pemusnahan"],
+    "konten": "Pengendali Data Pribadi wajib memberitahukan penghapusan dan/atau pemusnahan Data Pribadi kepada Subjek Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 46",
+    "tags": ["Kegagalan Pelindungan", "Data Breach", "Pemberitahuan Tertulis", "Penanganan Pemulihan"],
+    "konten": "(1) Dalam hal terjadi kegagalan Pelindungan Data Pribadi, Pengendali Data Pribadi wajib menyampaikan pemberitahuan secara tertulis paling lambat 3x24 (tiga kali dua puluh empat) jam kepada:\na. Subjek Data Pribadi; dan\nb. lembaga.\n(2) Pemberitahuan tertulis sebagaimana dimaksud pada ayat (1) minimal memuat:\na. Data Pribadi yang terungkap;\nb. kapan dan bagaimana Data Pribadi terungkap; dan\nc. upaya penanganan dan pemulihan atas terungkapnya Data Pribadi oleh Pengendali Data Pribadi.\n(3) Dalam hal tertentu, Pengendali Data Pribadi wajib memberitahukan kepada masyarakat mengenai kegagalan Pelindungan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 47",
+    "tags": ["Pertanggungjawaban", "Akuntabilitas"],
+    "konten": "Pengendali Data Pribadi wajib bertanggung jawab atas pemrosesan Data Pribadi dan menunjukkan pertanggungjawaban dalam pemenuhan kewajiban pelaksanaan prinsip Pelindungan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 48",
+    "tags": ["Penggabungan Badan Hukum", "Merger & Akuisisi", "Pengalihan Data Pribadi", "Pembubaran"],
+    "konten": "(1) Pengendali Data Pribadi berbentuk badan hukum yang melakukan penggabungan, pemisahan, pengambilalihan, peleburan, atau pembubaran badan hukum wajib menyampaikan pemberitahuan pengalihan Data Pribadi kepada Subjek Data Pribadi.\n(2) Pemberitahuan pengalihan Data Pribadi sebagaimana dimaksud pada ayat (1) dilakukan sebelum dan sesudah penggabungan, pemisahan, pengambilalihan, peleburan, atau pembubaran badan hukum.\n(3) Dalam hal Pengendali Data Pribadi berbentuk badan hukum melakukan pembubaran atau dibubarkan, penyimpanan, pentransferan, penghapusan, atau pemusnahan Data Pribadi dilaksanakan sesuai dengan ketentuan peraturan perundang-undangan.\n(4) Penyimpanan, pentransferan, penghapusan, atau pemusnahan Data Pribadi sebagaimana dimaksud pada ayat (3) diberitahukan kepada Subjek Data Pribadi.\n(5) Ketentuan lebih lanjut mengenai tata cara pemberitahuan sebagaimana dimaksud pada ayat (1), ayat (2), dan ayat (4) diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 49",
+    "tags": ["Perintah Lembaga"],
+    "konten": "Pengendali Data Pribadi dan/atau Prosesor Data Pribadi wajib melaksanakan perintah lembaga dalam rangka penyelenggaraan Pelindungan Data Pribadi sesuai dengan Undang-Undang ini."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 50",
+    "tags": ["Pengecualian Kewajiban", "Pertahanan Nasional", "Penegakan Hukum", "Pengawasan Sektor Keuangan"],
+    "konten": "(1) Kewajiban Pengendali Data Pribadi sebagaimana dimaksud dalam Pasal 30, Pasal 32, Pasal 36, Pasal 42, Pasal 43 ayat (1) huruf a sampai dengan huruf c, Pasal 44 ayat (1) huruf b, Pasal 45, dan Pasal 46 ayat (1) huruf a, dikecualikan untuk:\na. kepentingan pertahanan dan keamanan nasional;\nb. kepentingan proses penegakan hukum;\nc. kepentingan umum dalam rangka penyelenggaraan negara; atau\nd. kepentingan pengawasan sektor jasa keuangan, moneter, sistem pembayaran, dan stabilitas sistem keuangan yang dilakukan dalam rangka penyelenggaraan negara.\n(2) Pengecualian sebagaimana dimaksud pada ayat (1) dilaksanakan hanya dalam rangka pelaksanaan ketentuan Undang-Undang."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 51",
+    "tags": ["Kewajiban Prosesor Data", "Pemrosesan Berdasarkan Perintah", "Tanggung Jawab Pengendali", "Pelibatan Prosesor Lain"],
+    "konten": "(1) Dalam hal Pengendali Data Pribadi menunjuk Prosesor Data Pribadi, Prosesor Data Pribadi wajib melakukan pemrosesan Data Pribadi berdasarkan perintah Pengendali Data Pribadi.\n(2) Pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1), dilaksanakan sesuai ketentuan yang diatur dalam Undang-Undang ini.\n(3) Pemrosesan Data Pribadi sebagaimana dimaksud pada ayat (1) termasuk dalam tanggung jawab Pengendali Data Pribadi.\n(4) Prosesor Data Pribadi dapat melibatkan Prosesor Data Pribadi lain dalam melakukan pemrosesan Data Pribadi.\n(5) Prosesor Data Pribadi wajib mendapatkan persetujuan tertulis dari Pengendali Data Pribadi sebelum melibatkan Prosesor Data Pribadi lain sebagaimana dimaksud pada ayat (4).\n(6) Dalam hal Prosesor Data Pribadi melakukan pemrosesan Data Pribadi di luar perintah dan tujuan yang ditetapkan Pengendali Data Pribadi, pemrosesan Data Pribadi menjadi tanggung jawab Prosesor Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 52",
+    "tags": ["Kewajiban Berlaku bagi Prosesor", "Keamanan Data", "Perekaman Kegiatan", "Kerahasiaan"],
+    "konten": "Ketentuan mengenai kewajiban Pengendali Data Pribadi sebagaimana dimaksud dalam Pasal 29, Pasal 31, Pasal 35, Pasal 36, Pasal 37, Pasal 38, dan Pasal 39 berlaku juga terhadap Prosesor Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 53",
+    "tags": ["Penunjukan DPO", "Pejabat Pelindungan Data Pribadi", "Data Pribadi Skala Besar", "Profesionalitas"],
+    "konten": "(1) Pengendali Data Pribadi dan Prosesor Data Pribadi wajib menunjuk pejabat atau petugas yang melaksanakan fungsi Pelindungan Data Pribadi dalam hal:\na. pemrosesan Data Pribadi untuk kepentingan pelayanan publik;\nb. kegiatan inti Pengendali Data Pribadi memiliki sifat, ruang lingkup, dan/atau tujuan yang memerlukan pemantauan secara teratur dan sistematis atas Data Pribadi dengan skala besar; dan\nc. kegiatan inti Pengendali Data Pribadi terdiri dari pemrosesan Data Pribadi dalam skala besar untuk Data Pribadi yang bersifat spesifik dan/atau Data Pribadi yang berkaitan dengan tindak pidana.\n(2) Pejabat atau petugas yang melaksanakan fungsi Pelindungan Data Pribadi sebagaimana dimaksud pada ayat (1) ditunjuk berdasarkan profesionalitas, pengetahuan mengenai hukum, praktik Pelindungan Data Pribadi, dan kemampuan untuk memenuhi tugas-tugasnya.\n(3) Pejabat atau petugas yang melaksanakan fungsi Pelindungan Data Pribadi sebagaimana dimaksud pada ayat (2) dapat berasal dari dalam dan/atau luar Pengendali Data Pribadi atau Prosesor Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VI KEWAJIBAN PENGENDALI DATA PRIBADI DAN PROSESOR DATA PRIBADI DALAM PEMROSESAN DATA PRIBADI",
+    "pasal": "Pasal 54",
+    "tags": ["Tugas DPO", "Pejabat Pelindungan Data Pribadi", "Kepatuhan", "Narahubung"],
+    "konten": "(1) Pejabat atau petugas yang melaksanakan fungsi Pelindungan Data Pribadi memiliki tugas paling sedikit:\na. menginformasikan dan memberikan saran kepada Pengendali Data Pribadi atau Prosesor Data Pribadi agar mematuhi ketentuan dalam Undang-Undang ini;\nb. memantau dan memastikan kepatuhan terhadap Undang-Undang ini dan kebijakan Pengendali Data Pribadi atau Prosesor Data Pribadi;\nc. memberikan saran mengenai penilaian dampak Pelindungan Data Pribadi dan memantau kinerja Pengendali Data Pribadi dan Prosesor Data Pribadi; dan\nd. berkoordinasi dan bertindak sebagai narahubung untuk isu yang berkaitan dengan pemrosesan Data Pribadi.\n(2) Dalam melaksanakan tugas sebagaimana dimaksud pada ayat (1), pejabat atau petugas yang melaksanakan fungsi Pelindungan Data Pribadi memperhatikan risiko terkait pemrosesan Data Pribadi, dengan mempertimbangkan sifat, ruang lingkup, konteks, dan tujuan pemrosesan.\n(3) Ketentuan lebih lanjut mengenai pejabat atau petugas yang melaksanakan fungsi Pelindungan Data Pribadi diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VII TRANSFER DATA PRIBADI",
+    "pasal": "Pasal 55",
+    "tags": ["Transfer Data Domestik", "Transfer Dalam Negeri", "Pelindungan Saat Transfer"],
+    "konten": "(1) Pengendali Data Pribadi dapat melakukan transfer Data Pribadi kepada Pengendali Data Pribadi lainnya dalam wilayah hukum Negara Republik Indonesia.\n(2) Pengendali Data Pribadi yang melakukan transfer Data Pribadi dan yang menerima transfer Data Pribadi wajib melakukan Pelindungan Data Pribadi sebagaimana dimaksud dalam Undang-Undang ini."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VII TRANSFER DATA PRIBADI",
+    "pasal": "Pasal 56",
+    "tags": ["Transfer Data Internasional", "Transfer Lintas Batas", "Tingkat Pelindungan Setara", "Persetujuan Subjek Data"],
+    "konten": "(1) Pengendali Data Pribadi dapat melakukan transfer Data Pribadi kepada Pengendali Data Pribadi dan/atau Prosesor Data Pribadi di luar wilayah hukum Negara Republik Indonesia sesuai dengan ketentuan yang diatur dalam Undang-Undang ini.\n(2) Dalam melakukan transfer Data Pribadi sebagaimana dimaksud pada ayat (1), Pengendali Data Pribadi wajib memastikan negara tempat kedudukan Pengendali Data Pribadi dan/atau Prosesor Data Pribadi yang menerima transfer Data Pribadi memiliki tingkat Pelindungan Data Pribadi yang setara atau lebih tinggi dari yang diatur dalam Undang-Undang ini.\n(3) Dalam hal ketentuan sebagaimana dimaksud pada ayat (2) tidak terpenuhi, Pengendali Data Pribadi wajib memastikan terdapat Pelindungan Data Pribadi yang memadai dan bersifat mengikat.\n(4) Dalam hal ketentuan sebagaimana dimaksud pada ayat (2) dan ayat (3) tidak terpenuhi, Pengendali Data Pribadi wajib mendapatkan persetujuan Subjek Data Pribadi.\n(5) Ketentuan lebih lanjut mengenai transfer Data Pribadi diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB VIII SANKSI ADMINISTRATIF",
+    "pasal": "Pasal 57",
+    "tags": ["Sanksi Administratif", "Denda Administratif", "Penghentian Sementara", "Pelanggaran"],
+    "konten": "(1) Pelanggaran terhadap ketentuan Pasal 20 ayat (1), Pasal 21, Pasal 24, Pasal 25 ayat (2), Pasal 26 ayat (3), Pasal 27, Pasal 28, Pasal 29, Pasal 30, Pasal 31, Pasal 32 ayat (1), Pasal 33, Pasal 34 ayat (1), Pasal 35, Pasal 36, Pasal 37, Pasal 38, Pasal 39 ayat (1), Pasal 40 ayat (1), Pasal 41 ayat (1) dan ayat (3), Pasal 42 ayat (1), Pasal 43 ayat (1), Pasal 44 ayat (1), Pasal 45, Pasal 46 ayat (1) dan ayat (3), Pasal 47, Pasal 48 ayat (1), Pasal 49, Pasal 51 ayat (1) dan ayat (5), Pasal 52, Pasal 53 ayat (1), Pasal 55 ayat (2), dan Pasal 56 ayat (2) sampai dengan ayat (4) dikenai sanksi administratif.\n(2) Sanksi administratif sebagaimana dimaksud pada ayat (1) berupa:\na. peringatan tertulis;\nb. penghentian sementara kegiatan pemrosesan Data Pribadi;\nc. penghapusan atau pemusnahan Data Pribadi; dan/atau\nd. denda administratif.\n(3) Sanksi administratif berupa denda administratif sebagaimana dimaksud pada ayat (2) huruf d paling tinggi 2 (dua) persen dari pendapatan tahunan atau penerimaan tahunan terhadap variabel pelanggaran.\n(4) Penjatuhan sanksi administratif sebagaimana dimaksud pada ayat (2) diberikan oleh lembaga.\n(5) Ketentuan lebih lanjut mengenai tata cara pengenaan sanksi administratif sebagaimana dimaksud pada ayat (3) diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IX KELEMBAGAAN",
+    "pasal": "Pasal 58",
+    "tags": ["Kelembagaan Pelindungan Data", "Peran Pemerintah", "Penetapan Presiden"],
+    "konten": "(1) Pemerintah berperan dalam mewujudkan penyelenggaraan Pelindungan Data Pribadi sesuai dengan ketentuan Undang-Undang ini.\n(2) Penyelenggaraan Pelindungan Data Pribadi sebagaimana dimaksud pada ayat (1) dilaksanakan oleh lembaga.\n(3) Lembaga sebagaimana dimaksud pada ayat (2) ditetapkan oleh Presiden.\n(4) Lembaga sebagaimana dimaksud pada ayat (2) bertanggung jawab kepada Presiden.\n(5) Ketentuan lebih lanjut mengenai lembaga sebagaimana dimaksud pada ayat (2) diatur dengan Peraturan Presiden."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IX KELEMBAGAAN",
+    "pasal": "Pasal 59",
+    "tags": ["Tugas Lembaga", "Kebijakan Pelindungan Data", "Pengawasan", "Penegakan Hukum Administratif"],
+    "konten": "Lembaga sebagaimana dimaksud dalam Pasal 58 ayat (2) melaksanakan:\na. perumusan dan penetapan kebijakan dan strategi Pelindungan Data Pribadi yang menjadi panduan bagi Subjek Data Pribadi, Pengendali Data Pribadi, dan Prosesor Data Pribadi;\nb. pengawasan terhadap penyelenggaraan Pelindungan Data Pribadi;\nc. penegakan hukum administratif terhadap pelanggaran Undang-Undang ini; dan\nd. fasilitasi penyelesaian sengketa di luar pengadilan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IX KELEMBAGAAN",
+    "pasal": "Pasal 60",
+    "tags": ["Wewenang Lembaga", "Pemeriksaan", "Penelusuran", "Pemberian Sanksi", "Pemanggilan"],
+    "konten": "Lembaga sebagaimana dimaksud dalam Pasal 58 ayat (2) berwenang:\na. merumuskan dan menetapkan kebijakan di bidang Pelindungan Data Pribadi;\nb. melakukan pengawasan terhadap kepatuhan Pengendali Data Pribadi;\nc. menjatuhkan sanksi administratif atas pelanggaran Pelindungan Data Pribadi yang dilakukan Pengendali Data Pribadi dan/atau Prosesor Data Pribadi;\nd. membantu aparat penegak hukum dalam penanganan dugaan tindak pidana Data Pribadi sebagaimana dimaksud dalam Undang-Undang ini;\ne. bekerja sama dengan lembaga Pelindungan Data Pribadi negara lain dalam rangka penyelesaian dugaan pelanggaran Pelindungan Data Pribadi lintas negara;\nf. melakukan penilaian terhadap pemenuhan persyaratan transfer Data Pribadi ke luar wilayah hukum Negara Republik Indonesia;\ng. memberikan perintah dalam rangka tindak lanjut hasil pengawasan kepada Pengendali Data Pribadi dan/atau Prosesor Data Pribadi;\nh. melakukan publikasi hasil pelaksanaan pengawasan Pelindungan Data Pribadi sesuai dengan ketentuan peraturan perundang-undangan;\ni. menerima aduan dan/atau laporan tentang dugaan terjadinya pelanggaran Pelindungan Data Pribadi;\nj. melakukan pemeriksaan dan penelusuran atas pengaduan, laporan, dan/atau hasil pengawasan terhadap dugaan terjadinya pelanggaran Pelindungan Data Pribadi;\nk. memanggil dan menghadirkan Setiap Orang dan/atau Badan Publik yang terkait dengan dugaan pelanggaran Pelindungan Data Pribadi;\nl. meminta keterangan, data, Informasi, dan dokumen dari Setiap Orang dan/atau Badan Publik terkait dugaan pelanggaran Pelindungan Data Pribadi;\nm. memanggil dan menghadirkan ahli yang diperlukan dalam pemeriksaan dan penelusuran terkait dugaan pelanggaran Pelindungan Data Pribadi;\nn. melakukan pemeriksaan dan penelusuran terhadap sistem elektronik, sarana, ruang, dan/atau tempat yang digunakan Pengendali Data Pribadi dan/atau Prosesor Data Pribadi, termasuk memperoleh akses terhadap data dan/atau menunjuk pihak ketiga; dan\no. meminta bantuan hukum kepada kejaksaan dalam penyelesaian sengketa Pelindungan Data Pribadi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB IX KELEMBAGAAN",
+    "pasal": "Pasal 61",
+    "tags": ["Tata Cara Wewenang Lembaga", "Peraturan Pemerintah"],
+    "konten": "Ketentuan mengenai tata cara pelaksanaan wewenang lembaga sebagaimana dimaksud dalam Pasal 60 diatur dalam Peraturan Pemerintah."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB X KERJA SAMA INTERNASIONAL",
+    "pasal": "Pasal 62",
+    "tags": ["Kerja Sama Internasional", "Prinsip Hukum Internasional"],
+    "konten": "(1) Kerja sama internasional dilakukan oleh Pemerintah dengan pemerintah negara lain atau Organisasi Internasional terkait dengan Pelindungan Data Pribadi.\n(2) Kerja sama internasional dalam rangka pelaksanaan Undang-Undang ini dilaksanakan sesuai dengan ketentuan peraturan perundang-undangan dan prinsip hukum internasional."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XI PARTISIPASI MASYARAKAT",
+    "pasal": "Pasal 63",
+    "tags": ["Partisipasi Masyarakat", "Pendidikan dan Pelatihan", "Pengawasan Masyarakat"],
+    "konten": "(1) Masyarakat dapat berperan baik secara langsung maupun tidak langsung dalam mendukung terselenggaranya Pelindungan Data Pribadi.\n(2) Pelaksanaan peran sebagaimana dimaksud pada ayat (1) dapat dilakukan melalui pendidikan, pelatihan, advokasi, sosialisasi, dan/atau pengawasan sesuai dengan ketentuan peraturan perundang-undangan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XII PENYELESAIAN SENGKETA DAN HUKUM ACARA",
+    "pasal": "Pasal 64",
+    "tags": ["Penyelesaian Sengketa", "Hukum Acara", "Arbitrase", "Alat Bukti Elektronik", "Sidang Tertutup"],
+    "konten": "(1) Penyelesaian sengketa Pelindungan Data Pribadi dilakukan melalui arbitrase, pengadilan, atau lembaga penyelesaian sengketa alternatif lainnya sesuai dengan ketentuan peraturan perundang-undangan.\n(2) Hukum acara yang berlaku dalam penyelesaian sengketa dan/atau proses peradilan Pelindungan Data Pribadi sebagaimana dimaksud pada ayat (1) dilaksanakan berdasarkan hukum acara yang berlaku sesuai dengan ketentuan peraturan perundang-undangan.\n(3) Alat bukti yang sah dalam Undang-Undang ini meliputi:\na. alat bukti sebagaimana dimaksud dalam hukum acara; dan\nb. alat bukti lain berupa informasi elektronik dan/atau dokumen elektronik sesuai dengan ketentuan peraturan perundang-undangan.\n(4) Dalam hal diperlukan untuk melindungi Data Pribadi, proses persidangan dilakukan secara tertutup."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIII LARANGAN DALAM PENGGUNAAN DATA PRIBADI",
+    "pasal": "Pasal 65",
+    "tags": ["Larangan Penggunaan Data", "Melawan Hukum", "Memperoleh Data Pribadi", "Mengungkapkan Data Pribadi"],
+    "konten": "(1) Setiap Orang dilarang secara melawan hukum memperoleh atau mengumpulkan Data Pribadi yang bukan miliknya dengan maksud untuk menguntungkan diri sendiri atau orang lain yang dapat mengakibatkan kerugian Subjek Data Pribadi.\n(2) Setiap Orang dilarang secara melawan hukum mengungkapkan Data Pribadi yang bukan miliknya.\n(3) Setiap Orang dilarang secara melawan hukum menggunakan Data Pribadi yang bukan miliknya."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIII LARANGAN DALAM PENGGUNAAN DATA PRIBADI",
+    "pasal": "Pasal 66",
+    "tags": ["Larangan Pemalsuan Data", "Membuat Data Palsu"],
+    "konten": "Setiap Orang dilarang membuat Data Pribadi palsu atau memalsukan Data Pribadi dengan maksud untuk menguntungkan diri sendiri atau orang lain yang dapat mengakibatkan kerugian bagi orang lain."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIV KETENTUAN PIDANA",
+    "pasal": "Pasal 67",
+    "tags": ["Ketentuan Pidana", "Pidana Penjara", "Pidana Denda", "Pelanggaran Pasal 65"],
+    "konten": "(1) Setiap Orang yang dengan sengaja dan melawan hukum memperoleh atau mengumpulkan Data Pribadi yang bukan miliknya dengan maksud untuk menguntungkan diri sendiri atau orang lain yang dapat mengakibatkan kerugian Subjek Data Pribadi sebagaimana dimaksud dalam Pasal 65 ayat (1) dipidana dengan pidana penjara paling lama 5 (lima) tahun dan/atau pidana denda paling banyak Rp5.000.000.000,00 (lima miliar rupiah).\n(2) Setiap Orang yang dengan sengaja dan melawan hukum mengungkapkan Data Pribadi yang bukan miliknya sebagaimana dimaksud dalam Pasal 65 ayat (2) dipidana dengan pidana penjara paling lama 4 (empat) tahun dan/atau pidana denda paling banyak Rp4.000.000.000,00 (empat miliar rupiah).\n(3) Setiap Orang yang dengan sengaja dan melawan hukum menggunakan Data Pribadi yang bukan miliknya sebagaimana dimaksud dalam Pasal 65 ayat (3) dipidana dengan pidana penjara paling lama 5 (lima) tahun dan/atau pidana denda paling banyak Rp5.000.000.000,00 (lima miliar rupiah)."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIV KETENTUAN PIDANA",
+    "pasal": "Pasal 68",
+    "tags": ["Ketentuan Pidana", "Pidana Pemalsuan Data", "Pelanggaran Pasal 66"],
+    "konten": "Setiap Orang yang dengan sengaja membuat Data Pribadi palsu atau memalsukan Data Pribadi dengan maksud untuk menguntungkan diri sendiri atau orang lain yang dapat mengakibatkan kerugian bagi orang lain sebagaimana dimaksud dalam Pasal 66 dipidana dengan pidana penjara paling lama 6 (enam) tahun dan/atau pidana denda paling banyak Rp6.000.000.000,00 (enam miliar rupiah)."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIV KETENTUAN PIDANA",
+    "pasal": "Pasal 69",
+    "tags": ["Pidana Tambahan", "Perampasan Keuntungan", "Pembayaran Ganti Kerugian"],
+    "konten": "Selain dijatuhi pidana sebagaimana dimaksud dalam Pasal 67 dan Pasal 68 juga dapat dijatuhi pidana tambahan berupa perampasan keuntungan dan/atau harta kekayaan yang diperoleh atau hasil dari tindak pidana dan pembayaran ganti kerugian."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIV KETENTUAN PIDANA",
+    "pasal": "Pasal 70",
+    "tags": ["Pidana Korporasi", "Denda Korporasi", "Pembekuan Usaha", "Pembubaran Korporasi"],
+    "konten": "(1) Dalam hal tindak pidana sebagaimana dimaksud dalam Pasal 67 dan Pasal 68 dilakukan oleh Korporasi, pidana dapat dijatuhkan kepada pengurus, pemegang kendali, pemberi perintah, pemilik manfaat, dan/atau Korporasi.\n(2) Pidana yang dapat dijatuhkan terhadap Korporasi hanya pidana denda.\n(3) Pidana denda yang dijatuhkan kepada Korporasi paling banyak 10 (sepuluh) kali dari maksimal pidana denda yang diancamkan.\n(4) Selain dijatuhi pidana denda sebagaimana dimaksud pada ayat (2), Korporasi dapat dijatuhi pidana tambahan berupa:\na. perampasan keuntungan dan/atau harta kekayaan yang diperoleh atau hasil dari tindak pidana;\nb. pembekuan seluruh atau sebagian usaha Korporasi;\nc. pelarangan permanen melakukan perbuatan tertentu;\nd. penutupan seluruh atau sebagian tempat usaha dan/atau kegiatan Korporasi;\ne. melaksanakan kewajiban yang telah dilalaikan;\nf. pembayaran ganti kerugian;\ng. pencabutan izin; dan/atau\nh. pembubaran Korporasi."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIV KETENTUAN PIDANA",
+    "pasal": "Pasal 71",
+    "tags": ["Eksekusi Pidana Denda", "Penyitaan Harta", "Pelelangan Benda", "Pidana Penjara Pengganti"],
+    "konten": "(1) Dalam hal pengadilan menjatuhkan putusan pidana denda, terpidana diberikan jangka waktu 1 (satu) bulan sejak putusan telah memperoleh kekuatan hukum tetap untuk membayar denda tersebut.\n(2) Dalam hal terdapat alasan kuat, jangka waktu sebagaimana dimaksud pada ayat (1) dapat diperpanjang untuk waktu paling lama 1 (satu) bulan.\n(3) Dalam hal terpidana tidak membayar pidana denda dalam jangka waktu sebagaimana dimaksud pada ayat (1) atau ayat (2) maka harta kekayaan atau pendapatan terpidana dapat disita dan dilelang oleh jaksa untuk melunasi pidana denda yang tidak dibayar.\n(4) Dalam hal penyitaan dan pelelangan harta kekayaan atau pendapatan sebagaimana dimaksud pada ayat (3) tidak cukup atau tidak memungkinkan untuk dilaksanakan, pidana denda yang tidak dibayar diganti dengan pidana penjara paling lama sebagaimana diancamkan untuk tindak pidana yang bersangkutan.\n(5) Lamanya pidana penjara sebagaimana dimaksud pada ayat (4) yang ditentukan oleh hakim, dicantumkan dalam putusan pengadilan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIV KETENTUAN PIDANA",
+    "pasal": "Pasal 72",
+    "tags": ["Pidana Pengganti Korporasi", "Pembekuan Kegiatan Usaha"],
+    "konten": "(1) Dalam hal penyitaan dan pelelangan harta kekayaan atau pendapatan sebagaimana dimaksud dalam Pasal 71 ayat (4) dilakukan terhadap terpidana Korporasi dan tidak cukup untuk melunasi pidana denda, Korporasi dikenakan pidana pengganti berupa pembekuan sebagian atau seluruh kegiatan usaha Korporasi untuk jangka waktu paling lama 5 (lima) tahun.\n(2) Lamanya pembekuan sebagian atau seluruh kegiatan usaha Korporasi sebagaimana dimaksud pada ayat (1) yang ditentukan oleh hakim, dicantumkan dalam putusan pengadilan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XIV KETENTUAN PIDANA",
+    "pasal": "Pasal 73",
+    "tags": ["Pidana Tambahan", "Pembayaran Ganti Kerugian"],
+    "konten": "Ketentuan sebagaimana dimaksud dalam Pasal 71 dan Pasal 72 juga berlaku dalam hal penjatuhan pidana tambahan berupa pembayaran ganti kerugian."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XV KETENTUAN PERALIHAN",
+    "pasal": "Pasal 74",
+    "tags": ["Ketentuan Peralihan", "Masa Penyesuaian", "Jangka Waktu Transisi"],
+    "konten": "Pada saat Undang-Undang ini mulai berlaku, Pengendali Data Pribadi, Prosesor Data Pribadi, dan pihak lain yang terkait dengan pemrosesan Data Pribadi, wajib menyesuaikan dengan ketentuan pemrosesan Data Pribadi berdasarkan Undang-Undang ini paling lama 2 (dua) tahun sejak Undang-Undang ini diundangkan."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XV KETENTUAN PERALIHAN",
+    "pasal": "Pasal 75",
+    "tags": ["Ketentuan Peralihan", "Keberlakuan Peraturan Lama"],
+    "konten": "Pada saat Undang-Undang ini mulai berlaku, semua ketentuan peraturan perundang-undangan yang mengatur mengenai Pelindungan Data Pribadi, dinyatakan masih tetap berlaku sepanjang tidak bertentangan dengan ketentuan dalam Undang-Undang ini."
+  },
+  {
+    "document_title": "UU Nomor 27 Tahun 2022",
+    "document_type": "Undang-Undang",
+    "domain": "Pelindungan Data Pribadi",
+    "bab": "BAB XVI KETENTUAN PENUTUP",
+    "pasal": "Pasal 76",
+    "tags": ["Ketentuan Penutup", "Masa Berlaku Peraturan", "Tanggal Diundangkan"],
+    "konten": "Undang-Undang ini mulai berlaku pada tanggal diundangkan."
+  }
+]

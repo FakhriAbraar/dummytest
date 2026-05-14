@@ -10,7 +10,6 @@ from app.settings import settings
 
 IGRS_DATA: list[dict[str, str]] = [
     {"kategori_ai": "Pornography_Keras",    "age_rating_minimal": "PRC", "dominant_modality": "VISUAL"},
-    {"kategori_ai": "Pornography_Ringan",   "age_rating_minimal": "PRC", "dominant_modality": "VISUAL"},
     {"kategori_ai": "Pornography_Ringan",   "age_rating_minimal": "17+", "dominant_modality": "VISUAL"},
     {"kategori_ai": "Animasi_Ringan",       "age_rating_minimal": "SU",  "dominant_modality": "VISUAL"},
     {"kategori_ai": "Animasi_Keras",        "age_rating_minimal": "13+", "dominant_modality": "VISUAL"},
