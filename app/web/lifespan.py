@@ -17,7 +17,7 @@ async def lifespan_setup(
 ) -> AsyncGenerator[None]:  # pragma: no cover
     await connect_postgres()
     await connect_mongo()
-    await connect_qdrant()
+    # await connect_qdrant() # hapus? - algof
     await connect_minio()
 
     app.middleware_stack = None

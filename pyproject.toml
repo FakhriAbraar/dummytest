@@ -21,6 +21,7 @@ dependencies = [
   "alembic >=1.16.0,<2",
   "qdrant-client >=1.14.0,<2",
   "minio >=7.2.0,<8",
+  "python-multipart>=0.0.27",
 ]
 
 [dependency-groups]
@@ -117,10 +118,10 @@ lint.ignore = [
     "D102",
     "D103",
 ]
+lint.mccabe = { max-complexity = 10 }
 exclude = [
     ".venv/"
 ]
-lint.mccabe = { max-complexity = 10 }
 line-length = 88
 
 [tool.ruff.lint.per-file-ignores]
