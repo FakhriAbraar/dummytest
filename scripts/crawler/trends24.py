@@ -67,7 +67,7 @@ args = parser.parse_args()
 # ============================================================
 TARGET_URL      = f"https://trends24.in/{args.region}/"
 HEADLESS_FLAG   = args.headless
-COLLECTION_NAME = "trending_keyword"
+COLLECTION_NAME = "trends24_keyword"
 
 
 # ============================================================
