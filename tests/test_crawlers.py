@@ -50,6 +50,11 @@ CRAWLERS = [
         "module":  "scripts.crawler.google-trends",
         "args":    [],
     },
+    {
+        "name":   "Instagram",
+        "module": "scripts.crawler.instagram",
+        "args":   ["--keyword", "prabowo", "--target_post", "3", "--max_scroll", "3"],
+    },
 ]
 
 # ============================================================
