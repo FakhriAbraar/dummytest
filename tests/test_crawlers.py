@@ -68,6 +68,11 @@ CRAWLERS = [
         "module": "scripts.crawler.youtube",
         "args":   ["--keyword", "nadiem makarim", "--target_post", "1"],
     },
+    {
+        "name":   "Screenshot",
+        "script": "scripts/crawler/screenshot-evidence.py",
+        "args":   ["--url", "https://www.youtube.com/watch?v=6KP2W1djB6c", "https://instagram.com/p/DXtLg_Wk95E", "https://www.tiktok.com/@badan.gerakan.nus/video/7628929672537034005", "https://x.com/scaradeharu/status/2054107944783085888"],
+    },
 ]
 
 # ============================================================
