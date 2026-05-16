@@ -73,6 +73,17 @@ CRAWLERS = [
         "script": "scripts/crawler/screenshot-evidence.py",
         "args":   ["--url", "https://www.youtube.com/watch?v=6KP2W1djB6c", "https://instagram.com/p/DXtLg_Wk95E", "https://www.tiktok.com/@badan.gerakan.nus/video/7628929672537034005", "https://x.com/scaradeharu/status/2054107944783085888"],
     },
+    {
+        "name":   "Content Checker",
+        "script": "scripts/crawler/content-checker.py",
+        "args":   [
+            "--url",
+            "https://www.youtube.com/watch?v=6KP2W1djB6c",
+            "https://www.tiktok.com/@badan.gerakan.nus/video/7628929672537034005",
+            "https://instagram.com/p/DXtLg_Wk95E",
+            "https://x.com/scaradeharu/status/2054107944783085888",
+        ],
+    },
 ]
 
 # ============================================================
