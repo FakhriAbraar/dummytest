@@ -310,6 +310,7 @@ async def upload_screenshots(screenshots: list[dict]) -> dict:
                 "url":           item["url"],
                 "minio_path":    result["path"],
                 "platform":      _detect_platform(item["url"]),
+                "source":        "direct_url",
                 "screenshot_at": screenshot_at,
             })
             logger.info("Upload berhasil: %s", item["object_name"])

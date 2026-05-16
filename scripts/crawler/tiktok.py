@@ -178,6 +178,7 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
         documents.append({
             "batch_id":       batch_id,
             "platform":       "tiktok",
+            "source":         "keyword_crawl",
             "target_keyword": item.get("input"),
             "scraped_at":     scraped_at_iso,
             "unique_id":      unique_id,

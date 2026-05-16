@@ -332,6 +332,7 @@ async def download_upload_and_save(tag_links: dict[str, list[str]]) -> dict:
                 documents.append({
                     "batch_id":        batch_id,
                     "platform":        "instagram",
+                    "source":          "keyword_crawl",
                     "target_keyword":  kw,
                     "scraped_at":      scraped_at_iso,
                     "unique_id":       unique_id,

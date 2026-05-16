@@ -253,6 +253,7 @@ def download_videos(
             documents.append({
                 "batch_id":       batch_id,
                 "platform":       "youtube",
+                "source":         "keyword_crawl",
                 "target_keyword": keyword_label,
                 "scraped_at":     scraped_at_iso,
                 "unique_id":      unique_id,

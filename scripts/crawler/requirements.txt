@@ -1,0 +1,32 @@
+# ============================================================
+# Python dependencies untuk scripts/crawler/
+# Install: pip install -r scripts/crawler/requirements.txt
+# ============================================================
+
+# Web scraping & browser automation
+playwright          # Digunakan oleh: semua crawler (kecuali content-checker)
+beautifulsoup4      # Digunakan oleh: trends24.py (parsing HTML)
+
+# Media download
+yt-dlp              # Digunakan oleh: tiktok.py, twitter.py, youtube.py, content-checker.py
+
+# Social media APIs & clients
+instaloader         # Digunakan oleh: instagram.py (download media Instagram)
+apify-client        # Digunakan oleh: tiktok.py (Apify actor TikTok scraper)
+
+# HTTP
+requests            # Digunakan oleh: tiktok.py (download slideshow), twitter.py (download gambar)
+
+# Environment & config
+python-dotenv       # Digunakan oleh: semua crawler (load .env)
+
+# ============================================================
+# Catatan dependensi non-Python:
+# ============================================================
+# 1. Playwright browser:
+#    playwright install chromium
+#
+# 2. Node.js + tweet-harvest (untuk twitter.py):
+#    npx tweet-harvest --help
+#    (dipanggil via subprocess, bukan import Python)
+# ============================================================
