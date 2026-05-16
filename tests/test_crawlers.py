@@ -38,30 +38,35 @@ PROJECT_ROOT = next(p for p in Path(
     __file__).parents if (p / "pyproject.toml").exists())
 
 CRAWLERS = [
-    # {
-    #     "name":    "Trends24",
-    #     "module":  "scripts.crawler.trends24",
-    #     "args":    ["--region", "indonesia"],
-    # },
-    # {
-    #     "name":    "Google Trends",
-    #     "module":  "scripts.crawler.google-trends",
-    #     "args":    [],
-    # },
-    # {
-    #     "name":   "Instagram",
-    #     "module": "scripts.crawler.instagram",
-    #     "args":   ["--keyword", "prabowo", "--target_post", "3", "--max_scroll", "3"],
-    # },
-    # {
-    #     "name":   "TikTok",
-    #     "module": "scripts.crawler.tiktok",
-    #     "args":   ["--keyword", "komdigi", "--target_post", "20"],
-    # },
+    {
+        "name":    "Trends24",
+        "module":  "scripts.crawler.trends24",
+        "args":    ["--region", "indonesia"],
+    },
+    {
+        "name":    "Google Trends",
+        "module":  "scripts.crawler.google-trends",
+        "args":    [],
+    },
+    {
+        "name":   "Instagram",
+        "module": "scripts.crawler.instagram",
+        "args":   ["--keyword", "prabowo", "--target_post", "3", "--max_scroll", "3"],
+    },
+    {
+        "name":   "TikTok",
+        "module": "scripts.crawler.tiktok",
+        "args":   ["--keyword", "komdigi", "--target_post", "20"],
+    },
     {
         "name":   "Twitter",
         "module": "scripts.crawler.twitter",
         "args":   ["--keyword", "komdigi", "--target_post", "5"],
+    },
+    {
+        "name":   "YouTube",
+        "module": "scripts.crawler.youtube",
+        "args":   ["--keyword", "nadiem makarim", "--target_post", "1"],
     },
 ]
 
