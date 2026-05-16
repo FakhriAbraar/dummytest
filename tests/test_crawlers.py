@@ -2,7 +2,7 @@
 test_crawlers.py — Standalone runner untuk menguji crawler via subprocess.
 
 Cara menjalankan dari root project:
-    conda run -n aitf python test_crawlers.py
+    conda run -n aitf python -m tests.test_crawlers
 
 Skrip ini mensimulasikan persis cara AI Agent memanggil crawler:
   - stdout  -> di-parse sebagai JSON
@@ -10,6 +10,11 @@ Skrip ini mensimulasikan persis cara AI Agent memanggil crawler:
   - exit code -> 0 = sukses, 1 = gagal
 """
 
+from dataclasses import dataclass, field
+from pathlib import Path
+import subprocess
+import time
+import json
 import io
 import sys
 
@@ -19,21 +24,18 @@ if sys.platform == "win32":
     ctypes.windll.kernel32.SetConsoleOutputCP(65001)
     ctypes.windll.kernel32.SetConsoleCP(65001)
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+sys.stdout = io.TextIOWrapper(
+    sys.stdout.buffer, encoding="utf-8", errors="replace")
+sys.stderr = io.TextIOWrapper(
+    sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-
-import json
-import time
-import subprocess
-from pathlib import Path
-from dataclasses import dataclass, field
 
 # ============================================================
 # KONFIGURASI CRAWLER YANG AKAN DIUJI
 # ============================================================
 # Root project = direktori tempat file ini berada
-PROJECT_ROOT = next(p for p in Path(__file__).parents if (p / "pyproject.toml").exists())
+PROJECT_ROOT = next(p for p in Path(
+    __file__).parents if (p / "pyproject.toml").exists())
 
 CRAWLERS = [
     {
@@ -55,11 +57,18 @@ CRAWLERS = [
         "module": "scripts.crawler.instagram",
         "args":   ["--keyword", "prabowo", "--target_post", "3", "--max_scroll", "3"],
     },
+    {
+        "name":   "TikTok",
+        "module": "scripts.crawler.tiktok",
+        "args":   ["--keyword", "komdigi", "--target_post", "20"],
+    },
 ]
 
 # ============================================================
 # DATA CLASS HASIL UJI
 # ============================================================
+
+
 @dataclass
 class TestResult:
     name:       str
@@ -69,24 +78,25 @@ class TestResult:
     stdout_raw: str
     stderr:     str
     json_out:   dict = field(default_factory=dict)
-    error_msg:  str  = ""
+    error_msg:  str = ""
 
 
 # ============================================================
 # HELPER: WARNA TERMINAL (ANSI)
 # ============================================================
-GREEN  = "\033[92m"
-RED    = "\033[91m"
+GREEN = "\033[92m"
+RED = "\033[91m"
 YELLOW = "\033[93m"
-CYAN   = "\033[96m"
-BOLD   = "\033[1m"
-RESET  = "\033[0m"
+CYAN = "\033[96m"
+BOLD = "\033[1m"
+RESET = "\033[0m"
 
-def ok(text):    return f"{GREEN}[PASS] {text}{RESET}"
-def fail(text):  return f"{RED}[FAIL] {text}{RESET}"
-def info(text):  return f"{CYAN}{text}{RESET}"
-def warn(text):  return f"{YELLOW}[WARN] {text}{RESET}"
-def bold(text):  return f"{BOLD}{text}{RESET}"
+
+def ok(text): return f"{GREEN}[PASS] {text}{RESET}"
+def fail(text): return f"{RED}[FAIL] {text}{RESET}"
+def info(text): return f"{CYAN}{text}{RESET}"
+def warn(text): return f"{YELLOW}[WARN] {text}{RESET}"
+def bold(text): return f"{BOLD}{text}{RESET}"
 
 
 # ============================================================
@@ -213,7 +223,8 @@ def main():
         print()
         if result.passed:
             count = result.json_out.get("count", "?")
-            print(ok(f"  LULUS  | {result.name} — {count} dokumen tersimpan ({result.duration_s:.1f}s)"))
+            print(
+                ok(f"  LULUS  | {result.name} — {count} dokumen tersimpan ({result.duration_s:.1f}s)"))
         else:
             print(fail(f"  GAGAL  | {result.name} ({result.duration_s:.1f}s)"))
             print(f"         {RED}Alasan: {result.error_msg}{RESET}")
@@ -223,8 +234,8 @@ def main():
     # SUMMARY AKHIR
     # ============================================================
     passed_count = sum(1 for r in results if r.passed)
-    total_count  = len(results)
-    total_time   = sum(r.duration_s for r in results)
+    total_count = len(results)
+    total_time = sum(r.duration_s for r in results)
 
     print(f"\n{'=' * 60}")
     print(bold("  HASIL AKHIR"))
@@ -232,17 +243,20 @@ def main():
 
     for r in results:
         status_str = ok("LULUS") if r.passed else fail("GAGAL")
-        doc_count  = r.json_out.get("count", "-") if r.passed else "-"
-        print(f"  {status_str}  {r.name:<20} | {doc_count:>5} docs | {r.duration_s:>5.1f}s | exit={r.exit_code}")
+        doc_count = r.json_out.get("count", "-") if r.passed else "-"
+        print(
+            f"  {status_str}  {r.name:<20} | {doc_count:>5} docs | {r.duration_s:>5.1f}s | exit={r.exit_code}")
 
     print(f"{'-' * 60}")
-    print(f"  Total: {passed_count}/{total_count} lulus | Waktu total: {total_time:.1f}s")
+    print(
+        f"  Total: {passed_count}/{total_count} lulus | Waktu total: {total_time:.1f}s")
 
     if passed_count == total_count:
         print(ok(f"\n  Semua crawler berfungsi dengan benar!"))
     else:
         failed_names = [r.name for r in results if not r.passed]
-        print(fail(f"\n  {total_count - passed_count} crawler gagal: {', '.join(failed_names)}"))
+        print(fail(
+            f"\n  {total_count - passed_count} crawler gagal: {', '.join(failed_names)}"))
 
     print(f"{'=' * 60}\n")
 
