@@ -38,29 +38,30 @@ PROJECT_ROOT = next(p for p in Path(
     __file__).parents if (p / "pyproject.toml").exists())
 
 CRAWLERS = [
+    # {
+    #     "name":    "Trends24",
+    #     "module":  "scripts.crawler.trends24",
+    #     "args":    ["--region", "indonesia"],
+    # },
+    # {
+    #     "name":    "Google Trends",
+    #     "module":  "scripts.crawler.google-trends",
+    #     "args":    [],
+    # },
+    # {
+    #     "name":   "Instagram",
+    #     "module": "scripts.crawler.instagram",
+    #     "args":   ["--keyword", "prabowo", "--target_post", "3", "--max_scroll", "3"],
+    # },
+    # {
+    #     "name":   "TikTok",
+    #     "module": "scripts.crawler.tiktok",
+    #     "args":   ["--keyword", "komdigi", "--target_post", "20"],
+    # },
     {
-        "name":    "Trends24",
-        "module":  "scripts.crawler.trends24",
-        "args":    ["--region", "indonesia"],
-    },
-    {
-        "name":    "Google Trends",
-        # google-trends.py mengandung tanda hubung sehingga tidak bisa
-        # di-import sebagai module Python biasa lewat -m.
-        # Solusi: gunakan path file langsung.
-        # "script":  "scripts/crawler/google-trends.py",
-        "module":  "scripts.crawler.google-trends",
-        "args":    [],
-    },
-    {
-        "name":   "Instagram",
-        "module": "scripts.crawler.instagram",
-        "args":   ["--keyword", "prabowo", "--target_post", "3", "--max_scroll", "3"],
-    },
-    {
-        "name":   "TikTok",
-        "module": "scripts.crawler.tiktok",
-        "args":   ["--keyword", "komdigi", "--target_post", "20"],
+        "name":   "Twitter",
+        "module": "scripts.crawler.twitter",
+        "args":   ["--keyword", "komdigi", "--target_post", "5"],
     },
 ]
 
