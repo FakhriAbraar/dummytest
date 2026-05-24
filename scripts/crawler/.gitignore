@@ -4,5 +4,14 @@
 # instagram.py
 ig_session.json
 
-# twitter.py
-twitter_session.json
+# twitter.py — session files
+twitter_session_1.json
+twitter_session_2.json
+twitter_session_3.json
+twitter_session_4.json
+twitter_session_5.json
+
+# twitter.py — session pool lock files (auto-generated, jangan di-commit)
+.twitter_session_*.lock
+.twitter_rr_counter
+.twitter_rr.lock

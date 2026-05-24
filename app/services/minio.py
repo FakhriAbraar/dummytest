@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import asyncio
 import io
+import base64
+from PIL import Image
 from datetime import timedelta
 
 from fastapi import UploadFile
@@ -113,4 +115,37 @@ async def get_presigned_url(object_name: str, time_to_expire: int = 3600) -> dic
         )
         return {"status": "success", "message": "object berhasil ditemukan", "url": url}
     except S3Error as e:
+        return {"status": "error", "message": str(e)}
+
+
+async def get_file_base64(object_name: str) -> dict:
+    minio_client = get_minio_client()
+    try:
+        response = await asyncio.to_thread(
+            minio_client.get_object,
+            bucket_name=settings.minio_bucket,
+            object_name=object_name,
+        )
+        data = response.read()
+        response.close()
+        response.release_conn()
+        
+        img = Image.open(io.BytesIO(data))
+        
+        if img.mode in ("RGBA", "P"):
+            img = img.convert("RGB")
+            
+        img.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
+        
+        buffer = io.BytesIO()
+        img.save(buffer, format="JPEG", quality=75, optimize=True)
+        compressed_data = buffer.getvalue()
+        
+        b64_encoded = base64.b64encode(compressed_data).decode('utf-8')
+        
+        data_uri = f"data:image/jpeg;base64,{b64_encoded}"
+        
+        return {"status": "success", "data_uri": data_uri}
+    except Exception as e:
+        print(f"[-] Error kompresi/Base64 MinIO: {e}")
         return {"status": "error", "message": str(e)}

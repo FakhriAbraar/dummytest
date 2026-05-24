@@ -28,7 +28,7 @@ async def lifespan_setup(
     await connect_minio()
 
     BASE_DIR = Path(__file__).resolve().parent.parent.parent
-    KEYWORD_MODEL_PATH = BASE_DIR / "models" / "keyword_generator" / "ministral-3b-base-f16.gguf"
+    KEYWORD_MODEL_PATH = BASE_DIR / "app" / "models" / "keyword_generator" / "ministral-3b-base-f16.gguf"
 
     print(f"[*] Mengecek Model Keyword di: {KEYWORD_MODEL_PATH}")
 

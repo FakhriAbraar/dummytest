@@ -19,6 +19,7 @@ requests            # Digunakan oleh: tiktok.py (download slideshow), twitter.py
 
 # Environment & config
 python-dotenv       # Digunakan oleh: semua crawler (load .env)
+filelock            # Digunakan oleh: twitter.py (inter-process session pool lock)
 
 # ============================================================
 # Catatan dependensi non-Python:

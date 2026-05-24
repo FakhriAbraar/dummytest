@@ -1,43 +1,159 @@
+import os
+import sys
+import json
 import asyncio
+import subprocess
+
+# Force subprocess child processes to use UTF-8 encoding on Windows
+_subprocess_env = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"}
+
+
+def _run_trend_subprocess_sync(script_module: str, *extra_args) -> list[str]:
+    """Synchronous version — akan di-dispatch ke thread oleh wrapper async."""
+    cwd_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+    cmd = [sys.executable, "-m", script_module] + list(extra_args)
+    
+    print(f"[*] Triggering subprocess: {' '.join(cmd)}")
+    
+    proc = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        cwd=cwd_path,
+        timeout=300,
+        env=_subprocess_env
+    )
+    
+    if proc.returncode != 0:
+        print(f"[-] Subprocess {script_module} meledak (Exit {proc.returncode}):\n{proc.stderr.decode('utf-8', errors='replace')}")
+        return []
+        
+    try:
+        result = json.loads(proc.stdout.decode('utf-8', errors='replace'))
+        topics = []
+        
+        # Ekstrak field 'topic' dari data yang udah ditambal tadi
+        extracted_data = result.get("extracted_data", [])
+        for item in extracted_data:
+            if "topic" in item and item["topic"]:
+                topics.append(str(item["topic"]))
+                
+        print(f"[+] {script_module} mengamankan {len(topics)} trending topics.")
+        return topics
+        
+    except json.JSONDecodeError:
+        print(f"[-] Output {script_module} bukan JSON murni. Pastikan tidak ada print() liar di scraper.")
+        return []
+    except Exception as e:
+        print(f"[-] Parsing error di {script_module}: {e}")
+        return []
+
+
+async def _run_trend_subprocess(script_module: str, *extra_args) -> list[str]:
+    return await asyncio.to_thread(_run_trend_subprocess_sync, script_module, *extra_args)
+
 
 async def run_trend_crawlers() -> list: 
-    print("[*] [MOCK] Menjalankan Google Trends...")
-    await asyncio.sleep(1.5)
-    return ["kasus doxxing telegram"]
+    print("\n[*] Menjalankan Integrasi Real Trend Crawlers (Trends24 & Google Trends)...")
+    
+    t24_task = _run_trend_subprocess("scripts.crawler.trends24", "--region", "indonesia")
+    gtrends_task = _run_trend_subprocess("scripts.crawler.google_trends")
+    
+    results = await asyncio.gather(t24_task, gtrends_task)
+    
+    combined_trends = results[0] + results[1]
+    
+    cleaned_trends = list(set(
+        t.lower().strip() for t in combined_trends if t.strip()
+    ))
+    
+    print(f"[=] Total unique trending topics siap di-crawl: {len(cleaned_trends)}\n")
+    
+    if not cleaned_trends:
+        print("[!] WARNING: Trend crawlers gagal total. Fallback ke seed default.")
+        return ["kasus doxxing telegram"]
+        
+    return cleaned_trends
+
+
+def _run_sosmed_subprocess_sync(script_module: str, keyword: str, limit: int, extra_args: list = None) -> list[dict]:
+    """Synchronous version — akan di-dispatch ke thread oleh wrapper async."""
+    cwd_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
+    cmd = [
+        sys.executable, "-m", script_module,
+        "--keyword", keyword,
+        "--target_post", str(limit)
+    ]
+    if extra_args:
+        cmd.extend(extra_args)
+        
+    platform_name = script_module.split('.')[-1].upper()
+    print(f"[*] Menugaskan Agen {platform_name} untuk: '{keyword}'...")
+    
+    try:
+        proc = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            cwd=cwd_path,
+            timeout=300,
+            env=_subprocess_env
+        )
+        
+        if proc.returncode != 0:
+            print(f"[-] Agen {platform_name} Gagal (Exit {proc.returncode}):\n{proc.stderr.decode('utf-8', errors='replace')}")
+            return []
+            
+        result = json.loads(proc.stdout.decode('utf-8', errors='replace'))
+        extracted_data = result.get("extracted_data", [])
+        
+        # Mapping Schema
+        formatted_data = []
+        for doc in extracted_data:
+            formatted_data.append({
+                "type": doc.get("type", "text"),
+                "content": doc.get("caption", ""), 
+                "source": doc.get("platform", platform_name.lower()),
+                "url": doc.get("url", "")
+            })
+            
+        print(f"[+] Agen {platform_name} mengamankan {len(formatted_data)} konten.")
+        return formatted_data
+        
+    except json.JSONDecodeError:
+        print(f"[-] Output {platform_name} bukan JSON murni. Cek log error:\n{proc.stdout.decode('utf-8', errors='replace')}")
+        return []
+    except Exception as e:
+        print(f"[-] Exception di Agen {platform_name}: {e}")
+        return []
+
+
+async def _run_sosmed_subprocess(script_module: str, keyword: str, limit: int, extra_args: list = None) -> list[dict]:
+    """Fungsi generic buat manggil scraper Twitter/IG sebagai subprocess."""
+    return await asyncio.to_thread(_run_sosmed_subprocess_sync, script_module, keyword, limit, extra_args)
+
 
 async def run_content_crawlers(keyword: str, limit: int = 5) -> list:
-    print(f"[*] [MOCK] Mengerahkan crawler sosmed untuk keyword: '{keyword}'...")
-    await asyncio.sleep(1.5)
-    unified_data = []
-    kw_lower = keyword.lower()
+    print(f"\n[*] Mengerahkan Pasukan Crawler untuk keyword: '{keyword}' (Limit per platform: {limit})...")
     
-    # --- SKENARIO DEPTH 0 (Umpan Awal) ---
-    if "kasus doxxing telegram" in kw_lower:
-        unified_data = [
-            {"type": "text", "content": "Viral banget kasus doxxing telegram, gila netizen berani banget spill KTP dan alamat korban.", "source": "X", "url": "https://x.com/fake1"},
-            {"type": "video_desc", "content": "Bagi dong link video skandal telegram yang lagi viral, penasaran nih. pm ya.", "source": "TikTok", "url": "https://tiktok.com/fake2"},
-            {"type": "text", "content": "Info cuaca hari ini cerah banget, enak buat ngopi di rumah.", "source": "IG", "url": "https://ig.com/fake3"} # Sengaja dikasih SAFE
-        ]
+    # Hantam Instagram dan TikTok berbarengan! (Twitter dinonaktifkan sementara)
+    # twitter_task = _run_sosmed_subprocess("scripts.crawler.twitter", keyword, limit)
+    
+    # Kasih max_scroll 3 biar Playwright IG nggak muter-muter kelamaan di tag kosong
+    ig_task = _run_sosmed_subprocess("scripts.crawler.instagram", keyword, limit, ["--max_scroll", "3"])
+    
+    # TikTok via Apify
+    tiktok_task = _run_sosmed_subprocess("scripts.crawler.tiktok", keyword, limit)
+    
+    # Hanya tunggu IG dan TikTok
+    results = await asyncio.gather(ig_task, tiktok_task)
+    
+    unified_data = results[0] + results[1]
+    
+    # Fallback kalau ketiga-tiganya meledak/rate-limited
+    if not unified_data:
+        print(f"[!] WARNING: Semua crawler gagal untuk '{keyword}'. Fallback ke data kosong.")
+        return []
         
-    elif "spill ktp" in kw_lower or "alamat" in kw_lower:
-        unified_data = [
-            {"type": "text", "content": "Tolong report akun ini, dia main ancam sebar KK dan nomor HP di grup.", "source": "X", "url": "https://x.com/fake4"},
-            {"type": "text", "content": "KTP ku ilang di jalan kemarin, ada yang nemu ga ya?", "source": "Facebook", "url": "https://fb.com/fake5"} # SAFE context
-        ]
-    elif "video skandal" in kw_lower or "link" in kw_lower:
-        unified_data = [
-            {"type": "video", "content": "Full video asusila tanpa sensor, join grup VIP sekarang.", "source": "Telegram", "url": "https://t.me/fake6"}
-        ]
-        
-    elif "sebar kk" in kw_lower or "vip" in kw_lower or "asusila" in kw_lower:
-        unified_data = [
-            {"type": "text", "content": "Open BO judi slot gacor, klik link di bio.", "source": "X", "url": "https://x.com/fake7"}
-        ]
-        
-    else:
-        unified_data = [
-            {"type": "text", "content": f"Lagi rame pada ngomongin {keyword} ya?", "source": "X", "url": "https://x.com/fake8"}
-        ]
-        
-    print(f"[+] [MOCK] Crawler mendapatkan {len(unified_data)} konten untuk '{keyword}'.")
-    return unified_data[:limit]
+    print(f"[=] Total {len(unified_data)} konten diserahkan ke Gatekeeper.")
+    return unified_data

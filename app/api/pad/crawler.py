@@ -29,6 +29,7 @@ async def trigger_agentic_crawler(
         "raw_contents": [],
         "unsafe_contents": [],
         "extracted_entities": [],
+        "total_processed_contents": 0,
         "crawling_depth": 0,
         "max_depth": request.max_depth
     }

@@ -14,7 +14,6 @@ class EngineDecision(BaseModel):
     kategori_final: str
     rating_final: str
     reason_ai: str
-    is_vetoed_by_backend: bool
 
 class LegalContext(BaseModel):
     bunyi_pasal_qdrant: str

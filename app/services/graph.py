@@ -25,6 +25,7 @@ def build_pad_workflow(keyword_model, session):
         check_loop_status,
         {
             "continue": "ContentCrawler",
+            "retry_trend": "TrendSeed", 
             "end": END                    
         }
     )

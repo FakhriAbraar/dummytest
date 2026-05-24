@@ -20,6 +20,7 @@ CATATAN: Jalankan sebagai path (bukan -m) karena nama file mengandung tanda hubu
 
 import re
 import sys
+import httpx
 import json
 import uuid
 import asyncio
@@ -96,20 +97,27 @@ def _detect_platform(url: str) -> str:
 
 
 def _build_unique_id(url: str, platform: str) -> str:
-    """Bangun unique_id bermakna dari URL (misal: twitter_<status_id>)."""
+    """Bangun unique_id bermakna dari URL dan bersihkan untuk Windows OS."""
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    
+    # Kita benerin Regex-nya biar otomatis berhenti kalau ketemu '?' atau '#'
     patterns: dict[str, tuple[str, str]] = {
-        "instagram": (r"p/([^/]+)/", "instagram_{}"),
-        "tiktok":    (r"video/([^/]+)", "tiktok_{}"),
-        "twitter":   (r"status/([^/?]+)", "twitter_{}"),
-        "youtube":   (r"(?:watch\?v=|youtu\.be/)([^&/]+)", "youtube_{}"),
+        "instagram": (r"p/([^/?#]+)", "instagram_{}"),
+        "tiktok":    (r"video/([^/?#]+)", "tiktok_{}"),
+        "twitter":   (r"status/([^/?#]+)", "twitter_{}"),
+        "youtube":   (r"(?:watch\?v=|youtu\.be/)([^&/?#]+)", "youtube_{}"),
     }
+    
     if platform in patterns:
         regex, fmt = patterns[platform]
         match = re.search(regex, url)
-        return fmt.format(match.group(1)) if match else f"{platform}_{timestamp}"
+        if match:
+            raw_id = match.group(1)
+            # SANITASI ABSOLUT: Buang semua karakter selain huruf, angka, min, dan underscore
+            safe_id = re.sub(r'[^a-zA-Z0-9_\-]', '', raw_id)
+            return fmt.format(safe_id)
+            
     return f"{platform}_{timestamp}"
-
 
 # ============================================================
 # 3. KONSTANTA
@@ -117,6 +125,137 @@ def _build_unique_id(url: str, platform: str) -> str:
 load_dotenv()
 COLLECTION_NAME = "social_media_posts"
 
+def _fallback_extract(url: str, platform: str, batch_id: str, scraped_at: str, unique_id: str, temp_dir: Path | None = None) -> dict | None:
+    """Fallback scraper jika yt-dlp gagal (khusus untuk gambar/teks murni)."""
+
+    def _download_images(image_urls: list[str], plat: str, uid: str) -> list[str]:
+        """Download gambar dari CDN ke disk lokal agar bisa di-upload ke MinIO."""
+        if not temp_dir or not image_urls:
+            return []
+        local_paths: list[str] = []
+        img_dir = temp_dir / uid
+        img_dir.mkdir(parents=True, exist_ok=True)
+        for idx, img_url in enumerate(image_urls):
+            try:
+                with httpx.Client(timeout=15.0, follow_redirects=True) as dl_client:
+                    resp = dl_client.get(img_url)
+                    if resp.status_code == 200:
+                        # Deteksi ekstensi dari content-type atau URL
+                        ct = resp.headers.get("content-type", "")
+                        if "png" in ct:
+                            ext = "png"
+                        elif "webp" in ct:
+                            ext = "webp"
+                        elif "gif" in ct:
+                            ext = "gif"
+                        else:
+                            ext = "jpg"
+                        fname = img_dir / f"{idx}.{ext}"
+                        fname.write_bytes(resp.content)
+                        local_paths.append(str(fname))
+                        logger.info("  [+] Image downloaded: %s (%d bytes)", fname.name, len(resp.content))
+                    else:
+                        logger.warning("  [-] Image download gagal (HTTP %d): %s", resp.status_code, img_url[:80])
+            except Exception as e:
+                logger.error("  [-] Image download error: %s", e)
+        return local_paths
+    
+    if platform == "twitter":
+        # Trik vxtwitter: Ubah x.com/twitter.com jadi api.vxtwitter.com untuk dapet JSON murni
+        api_url = re.sub(r'(https?://)(www\.)?(twitter\.com|x\.com)', r'\1api.vxtwitter.com', url)
+        try:
+            with httpx.Client(timeout=10.0) as client:
+                resp = client.get(api_url)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    media_urls = data.get("mediaURLs", [])
+                    
+                    # Download gambar ke disk agar bisa di-upload ke MinIO
+                    image_only_urls = [u for u in media_urls if not u.endswith(".mp4")]
+                    downloaded_paths = _download_images(image_only_urls, platform, unique_id)
+                    
+                    return {
+                        "batch_id": batch_id,
+                        "platform": platform,
+                        "source": "vxtwitter_api",
+                        "target_keyword": None,
+                        "scraped_at": scraped_at,
+                        "unique_id": unique_id,
+                        "url": url,
+                        "type": "image" if len(media_urls) == 1 else ("multipleImage" if len(media_urls) > 1 else "text"),
+                        "caption": data.get("text", ""),
+                        "thumbnail_url": media_urls[0] if media_urls else "",
+                        "published_at": data.get("date"),
+                        "file_path": downloaded_paths,
+                        "duration": None,
+                        "creator": {
+                            "username": data.get("user_screen_name"),
+                            "user_id": data.get("user_screen_name"),
+                        },
+                        "engagement": {
+                            "like_count": data.get("likes"),
+                            "comment_count": data.get("replies"),
+                            "share_count": data.get("retweets"),
+                            "view_count": None,
+                            "saved_count": None,
+                            "repost_count": data.get("retweets"),
+                        },
+                    }
+        except Exception as e:
+            logger.error("Fallback vxtwitter gagal: %s", e)
+
+    elif platform == "instagram":
+        # oEmbed API — official Instagram endpoint, jauh lebih stabil daripada ?__a=1 yang udah diblock Meta
+        clean_url = url.split("?")[0].rstrip("/")
+        oembed_url = f"https://i.instagram.com/api/v1/oembed/?url={clean_url}"
+        
+        try:
+            with httpx.Client(timeout=10.0, follow_redirects=True) as client:
+                resp = client.get(oembed_url)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    
+                    thumbnail = data.get("thumbnail_url", "")
+                    author = data.get("author_name", "")
+                    title = data.get("title", "")
+                    
+                    # Download thumbnail ke disk agar bisa di-upload ke MinIO
+                    image_urls = [thumbnail] if thumbnail else []
+                    downloaded_paths = _download_images(image_urls, platform, unique_id)
+                    
+                    return {
+                        "batch_id": batch_id,
+                        "platform": platform,
+                        "source": "ig_oembed_api",
+                        "target_keyword": None,
+                        "scraped_at": scraped_at,
+                        "unique_id": unique_id,
+                        "url": clean_url,
+                        "type": "image" if thumbnail else "text",
+                        "caption": title or f"Post by {author}",
+                        "thumbnail_url": thumbnail,
+                        "published_at": None,
+                        "file_path": downloaded_paths,
+                        "duration": None,
+                        "creator": {
+                            "username": author,
+                            "user_id": str(data.get("author_id", "")),
+                        },
+                        "engagement": {
+                            "like_count": None,
+                            "comment_count": None,
+                            "share_count": None,
+                            "view_count": None,
+                            "saved_count": None,
+                            "repost_count": None,
+                        },
+                    }
+                else:
+                    logger.error("IG oEmbed gagal (HTTP %d)", resp.status_code)
+        except Exception as e:
+            logger.error("Fallback IG oEmbed gagal: %s", e)
+
+    return None
 
 # ============================================================
 # 4. EKSTRAKSI KONTEN — yt_dlp sebagai unified extractor
@@ -127,22 +266,6 @@ def extract_content(
     batch_id: str,
     scraped_at: str,
 ) -> dict | None:
-    """Ekstrak metadata + media dari URL menggunakan yt_dlp.
-
-    Two-step strategy:
-    1. Coba download penuh (media + metadata).
-    2. Jika download gagal, fallback ke metadata-only (skip_download=True).
-       Berguna untuk text-only tweets atau konten tanpa media.
-
-    Args:
-        url:        URL konten media sosial.
-        temp_dir:   Direktori sementara root; subdirektori per URL dibuat di sini.
-        batch_id:   UUID batch run saat ini.
-        scraped_at: Timestamp ISO saat crawl dimulai.
-
-    Returns:
-        Dokumen MongoDB-ready, atau None jika ekstraksi gagal total.
-    """
     platform  = _detect_platform(url)
     unique_id = _build_unique_id(url, platform)
 
@@ -162,7 +285,6 @@ def extract_content(
     info                   = None
     local_paths: list[str] = []
 
-    # Step 1: Download penuh (media + metadata)
     try:
         with _stdout_to_stderr():
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:  # type: ignore[arg-type]
@@ -180,7 +302,6 @@ def extract_content(
     except Exception as e:
         logger.warning("Download gagal (%s), mencoba metadata saja: %s", url, e)
 
-        # Step 2: Fallback metadata-only — untuk text-only tweets, platform tanpa media, dll.
         if info is None:
             try:
                 meta_opts = {**ydl_opts, "skip_download": True}
@@ -191,21 +312,52 @@ def extract_content(
                 logger.warning("Gagal mengekstrak metadata %s: %s", url, e2)
 
     if not info:
-        logger.warning("URL dilewati — tidak ada info yang dapat diekstrak: %s", url)
+        logger.warning("yt-dlp total gagal, mencoba fallback extractor untuk URL: %s", url)
+        
+        # Panggil Fallback
+        fallback_data = _fallback_extract(url, platform, batch_id, scraped_at, unique_id, temp_dir)
+        if fallback_data:
+            logger.info("Fallback berhasil diekstrak: %s (%s)", unique_id, fallback_data["type"])
+            return fallback_data
+            
+        logger.warning("URL benar-benar mati/gagal diekstrak oleh semua metode: %s", url)
         return None
 
-    # Fallback scan url_dir jika prepare_filename tidak akurat (edge case yt_dlp)
+    # Cek file yang berhasil di-download yt-dlp
     if not local_paths:
         local_paths = [str(f) for f in url_dir.iterdir() if f.is_file()]
 
-    # Deteksi content type dari file yang berhasil didownload
+    # KRITIS: yt-dlp sering dapet metadata (caption/title) tapi GAGAL download file
+    # gambar dari IG/Twitter. Kalau ini terjadi, panggil fallback extractor
+    # yang bisa download gambar via API platform.
+    _visual_platforms = {"instagram", "twitter", "tiktok"}
+    if not local_paths and platform in _visual_platforms:
+        logger.warning(
+            "yt-dlp dapet metadata tapi 0 file media di-download untuk %s. "
+            "Mencoba fallback extractor...", platform
+        )
+        fallback_data = _fallback_extract(url, platform, batch_id, scraped_at, unique_id, temp_dir)
+        if fallback_data:
+            # Gabungin: pakai caption dari yt-dlp (biasanya lebih lengkap) + file dari fallback
+            ydl_caption = info.get("title") or info.get("description") or ""
+            fallback_caption = fallback_data.get("caption", "")
+            # Ambil caption terpanjang (yang paling informatif)
+            if len(ydl_caption) > len(fallback_caption):
+                fallback_data["caption"] = ydl_caption
+            logger.info(
+                "Fallback berhasil! Tipe: %s, File: %d",
+                fallback_data["type"], len(fallback_data.get("file_path", []))
+            )
+            return fallback_data
+        logger.warning("Fallback juga gagal — lanjut dengan data yt-dlp tanpa media.")
+
     if len(local_paths) > 1:
         content_type = "multipleImage"
     elif len(local_paths) == 1:
         ext = Path(local_paths[0]).suffix.lower().lstrip(".")
         content_type = "video" if ext in {"mp4", "webm", "mkv", "mov"} else "image"
     else:
-        content_type = "text"  # Text-only: tweet tanpa media, dll.
+        content_type = "text" 
 
     upload_date  = info.get("upload_date")
     published_at = None
@@ -228,9 +380,10 @@ def extract_content(
         "unique_id":      unique_id,
         "url":            info.get("webpage_url") or url,
         "type":           content_type,
-        "caption":        info.get("title") or info.get("description"),
+        "caption":        info.get("title") or info.get("description") or "",
+        "thumbnail_url":  info.get("thumbnail") or "",
         "published_at":   published_at,
-        "file_path":      local_paths,  # lokal sementara — diganti MinIO di upload_and_save()
+        "file_path":      local_paths,  
         "duration":       info.get("duration"),
         "creator": {
             "username": info.get("uploader") or info.get("uploader_id"),
@@ -251,14 +404,6 @@ def extract_content(
 # 5. UPLOAD MINIO + SAVE MONGODB (async)
 # ============================================================
 async def upload_and_save(documents: list[dict]) -> dict:
-    """Upload file lokal ke MinIO dan simpan metadata ke MongoDB.
-
-    Args:
-        documents: List dokumen dari extract_content() dengan file_path lokal sementara.
-
-    Returns:
-        Dict hasil insert MongoDB (status, count, ids).
-    """
     await connect_minio()
     logger.info("Koneksi MinIO berhasil.")
 
@@ -310,14 +455,15 @@ async def upload_and_save(documents: list[dict]) -> dict:
     await disconnect_mongo()
     logger.info("Koneksi MongoDB ditutup.")
 
+    result["extracted_data"] = documents
+
     return result
 
 
 # ============================================================
-# 6. ENTRY POINT — Satu-satunya print() ada di sini (JSON murni)
+# 6. ENTRY POINT
 # ============================================================
 if __name__ == "__main__":
-    # Safety net: redirect sys.stdout → sys.stderr sebelum semua eksekusi.
     _real_stdout = sys.stdout
     sys.stdout   = sys.stderr
 

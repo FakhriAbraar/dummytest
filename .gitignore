@@ -14,6 +14,9 @@ __pycache__/
 models/**/*.gguf
 models/**/*.bin
 models/**/*.pt
+app/models/**/*.gguf
+app/models/**/*.bin
+app/models/**/*.pt
 
 # Distribution / packaging
 .Python
@@ -149,3 +152,5 @@ cython_debug/
 # IDE
 .agents/
 .claude/
+
+project_context.md

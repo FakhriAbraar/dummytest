@@ -75,7 +75,7 @@ IG_PASS = os.getenv("IG_PASS")
 BASE_DIR         = Path(__file__).resolve().parent
 SESSION_FILE     = BASE_DIR / "ig_session.json"   # Persistent antar run
 COLLECTION_NAME  = "social_media_posts"
-HEADLESS_FLAG    = True
+HEADLESS_FLAG    = False
 MEDIA_EXTENSIONS = {".jpg", ".jpeg", ".png", ".mp4"}
 
 TARGET_TAGS       = args.keyword
@@ -215,9 +215,18 @@ def scrape_instagram() -> dict[str, list[str]]:
         if not is_logged_in:
             raise RuntimeError("Gagal memverifikasi login Instagram.")
 
-        for tag in TARGET_TAGS:
-            logger.info("Menjelajahi #%s...", tag)
+        for raw_tag in TARGET_TAGS:
+            tag = raw_tag.lstrip("#").replace(" ", "").lower()
+            
+            if not tag:
+                logger.warning("Keyword '%s' menjadi kosong setelah disanitasi. Skip.", raw_tag)
+                continue
+
+            logger.info("Menjelajahi #%s (dari original: '%s')...", tag, raw_tag)
+            
             page.goto(f"https://www.instagram.com/explore/tags/{tag}/")
+            time.sleep(3.5)
+            
             links_found: set[str] = set()
             retry_scroll = 0
 
@@ -230,6 +239,7 @@ def scrape_instagram() -> dict[str, list[str]]:
                         links_found.add(f"https://www.instagram.com{href}")
 
                 logger.info("  #%s — total sementara: %d link", tag, len(links_found))
+                
                 if len(links_found) < MAX_POST_PER_TAG:
                     human_scroll(page)
                     retry_scroll += 1
@@ -237,7 +247,8 @@ def scrape_instagram() -> dict[str, list[str]]:
                     break
 
             logger.info("Selesai #%s. Didapat %d link.", tag, len(links_found))
-            hasil_final[tag] = list(links_found)
+            
+            hasil_final[raw_tag] = list(links_found)
 
         return hasil_final
 
@@ -372,6 +383,7 @@ async def download_upload_and_save(tag_links: dict[str, list[str]]) -> dict:
         collection_name=COLLECTION_NAME,
         data_list=documents,
     )
+    result["extracted_data"] = documents
     logger.info(
         "Berhasil disimpan! Count: %d | IDs (sample): %s...",
         result.get("count", 0),

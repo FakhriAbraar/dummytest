@@ -97,7 +97,7 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
     Raises:
             Exception: Jika Apify actor gagal dipanggil.
     """
-    client = ApifyClient(APIFY_API_FREE)
+    client = ApifyClient(APIFY_API_PREMIUM)
     run_input = {
         "searchQueries": keyword,
         "resultsPerPage": target_post,
@@ -267,6 +267,7 @@ async def upload_and_save(documents: list[dict]) -> dict:
         collection_name=COLLECTION_NAME,
         data_list=documents,
     )
+    result["extracted_data"] = documents
     logger.info(
         "Berhasil disimpan! Count: %d | IDs (sample): %s...",
         result.get("count", 0),

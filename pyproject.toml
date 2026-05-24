@@ -31,6 +31,13 @@ dependencies = [
   "llama-cpp-python>=0.3.20",
   "langgraph-checkpoint-sqlite>=3.0.3",
   "openai>=2.36.0",
+  "yt-dlp>=2026.3.17",
+  "pillow>=12.2.0",
+  "beautifulsoup4>=4.14.3",
+  "playwright>=1.60.0",
+  "instaloader>=4.15.1",
+  "apify-client>=3.0.0",
+  "httpx>=0.28.1",
 ]
 
 [dependency-groups]

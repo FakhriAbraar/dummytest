@@ -196,6 +196,7 @@ async def save_to_mongo(data: list[dict[str, Any]]) -> dict[str, Any]:
         collection_name=COLLECTION_NAME,
         data_list=data,
     )
+    result["extracted_data"] = data
     logger.info(
         "Berhasil disimpan! Count: %d | IDs (sample): %s...",
         result.get("count", 0),

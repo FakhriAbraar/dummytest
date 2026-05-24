@@ -20,6 +20,7 @@ from app.services.minio import save_from_local
 from app.db.mongo import connect_mongo, disconnect_mongo
 from app.db.minio import connect_minio, disconnect_minio
 import os
+import re
 import csv
 import sys
 import time
@@ -33,6 +34,9 @@ import argparse
 import subprocess
 import requests
 import yt_dlp
+import platform
+import httpx
+from filelock import FileLock, Timeout as FileLockTimeout
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import urlparse
@@ -59,13 +63,23 @@ logger = logging.getLogger(__name__)
 # 2. KONSTANTA
 # ============================================================
 load_dotenv()
-TW_USER = os.getenv("TW_USER")
+
+# Kredensial untuk do_login() — hanya dipakai sebagai fallback manual,
+# tidak digunakan oleh pool flow.
+TW_USER = os.getenv("TW_USER_1") or os.getenv("TW_USER")
 TW_PASS = os.getenv("TW_PASS")
 
 BASE_DIR = Path(__file__).resolve().parent
-SESSION_FILE = BASE_DIR / "twitter_session.json"
+
+# ---- Session Pool ----
+POOL_SIZE     = 5
+SESSION_FILES = [BASE_DIR / f"twitter_session_{i}.json" for i in range(1, POOL_SIZE + 1)]
+LOCK_FILES    = [BASE_DIR / f".twitter_session_{i}.lock" for i in range(1, POOL_SIZE + 1)]
+RR_STATE_FILE = BASE_DIR / ".twitter_rr_counter"
+RR_LOCK_FILE  = BASE_DIR / ".twitter_rr.lock"
+
 COLLECTION_NAME = "social_media_posts"
-HEADLESS_FLAG = True
+HEADLESS_FLAG = False
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
@@ -83,10 +97,29 @@ def safe_int(value, default=None):
         return default
 
 
+def _get_next_rr_index() -> int:
+    """Baca dan increment round-robin counter secara atomik (multi-process safe).
+
+    Menggunakan file lock pada RR_LOCK_FILE untuk memastikan tidak ada
+    dua proses yang membaca/menulis counter secara bersamaan.
+
+    Returns:
+        int: Index slot (0-based) sebagai titik awal pencarian sesi idle.
+    """
+    with FileLock(str(RR_LOCK_FILE), timeout=10):
+        try:
+            idx = int(RR_STATE_FILE.read_text().strip()) if RR_STATE_FILE.exists() else 0
+        except (ValueError, IOError):
+            idx = 0
+        RR_STATE_FILE.write_text(str((idx + 1) % POOL_SIZE))
+        return idx
+
+
 def do_login(page) -> bool:
     """Login otomatis ke X/Twitter menggunakan TW_USER dan TW_PASS.
 
     X menggunakan flow 2-langkah: username → Next → password → Log in.
+    Fungsi ini adalah fallback manual — tidak dipanggil oleh pool flow.
 
     Args:
         page: Playwright Page object yang sudah dibuka.
@@ -141,10 +174,19 @@ def do_login(page) -> bool:
 
 
 # ============================================================
-# 4. SCRAPING — Playwright auth + tweet-harvest + download media
+# 4. SCRAPING — Session pool + Playwright auth + tweet-harvest + download media
 # ============================================================
 def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list[dict]:
-    """Ekstrak auth_token via Playwright, scrape via tweet-harvest, download media.
+    """Ekstrak auth_token via Playwright (session pool), scrape via tweet-harvest, download media.
+
+    Mekanisme session pool:
+    - Memilih slot sesi secara round-robin menggunakan file counter atomik.
+    - Setiap slot dikunci dengan FileLock (inter-process) agar tidak dipakai
+      oleh dua instance sekaligus.
+    - Jika slot sedang dipakai (locked) atau session-nya expired, slot tersebut
+      dilewati dan dicoba slot berikutnya — tanpa re-login.
+    - Lock dilepas segera setelah auth_token diekstrak, sebelum tweet-harvest,
+      sehingga slot tidak terblokir saat download CSV yang bisa berlangsung lama.
 
     Args:
         keyword:     Daftar keyword pencarian Twitter/X.
@@ -155,84 +197,118 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
         List dokumen dengan field file_path berisi path lokal sementara.
 
     Raises:
-        RuntimeError: Jika login gagal atau auth_token tidak ditemukan.
+        RuntimeError: Jika semua slot pool tidak tersedia atau tidak valid.
     """
-    playwright_instance = None
-    browser = None
+    start_idx  = _get_next_rr_index()
     auth_token = None
 
-    # ---- Tahap 1: Playwright → ekstrak auth_token ----
-    try:
-        logger.info("Memulai Playwright ...")
-        playwright_instance = sync_playwright().start()
-        browser = playwright_instance.chromium.launch(
-            headless=HEADLESS_FLAG,
-            args=["--disable-blink-features=AutomationControlled"],
-        )
+    # ---- Tahap 1: Playwright → round-robin session pool → ekstrak auth_token ----
+    for offset in range(POOL_SIZE):
+        slot_idx     = (start_idx + offset) % POOL_SIZE
+        session_file = SESSION_FILES[slot_idx]
+        lock         = FileLock(str(LOCK_FILES[slot_idx]), timeout=0)
 
-        if SESSION_FILE.exists():
-            logger.info("Memuat sesi login dari: %s", SESSION_FILE)
+        # Coba kunci slot (non-blocking). Jika gagal → slot sibuk, geser ke berikutnya.
+        try:
+            lock.acquire()
+            logger.info("[Pool] Slot %d/%d berhasil dikunci.", slot_idx + 1, POOL_SIZE)
+        except FileLockTimeout:
+            logger.info("[Pool] Slot %d sibuk, lanjut ke berikutnya...", slot_idx + 1)
+            continue
+
+        playwright_instance = None
+        browser             = None
+
+        try:
+            # File session tidak ada → skip slot ini
+            if not session_file.exists():
+                logger.warning(
+                    "[Pool] Slot %d: file session '%s' tidak ditemukan, skip.",
+                    slot_idx + 1, session_file.name
+                )
+                continue  # finally: cleanup + release lock, lanjut iterasi berikutnya
+
+            logger.info("[Pool] Memulai Playwright untuk slot %d ...", slot_idx + 1)
+            playwright_instance = sync_playwright().start()
+            browser = playwright_instance.chromium.launch(
+                headless=HEADLESS_FLAG,
+                args=["--disable-blink-features=AutomationControlled"],
+            )
+
             context = browser.new_context(
-                storage_state=str(SESSION_FILE),
+                storage_state=str(session_file),
                 user_agent=USER_AGENT,
             )
-        else:
-            context = browser.new_context(user_agent=USER_AGENT)
+            page = context.new_page()
+            page.add_init_script(
+                "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+            )
 
-        page = context.new_page()
-        page.add_init_script(
-            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+            page.goto("https://x.com", wait_until="domcontentloaded")
+            time.sleep(random.uniform(2, 4))
+
+            # Validasi session — cek elemen nav khas akun yang sudah login.
+            # Jika tidak ditemukan → session expired. Skip tanpa re-login.
+            nav_button = page.query_selector('[data-testid="SideNav_AccountSwitcher_Button"]')
+            if not nav_button:
+                logger.warning(
+                    "[Pool] Slot %d: session expired atau tidak valid. "
+                    "Skip ke slot berikutnya (tanpa re-login).",
+                    slot_idx + 1
+                )
+                continue  # finally: cleanup + release lock
+
+            logger.info("[Pool] Slot %d: session valid, ekstrak auth_token.", slot_idx + 1)
+
+            # Ekstrak auth_token dari cookies
+            cookies     = context.cookies("https://x.com")
+            auth_cookie = next((c for c in cookies if c["name"] == "auth_token"), None)
+            if not auth_cookie:
+                logger.warning(
+                    "[Pool] Slot %d: auth_token tidak ditemukan di cookies. Skip.",
+                    slot_idx + 1
+                )
+                continue  # finally: cleanup + release lock
+
+            auth_token = auth_cookie["value"]
+            logger.info("[Pool] Slot %d: auth_token berhasil diekstrak.", slot_idx + 1)
+
+        finally:
+            # Selalu dijalankan: sebelum continue, break, maupun exception tak terduga.
+            # Lock dilepas di sini — sebelum tweet-harvest — agar slot tidak terblokir lama.
+            if browser:
+                browser.close()
+                logger.info("[Pool] Browser Chromium ditutup (slot %d).", slot_idx + 1)
+            if playwright_instance:
+                playwright_instance.stop()
+                logger.info("[Pool] Playwright instance dihentikan (slot %d).", slot_idx + 1)
+            if lock.is_locked:
+                lock.release()
+                logger.info("[Pool] Lock slot %d dilepas.", slot_idx + 1)
+
+        # auth_token berhasil didapat → keluar dari loop pool
+        if auth_token:
+            break
+
+    else:
+        # for...else: blok ini jalan hanya jika loop selesai tanpa `break`
+        # (artinya semua POOL_SIZE slot telah dicoba dan semuanya gagal)
+        raise RuntimeError(
+            f"Tidak ada session pool yang valid atau tersedia "
+            f"({POOL_SIZE} slot dicoba). "
+            "Periksa file twitter_session_1..5.json dan refresh session yang expired."
         )
 
-        page.goto("https://x.com", wait_until="domcontentloaded")
-        time.sleep(random.uniform(2, 4))
-
-        if not SESSION_FILE.exists():
-            if not do_login(page):
-                raise RuntimeError("Login Twitter gagal.")
-            context.storage_state(path=str(SESSION_FILE))
-            logger.info("Session baru disimpan ke: %s", SESSION_FILE)
-        else:
-            # Verifikasi session masih valid
-            nav_button = page.query_selector(
-                '[data-testid="SideNav_AccountSwitcher_Button"]')
-            if nav_button:
-                logger.info("Session tersimpan valid, langsung lanjut.")
-            else:
-                logger.warning(
-                    "Session tidak valid atau expired, mencoba login ulang ...")
-                if not do_login(page):
-                    raise RuntimeError("Re-login Twitter gagal.")
-                context.storage_state(path=str(SESSION_FILE))
-                logger.info("Session diperbarui di: %s", SESSION_FILE)
-
-        # Ekstrak auth_token dari cookies
-        cookies = context.cookies("https://x.com")
-        auth_cookie = next(
-            (c for c in cookies if c["name"] == "auth_token"), None)
-        if not auth_cookie:
-            raise RuntimeError(
-                "auth_token tidak ditemukan di cookies. Session mungkin expired."
-            )
-        auth_token = auth_cookie["value"]
-        logger.info("auth_token berhasil diekstrak.")
-
-    finally:
-        if browser:
-            browser.close()
-            logger.info("Browser Chromium ditutup.")
-        if playwright_instance:
-            playwright_instance.stop()
-            logger.info("Playwright instance dihentikan.")
-
     # ---- Tahap 2: tweet-harvest → CSV ----
-    # tweet-harvest selalu simpan ke <cwd>/tweets-data/<output>, tidak bisa terima
-    # absolute Windows path (C: dikonversi jadi C-). Solusi: cwd=temp_dir + nama relatif.
     search_query = " OR ".join(keyword)
     csv_filename = "tweets.csv"
-    csv_path = temp_dir / "tweets-data" / csv_filename
+    csv_path     = temp_dir / "tweets-data" / csv_filename
+
+    # OS Lock-in FIX: Jangan nulis npx.cmd hardcode!
+    npx_exec = "npx.cmd" if platform.system() == "Windows" else "npx"
+
     cmd = [
-        "npx.cmd", "tweet-harvest",
+        npx_exec, "tweet-harvest",
         "-s", search_query,
         "-t", auth_token,
         "-l", str(target_post),
@@ -250,95 +326,113 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
         )
     logger.info("tweet-harvest selesai. CSV: %s", csv_path)
 
-    # ---- Tahap 3: Baca CSV + download media ----
-    batch_id = str(uuid.uuid4())
+    # ---- Tahap 3: Baca CSV + Ekstrak Multi-Media via vxtwitter ----
+    batch_id      = str(uuid.uuid4())
     scraped_at_iso = datetime.now().isoformat()
     documents: list[dict] = []
 
-    ydl_opts: dict = {
-        "outtmpl": str(temp_dir / "%(id)s.%(ext)s"),
-        "format": "best",
-        "quiet": True,
-        "no_warnings": True,
-    }
-
     with open(csv_path, mode="r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        for counter, row in enumerate(reader):
-            image_url = row.get("image_url", "")
-            tweet_url = row.get("tweet_url", "")
-            id_str = row.get("id_str") or str(counter)
-            unique_id = f"twitter_{id_str}"
-            file_paths: list[str] = []
-            content_type = "text"
 
-            # Gambar
-            if image_url:
-                content_type = "image"
-                ext = os.path.splitext(urlparse(image_url).path)[1].lstrip(".")
-                img_path = temp_dir / f"twitter_{id_str}.{ext}"
-                try:
-                    img_res = requests.get(image_url, timeout=10)
-                    if img_res.status_code == 200:
-                        img_path.write_bytes(img_res.content)
-                        file_paths.append(str(img_path))
-                        logger.info(
-                            "Gambar berhasil didownload: %s", unique_id)
-                    else:
+        # Pake httpx.Client biar connection pooling aktif, request beruntun jadi ngebut
+        with httpx.Client(timeout=15.0, follow_redirects=True) as client:
+            for counter, row in enumerate(reader):
+                tweet_url = row.get("tweet_url", "")
+                id_str    = row.get("id_str") or str(counter)
+                unique_id = f"twitter_{id_str}"
+
+                media_urls = []
+
+                # 1. TEMBAK VXTWITTER: Jaminan 100% dapet semua array foto & link mp4 murni
+                if tweet_url:
+                    api_url = re.sub(
+                        r'(https?://)(www\.)?(twitter\.com|x\.com)', r'\1api.vxtwitter.com', tweet_url)
+                    try:
+                        resp = client.get(api_url)
+                        if resp.status_code == 200:
+                            api_data   = resp.json()
+                            media_urls = api_data.get("mediaURLs", [])
+                    except Exception as e:
                         logger.warning(
-                            "Download gambar gagal (HTTP %d): %s",
-                            img_res.status_code, image_url,
-                        )
-                except Exception as exc:
-                    logger.warning(
-                        "Download gambar error untuk %s: %s", unique_id, exc)
+                            "vxtwitter fetch gagal untuk %s: %s", unique_id, e)
 
-            # Video (fallback jika tidak ada gambar)
-            if not file_paths and tweet_url:
-                try:
-                    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                        info = ydl.extract_info(tweet_url, download=True)
-                        if info:
-                            content_type = "video"
-                            filename = ydl.prepare_filename(info)
-                            file_paths.append(str(Path(filename)))
-                            logger.info(
-                                "Video berhasil didownload: %s", tweet_url)
-                except Exception as exc:
-                    logger.warning(
-                        "Download video error untuk %s: %s", unique_id, exc)
+                # 2. FALLBACK: Kalau vxtwitter down, pecah string URL dari CSV tweet-harvest
+                if not media_urls:
+                    img_raw = row.get("image_url", "")
+                    vid_raw = row.get("video_url", "")
+                    if img_raw:
+                        media_urls.extend(
+                            [u.strip() for u in re.split(r'[\s,]+', img_raw) if u.strip()])
+                    if vid_raw:
+                        media_urls.extend(
+                            [u.strip() for u in re.split(r'[\s,]+', vid_raw) if u.strip()])
 
-            documents.append({
-                "batch_id":       batch_id,
-                "platform":       "twitter",
-                "source":         "keyword_crawl",
-                "target_keyword": search_query,
-                "scraped_at":     scraped_at_iso,
-                "unique_id":      unique_id,
-                "url":            tweet_url,
-                "type":           content_type,
-                "caption":        row.get("full_text"),
-                "published_at":   row.get("created_at"),
-                "file_path":      file_paths,  # lokal sementara — diganti MinIO di upload_and_save()
-                "duration":       None,
-                "creator": {
-                    "username": row.get("username"),
-                    "user_id":  row.get("user_id_str"),
-                },
-                "engagement": {
-                    "like_count":    safe_int(row.get("favorite_count")),
-                    "comment_count": safe_int(row.get("reply_count")),
-                    "share_count":   None,
-                    "view_count":    None,
-                    "saved_count":   None,
-                    "repost_count":  (
-                        safe_int(row.get("quote_count"), 0)
-                        + safe_int(row.get("retweet_count"), 0)
-                    ),
-                },
-            })
+                # 3. DOWNLOAD MULTI-MEDIA
+                file_paths   = []
+                content_type = "text"
 
-    logger.info("CSV dibaca. Total dokumen: %d", len(documents))
+                if media_urls:
+                    uid_dir = temp_dir / unique_id
+                    uid_dir.mkdir(parents=True, exist_ok=True)
+
+                    for idx, m_url in enumerate(media_urls):
+                        try:
+                            m_resp = client.get(m_url)
+                            if m_resp.status_code == 200:
+                                ext = m_url.split("?")[0].split(".")[-1].lower()
+                                if ext not in {"jpg", "jpeg", "png", "webp", "mp4", "gif"}:
+                                    ext = "mp4" if "video" in m_url else "jpg"
+
+                                m_path = uid_dir / f"{idx}.{ext}"
+                                m_path.write_bytes(m_resp.content)
+                                file_paths.append(str(m_path))
+                                logger.info("  [+] Media downloaded: %s", m_path.name)
+                            else:
+                                logger.warning(
+                                    "  [-] Media download gagal (HTTP %d): %s",
+                                    m_resp.status_code, m_url)
+                        except Exception as e:
+                            logger.error("  [-] Download media error %s: %s", m_url, e)
+
+                    # 4. TENTUKAN TIPE KONTEN BUAT AI
+                    if len(file_paths) > 1:
+                        content_type = "multipleImage"
+                    elif len(file_paths) == 1:
+                        content_type = "video" if file_paths[0].endswith(".mp4") else "image"
+
+                # 5. PACKING KE DOKUMEN
+                documents.append({
+                    "batch_id":       batch_id,
+                    "platform":       "twitter",
+                    "source":         "keyword_crawl",
+                    "target_keyword": search_query,
+                    "scraped_at":     scraped_at_iso,
+                    "unique_id":      unique_id,
+                    "url":            tweet_url,
+                    "type":           content_type,
+                    "caption":        row.get("full_text"),
+                    "published_at":   row.get("created_at"),
+                    "file_path":      file_paths,
+                    "duration":       None,
+                    "creator": {
+                        "username": row.get("username"),
+                        "user_id":  row.get("user_id_str"),
+                    },
+                    "engagement": {
+                        "like_count":    safe_int(row.get("favorite_count")),
+                        "comment_count": safe_int(row.get("reply_count")),
+                        "share_count":   None,
+                        "view_count":    safe_int(row.get("views")),
+                        "saved_count":   None,
+                        "repost_count":  (
+                            safe_int(row.get("quote_count"), 0)
+                            + safe_int(row.get("retweet_count"), 0)
+                        ),
+                    },
+                })
+
+    logger.info(
+        "Selesai proses CSV. Total dokumen siap di-upload: %d", len(documents))
     return documents
 
 
@@ -361,7 +455,7 @@ async def upload_and_save(documents: list[dict]) -> dict:
     logger.info("Koneksi MinIO berhasil.")
 
     for doc in documents:
-        unique_id = doc["unique_id"]
+        unique_id   = doc["unique_id"]
         local_paths = doc.get("file_path", [])
         minio_paths: list[str] = []
 
@@ -372,7 +466,7 @@ async def upload_and_save(documents: list[dict]) -> dict:
                     "File lokal tidak ditemukan, skip: %s", local_path)
                 continue
 
-            ext = local_file.suffix.lstrip(".")
+            ext         = local_file.suffix.lstrip(".")
             object_name = f"crawl/twitter/{unique_id}.{ext}"
 
             result = await save_from_local(
@@ -396,13 +490,13 @@ async def upload_and_save(documents: list[dict]) -> dict:
     await connect_mongo()
 
     logger.info(
-        "Menyimpan %d dokumen ke collection '%s'...", len(
-            documents), COLLECTION_NAME
+        "Menyimpan %d dokumen ke collection '%s'...", len(documents), COLLECTION_NAME
     )
     result = await insert_many_data(
         collection_name=COLLECTION_NAME,
         data_list=documents,
     )
+    result["extracted_data"] = documents
     logger.info(
         "Berhasil disimpan! Count: %d | IDs (sample): %s...",
         result.get("count", 0),
@@ -420,7 +514,7 @@ async def upload_and_save(documents: list[dict]) -> dict:
 # ============================================================
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Twitter Crawler — Scrape tweet via tweet-harvest + Playwright auth",
+        description="Twitter Crawler — Scrape tweet via tweet-harvest + Playwright session pool",
         formatter_class=argparse.RawTextHelpFormatter,
     )
     parser.add_argument("--keyword",     nargs="+",
@@ -437,7 +531,7 @@ if __name__ == "__main__":
             temp_dir = Path(tmp)
             logger.info("Temporary directory: %s", temp_dir)
 
-            # Step 1: Playwright auth + tweet-harvest + download media
+            # Step 1: Session pool auth + tweet-harvest + download media
             documents = scrape_twitter(
                 args.keyword, args.target_post, temp_dir)
 
