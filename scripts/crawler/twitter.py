@@ -401,6 +401,13 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
                         content_type = "video" if file_paths[0].endswith(".mp4") else "image"
 
                 # 5. PACKING KE DOKUMEN
+                # Cover URL: first non-video media URL (original CDN URL, browser-renderable)
+                cover_url = next(
+                    (u for u in media_urls
+                     if not u.split("?")[0].lower().endswith((".mp4", ".webm", ".mkv", ".mov"))),
+                    "",
+                )
+
                 documents.append({
                     "batch_id":       batch_id,
                     "platform":       "twitter",
@@ -413,6 +420,7 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
                     "caption":        row.get("full_text"),
                     "published_at":   row.get("created_at"),
                     "file_path":      file_paths,
+                    "cover_url":      cover_url,
                     "duration":       None,
                     "creator": {
                         "username": row.get("username"),

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.pad import check, crawler
+from app.api.pad import check, crawler, stats
 from app.web.api.router import api_router
 from app.web.lifespan import lifespan_setup
 
@@ -25,6 +25,7 @@ def get_app() -> FastAPI:
 
     app.include_router(router=api_router, prefix="/api")
     app.include_router(crawler.router, prefix="/api/pad")
+    app.include_router(stats.router, prefix="/api/pad")
     app.include_router(check.router, prefix="/api/pad/check", tags=["Public Checking"])
 
     return app

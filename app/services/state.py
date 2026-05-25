@@ -8,7 +8,8 @@ class PADState(TypedDict):
     
     raw_contents: List[Dict[str, Any]]     # Hasil kerukan mentah
     unsafe_contents: List[Dict[str, Any]]  # Hasil filter Model Tim 1/3
-    
+    all_processed_contents: List[Dict[str, Any]]  # SEMUA konten setelah gatekeeper (safe + unsafe) untuk disimpan ke DB
+
     extracted_entities: List[Dict[str, Any]] # Data siap masuk PostgreSQL
     
     total_processed_contents: int  # Akumulasi konten yang sudah diproses (panic button)

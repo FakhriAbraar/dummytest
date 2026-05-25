@@ -9,7 +9,7 @@ def resolve_ai_conflict(text_result: dict, visual_result: dict, igrs_rule: dict)
     visual_valid = visual_conf >= CONFIDENCE_THRESHOLD
     
     print("\n" + "="*60)
-    print(" ⚖️  PERSIDANGAN RESOLVER (ADU MEKANIK AI) ⚖️")
+    print(" [RESOLVER] PERSIDANGAN ADU MEKANIK AI")
     print("="*60)
     print(f" [TIM 1 - TEKS]   Kategori: {text_result.get('kategori', 'SAFE'):<18} | Conf: {text_conf:.2f} | Valid: {text_valid}")
     print(f" [TIM 3 - VISUAL] Kategori: {visual_result.get('kategori', 'SAFE'):<18} | Conf: {visual_conf:.2f} | Valid: {visual_valid}")
