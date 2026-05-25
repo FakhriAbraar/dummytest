@@ -97,7 +97,10 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
     Raises:
             Exception: Jika Apify actor gagal dipanggil.
     """
-    client = ApifyClient(APIFY_API_PREMIUM)
+    api_key = APIFY_API_PREMIUM or APIFY_API_FREE
+    if not api_key:
+        raise RuntimeError("APIFY_API_PREMIUM atau APIFY_API_FREE harus diset di .env")
+    client = ApifyClient(api_key)
     run_input = {
         "searchQueries": keyword,
         "resultsPerPage": target_post,
@@ -107,6 +110,8 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
     logger.info("Menjalankan Apify actor untuk keyword: %s", keyword)
     with _stdout_to_stderr():
         run = client.actor("GdWCkxBtKWOsKjdch").call(run_input=run_input)
+    if not run:
+        raise RuntimeError("Apify actor tidak mengembalikan run object (None). Cek token dan quota.")
     dataset_id = run["defaultDatasetId"]
     logger.info("Actor selesai. Dataset ID: %s", dataset_id)
 
@@ -187,6 +192,7 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
             "caption":        item.get("text"),
             "published_at":   item.get("createTimeISO"),
             "file_path":      file_paths,  # lokal sementara — diganti MinIO di upload_and_save()
+            "cover_url":      item.get("videoMeta", {}).get("coverUrl") or item.get("videoMeta", {}).get("originalCoverUrl") or "",
             "duration":       item.get("videoMeta", {}).get("duration"),
             "creator": {
                 "username": item.get("authorMeta", {}).get("name"),
