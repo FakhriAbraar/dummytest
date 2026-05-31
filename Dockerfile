@@ -29,6 +29,10 @@ RUN --mount=from=uv,source=/usr/local/bin/uv,target=/bin/uv \
     --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-dev
 
+# Playwright Chromium + system deps untuk crawler non-Apify (trends24, screenshot-evidence, dll).
+# Kalau hanya pakai crawler Apify, baris ini bisa dihapus untuk memperkecil image (~700MB).
+RUN python -m playwright install --with-deps chromium
+
 CMD ["/usr/local/bin/python", "-m", "app"]
 
 FROM prod AS dev

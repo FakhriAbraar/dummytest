@@ -1,0 +1,114 @@
+# docker-compose.prod.yml — file SHARED untuk VPS (~/aitf/docker-compose.prod.yml)
+# Dipakai oleh deploy step backend (service `api`) DAN frontend (service `frontend`).
+# Qdrant = CLOUD (QDRANT_URL di .env) → tidak ada container qdrant lokal.
+services:
+  api:
+    image: ${BACKEND_IMAGE:-ghcr.io/aitf-komdigi-x-its-batch-2/aitf-backend}:${BACKEND_TAG:-prod}
+    restart: always
+    command: sh -c "alembic upgrade head && python -m app"
+    env_file:
+      - .env
+    environment:
+      PAD_HOST: 0.0.0.0
+      PAD_PORT: "8000"
+      PAD_RELOAD: "false"
+      PAD_ENVIRONMENT: prod
+      PAD_POSTGRES_HOST: pad-postgres
+      PAD_MONGO_HOST: pad-mongo
+      PAD_MINIO_HOST: pad-minio
+      PAD_MINIO_PORT: "9000"
+      SENTENCE_TRANSFORMERS_HOME: /app/.cache/sentence_transformers
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      # Cache model embedding e5-large (~2GB) biar tidak re-download tiap restart
+      - pad-hf-cache:/app/.cache/sentence_transformers
+      # GGUF keyword model (OPSIONAL): taruh file di ~/aitf/models/keyword_generator/
+      # ministral-3b-base-f16.gguf lalu uncomment baris di bawah & restart api.
+      # - ./models/keyword_generator:/app/src/app/models/keyword_generator:ro
+    networks: [aitf]
+
+  frontend:
+    image: ${FRONTEND_IMAGE:-ghcr.io/aitf-komdigi-x-its-batch-2/aitf-frontend}:${FRONTEND_TAG:-prod}
+    restart: always
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    networks: [aitf]
+
+  postgres:
+    image: postgres:16-alpine
+    hostname: pad-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${PAD_POSTGRES_USER:-pad}
+      POSTGRES_PASSWORD: ${PAD_POSTGRES_PASS:-pad}
+      POSTGRES_DB: ${PAD_POSTGRES_DB:-pad}
+    volumes:
+      - pad-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PAD_POSTGRES_USER:-pad} -d ${PAD_POSTGRES_DB:-pad}"]
+      interval: 10s
+      timeout: 5s
+      retries: 40
+    networks: [aitf]
+
+  mongo:
+    image: mongo:7.0
+    hostname: pad-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${PAD_MONGO_USER:-pad}
+      MONGO_INITDB_ROOT_PASSWORD: ${PAD_MONGO_PASS:-pad}
+    command: mongod
+    volumes:
+      - pad-mongo-data:/data/db
+    healthcheck:
+      test: >
+        mongosh --quiet --username ${PAD_MONGO_USER:-pad} --password ${PAD_MONGO_PASS:-pad}
+        --authenticationDatabase admin --eval "db.adminCommand('ping').ok"
+      interval: 10s
+      timeout: 5s
+      retries: 40
+    networks: [aitf]
+
+  minio:
+    image: minio/minio:latest
+    hostname: pad-minio
+    restart: always
+    environment:
+      MINIO_ROOT_USER: ${PAD_MINIO_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${PAD_MINIO_SECRET_KEY:-minioadmin}
+    command: server /data --console-address ":9001"
+    volumes:
+      - pad-minio-data:/data
+    ports:
+      - "9001:9001" # console (api 9000 internal saja)
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 40
+    networks: [aitf]
+
+volumes:
+  pad-postgres-data:
+    name: pad-postgres-data
+  pad-mongo-data:
+    name: pad-mongo-data
+  pad-minio-data:
+    name: pad-minio-data
+  pad-hf-cache:
+    name: pad-hf-cache
+
+networks:
+  aitf:
+    driver: bridge

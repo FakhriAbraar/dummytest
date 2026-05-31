@@ -1,0 +1,5 @@
+# Paksa LF untuk file yang dijalankan/diparse di Linux VPS (cegah CRLF dari Windows)
+*.sh         text eol=lf
+deploy/**    text eol=lf
+.github/**/*.yml text eol=lf
+Dockerfile   text eol=lf

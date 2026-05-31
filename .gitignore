@@ -116,6 +116,11 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+# Crawler sessions / cookies (kredensial — JANGAN commit)
+scripts/crawler/twitter_session.json
+scripts/crawler/*.session
+scripts/crawler/.twitter_rr_counter
+
 # Environments
 .env
 .venv
