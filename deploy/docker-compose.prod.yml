@@ -41,7 +41,8 @@ services:
     depends_on:
       - api
     ports:
-      - "3000:3000"
+      # Host port bisa di-override via FRONTEND_HOST_PORT di .env (default 3000).
+      - "${FRONTEND_HOST_PORT:-3000}:3000"
     networks: [aitf]
 
   postgres:
@@ -90,8 +91,8 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - pad-minio-data:/data
-    ports:
-      - "9001:9001" # console (api 9000 internal saja)
+    # Console 9001 tidak dipublish default (hindari bentrok di VPS bersama).
+    # Mau console? tambah: ports: ["19001:9001"] dgn host-port bebas.
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]
       interval: 10s

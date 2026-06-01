@@ -56,7 +56,8 @@ services:
     depends_on:
       - api
     ports:
-      - "3000:3000"
+      # Host port bisa di-override via FRONTEND_HOST_PORT di .env (default 3000).
+      - "${FRONTEND_HOST_PORT:-3000}:3000"
     networks: [aitf]
 
   postgres:
@@ -105,8 +106,9 @@ services:
     command: server /data --console-address ":9001"
     volumes:
       - pad-minio-data:/data
-    ports:
-      - "9001:9001"
+    # Console 9001 TIDAK dipublish (hindari bentrok dgn deployment lain di VPS).
+    # App akses MinIO via pad-minio:9000 di network internal. Mau console? publish
+    # ke host-port bebas, mis:  ports: ["19001:9001"]
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]
       interval: 10s
