@@ -3,17 +3,59 @@ from __future__ import annotations
 import asyncio
 import base64
 import mimetypes
+from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.sql import get_db_session
+from app.db.tables import PublicCheck
 from app.services.check_engine import run_public_checking_pipeline
 from app.services.classification import get_igrs_rule_by_kategori
 from app.services.real_ml import call_llm_tim1, call_llm_tim3
 from app.services.resolver import resolve_ai_conflict
+
+# Ratings that mark a check as "unsafe" in list/preview views (mirrors frontend).
+_UNSAFE_RATINGS = {"13+", "17+", "PRC"}
+
+
+async def _persist_public_check(session: AsyncSession, result: dict[str, Any]) -> None:
+    """Save one public content-check result to history (best-effort).
+
+    Failures are swallowed (after rollback) so persistence never breaks the
+    user's check response. Base64 data-URI thumbnails (from file uploads) are
+    dropped to keep the table and the /recent payload lean.
+    """
+    try:
+        ed = result.get("engine_decision") or {}
+        meta = result.get("content_meta") or {}
+        thumb = meta.get("thumbnail_url", "") or ""
+        if thumb.startswith("data:"):
+            thumb = ""
+        session.add(
+            PublicCheck(
+                target_url=result.get("target_url", ""),
+                platform=meta.get("platform", "") or "",
+                username=meta.get("username", "") or "",
+                caption=meta.get("caption", "") or "",
+                thumbnail_url=thumb,
+                final_kategori=ed.get("kategori_final", "SAFE"),
+                final_rating=ed.get("rating_final", "SU"),
+                status=result.get("status", "COMPLETED"),
+                reason_ai=ed.get("reason_ai", ""),
+                legal_context=(result.get("legal_context") or {}).get(
+                    "bunyi_pasal_qdrant", ""
+                ),
+                checked_at=datetime.now(tz=timezone.utc),
+            )
+        )
+        await session.commit()
+    except Exception as e:
+        await session.rollback()
+        print(f"[!] Gagal menyimpan riwayat public check: {e}")  # noqa: T201
 
 router = APIRouter()
 
@@ -66,11 +108,49 @@ async def public_checking_endpoint(
 ):
     try:
         result = await run_public_checking_pipeline(request.url, session)
+        await _persist_public_check(session, result)
         return result
     except Exception as e:
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/recent")
+async def recent_public_checks(
+    limit: int = 10,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Most recent public content checks, newest first — shown on the landing
+    page before the user runs their own check. Shaped to match the frontend
+    ContentItem so it can reuse the result modal directly.
+    """
+    limit = max(1, min(limit, 50))
+    rows = (
+        await session.execute(
+            select(PublicCheck).order_by(PublicCheck.checked_at.desc()).limit(limit)
+        )
+    ).scalars().all()
+
+    items = [
+        {
+            "id": r.id,
+            "platform": (r.platform or "").lower(),
+            "username": r.username or "",
+            "caption": r.caption or "",
+            "classification": "unsafe" if (r.final_rating or "SU") in _UNSAFE_RATINGS else "safe",
+            "ageGroup": r.final_rating or "SU",
+            "category": (r.final_kategori or "").lower(),
+            "contentUrl": r.target_url or "",
+            "thumbnailUrl": r.thumbnail_url or "",
+            "reasonAi": r.reason_ai or "",
+            "legalContext": r.legal_context or "",
+            "keyword": "",
+            "createdAt": r.checked_at.isoformat() if r.checked_at else "",
+        }
+        for r in rows
+    ]
+    return {"recent": items, "count": len(items)}
 
 
 # ─── Upload-based content check (image / video) ────────────────────────────
@@ -94,7 +174,7 @@ def _build_data_uri(content: bytes, mime: str) -> str:
 async def check_upload_endpoint(
     file: UploadFile = File(..., description="Foto atau video yang mau diperiksa"),
     url: str = Form("", description="Opsional: URL asal konten untuk konteks tambahan"),
-    session: AsyncSession = Depends(get_db_session),  # noqa: ARG001 (dipakai untuk parity dengan /verify, IGRS rule lookup)
+    session: AsyncSession = Depends(get_db_session),
 ):
     """Klasifikasi konten berdasarkan FILE upload (foto/video), bukan URL.
 
@@ -183,7 +263,7 @@ async def check_upload_endpoint(
     # Video tidak perlu (terlalu berat untuk inline).
     thumbnail_for_response = img_urls[0] if img_urls else ""
 
-    return {
+    response = {
         "target_url": target_url,
         "status": public_status,
         "engine_decision": {
@@ -212,3 +292,5 @@ async def check_upload_endpoint(
             },
         },
     }
+    await _persist_public_check(session, response)
+    return response

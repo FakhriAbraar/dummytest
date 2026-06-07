@@ -90,21 +90,10 @@ async def get_dashboard_stats(
     }
 
 
-@router.get("/content")
-async def get_content_list(
-    q: str = "",
-    platform: str = "",
-    classification: str = "",
-    age_group: str = "",
-    date_from: str = "",
-    date_to: str = "",
-    page: int = 1,
-    per_page: int = 12,
-    session: AsyncSession = Depends(get_db_session),
-):
-    from datetime import datetime
-
-    stmt = (
+def _content_base_select():
+    """Shared select (content + account/platform/decision joins) for the content
+    list and the single-content detail endpoint, so both build identical rows."""
+    return (
         select(
             Content.content_id,
             Platform.platform_name,
@@ -122,6 +111,60 @@ async def get_content_list(
         .outerjoin(EngineDecision, EngineDecision.content_id == Content.content_id)
     )
 
+
+async def _row_to_item(row) -> dict:
+    """Map a content row (see `_content_base_select`) into the ContentItem shape
+    the frontend expects, resolving a presigned screenshot URL when available."""
+    (cid, plat, username, desc, eng_status, rating, src_url, crawled_at, raw_meta, kategori) = row
+    meta = raw_meta or {}
+
+    # Prefer real screenshot (MinIO) over CDN thumbnail.
+    # Frontend pakai URL ini langsung di <img src>; presigned URL valid 1 jam.
+    screenshot_path = meta.get("screenshot_path", "")
+    thumbnail = ""
+    if screenshot_path:
+        pres = await get_presigned_url(screenshot_path, time_to_expire=3600)
+        if pres.get("status") == "success":
+            thumbnail = pres.get("url", "")
+    if not thumbnail:
+        thumbnail = meta.get("thumbnail_url", "")
+
+    return {
+        "id": cid,
+        "platform": (plat or "").lower(),
+        "username": username or "",
+        "caption": desc or "",
+        "classification": "safe" if eng_status == "SAFE" else "unsafe",
+        "ageGroup": rating or "SU",
+        "category": (kategori or "").lower(),
+        "contentUrl": src_url or "",
+        "keyword": meta.get("seed_trend", ""),
+        "thumbnailUrl": thumbnail,
+        "reasonAi": meta.get("reason", ""),
+        "createdAt": crawled_at.isoformat() if crawled_at else "",
+    }
+
+
+@router.get("/content")
+async def get_content_list(
+    q: str = "",
+    platform: str = "",
+    classification: str = "",
+    age_group: str = "",
+    mission_id: str = "",
+    date_from: str = "",
+    date_to: str = "",
+    page: int = 1,
+    per_page: int = 12,
+    session: AsyncSession = Depends(get_db_session),
+):
+    from datetime import datetime
+
+    stmt = _content_base_select()
+
+    if mission_id:
+        # Konten satu sesi crawl (dipakai daftar konten di halaman laporan).
+        stmt = stmt.where(Content.raw_metadata["mission_id"].astext == mission_id)
     if q:
         stmt = stmt.where(Content.description.ilike(f"%{q}%"))
     if platform:
@@ -150,40 +193,28 @@ async def get_content_list(
     stmt = stmt.order_by(Content.crawl_timestamp.desc()).offset((page - 1) * per_page).limit(per_page)
     rows = (await session.execute(stmt)).all()
 
-    items = []
-    for row in rows:
-        (cid, plat, username, desc, eng_status, rating, src_url, crawled_at, raw_meta, kategori) = row
-        meta = raw_meta or {}
-
-        # Prefer real screenshot (MinIO) over CDN thumbnail.
-        # Frontend pakai URL ini langsung di <img src>; presigned URL valid 1 jam.
-        screenshot_path = meta.get("screenshot_path", "")
-        thumbnail = ""
-        if screenshot_path:
-            pres = await get_presigned_url(screenshot_path, time_to_expire=3600)
-            if pres.get("status") == "success":
-                thumbnail = pres.get("url", "")
-        if not thumbnail:
-            thumbnail = meta.get("thumbnail_url", "")
-
-        items.append({
-            "id": cid,
-            "platform": (plat or "").lower(),
-            "username": username or "",
-            "caption": desc or "",
-            "classification": "safe" if eng_status == "SAFE" else "unsafe",
-            "ageGroup": rating or "SU",
-            "category": (kategori or "").lower(),
-            "contentUrl": src_url or "",
-            "keyword": meta.get("seed_trend", ""),
-            "thumbnailUrl": thumbnail,
-            "createdAt": crawled_at.isoformat() if crawled_at else "",
-        })
+    items = [await _row_to_item(row) for row in rows]
 
     return {
         "data_per_page": items,
         "meta": {"page": page, "max_page": max_page, "total": total},
     }
+
+
+@router.get("/content/{content_id}")
+async def get_content_detail(
+    content_id: int,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Single content item for the detail-konten page (/admin/content/[id])."""
+    row = (
+        await session.execute(
+            _content_base_select().where(Content.content_id == content_id)
+        )
+    ).first()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Content not found")
+    return await _row_to_item(row)
 
 
 class UpdateClassificationRequest(BaseModel):
@@ -250,6 +281,7 @@ async def get_keyword_list(
             TrendingKeyword.keyword,
             TrendingKeyword.source,
             TrendingKeyword.detected_at,
+            TrendingKeyword.trend_score,
         )
         .order_by(TrendingKeyword.detected_at.desc())
     )
@@ -273,8 +305,9 @@ async def get_keyword_list(
                 "keyword": kw,
                 "source": src or "trending",
                 "detected_at": dt.isoformat() if dt else "",
+                "score": score,
             }
-            for kid, kw, src, dt in rows
+            for kid, kw, src, dt, score in rows
         ],
         "count": len(rows),
     }

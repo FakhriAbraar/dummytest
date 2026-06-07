@@ -3,7 +3,7 @@ import json
 import os
 import re
 import random
-from openai import AsyncOpenAI, RateLimitError, APIError
+from openai import AsyncOpenAI, APIError, RateLimitError
 from sqlalchemy.ext.asyncio import AsyncSession
 from .state import PADState
 from .crawler_service import run_trend_crawlers, run_content_crawlers
@@ -97,16 +97,44 @@ async def generate_keyword_local(text_input: str, platform: str, keyword_model) 
 # LANGGRAPH NODES
 # =====================================================================
 
-async def trend_crawler_node(state: PADState):
+async def trend_crawler_node(state: PADState, progress=None):
     retry_count = state.get("trend_retry", 0)
     print(f"\n[INIT] Menjalankan Trend Crawler (Batch ke-{retry_count + 1})...")
 
-    if state.get("seed_trend", "").strip():
-        initial_keywords = [state["seed_trend"]]
+    # "Loading Keywords": keyword kustom dari form Crawl Config.
+    if progress:
+        progress.start_stage("Loading Keywords")
+    custom = [k.strip() for k in state.get("custom_keywords", []) if k and k.strip()]
+    if progress:
+        progress.complete_stage("Loading Keywords")
+
+    # "Fetching Trending Keywords": ambil trending kecuali seed tunggal diberikan.
+    # Jumlah keyword per batch dikontrol dari setting Auto-Crawler (default 3).
+    keyword_count = max(1, state.get("trends_keyword_count", 3) or 3)
+    if progress:
+        progress.start_stage("Fetching Trending Keywords")
+    try:
+        if state.get("seed_trend", "").strip():
+            trending = [state["seed_trend"]]
+        else:
+            trending_data = await run_trend_crawlers()
+            start_idx = retry_count * keyword_count
+            trending = trending_data[start_idx : start_idx + keyword_count]
+        if progress:
+            progress.complete_stage("Fetching Trending Keywords")
+    except Exception as exc:
+        if progress:
+            progress.fail_stage("Fetching Trending Keywords", exc)
+        raise
+
+    # Keyword kustom hanya dipakai di batch pertama agar tidak diulang saat retry.
+    if retry_count == 0 and custom:
+        initial_keywords = []
+        for kw in custom + trending:
+            if kw not in initial_keywords:
+                initial_keywords.append(kw)
     else:
-        trending_data = await run_trend_crawlers()
-        start_idx = retry_count * 3
-        initial_keywords = trending_data[start_idx : start_idx + 3]
+        initial_keywords = trending
 
     return {
         "current_keywords": initial_keywords,
@@ -116,7 +144,7 @@ async def trend_crawler_node(state: PADState):
     }
 
 
-async def content_crawler_node(state: PADState):
+async def content_crawler_node(state: PADState, progress=None):
     current_total = state.get("total_processed_contents", 0)
 
     if current_total >= MAX_TOTAL_CONTENTS:
@@ -124,11 +152,22 @@ async def content_crawler_node(state: PADState):
         return {"raw_contents": []}
 
     print(f"[DEPTH {state['crawling_depth']}] Ngeruk data: {state['current_keywords']}")
+    platform_limits = state.get("platform_limits") or {}
     all_crawled_data = []
 
     for kw in state["current_keywords"]:
-        hasil_scrape = await run_content_crawlers(kw, limit=TARGET_POST_PER_KEYWORD)
+        hasil_scrape = await run_content_crawlers(
+            kw,
+            limit=TARGET_POST_PER_KEYWORD,
+            platform_limits=platform_limits,
+            progress=progress,
+        )
         all_crawled_data.extend(hasil_scrape)
+
+    # "Saving Raw Content": konten mentah ronde ini diserahkan ke Gatekeeper.
+    if progress:
+        progress.start_stage("Saving Raw Content")
+        progress.complete_stage("Saving Raw Content")
 
     # Safety net: kalau crawler benar-benar mati, inject satu konten dummy
     if not all_crawled_data:
@@ -149,9 +188,12 @@ async def content_crawler_node(state: PADState):
     }
 
 
-def create_gatekeeper_node(session: AsyncSession):
+def create_gatekeeper_node(session: AsyncSession, progress=None):
     async def gatekeeper_node(state: PADState):
         print(f"\n[DEPTH {state['crawling_depth']}] Gatekeeper menyaring {len(state['raw_contents'])} konten menggunakan OpenRouter...")
+        # "Running Classification": Tim 1 (teks) + Tim 3 (visual) per konten.
+        if progress:
+            progress.start_stage("Running Classification")
         unsafe_data = []
         all_classified = []
 
@@ -395,6 +437,8 @@ def create_gatekeeper_node(session: AsyncSession):
             await asyncio.sleep(4.0)
 
         print(f"\n[DEPTH {state['crawling_depth']}] GATEKEEPER: {len(unsafe_data)} beracun dari {len(all_classified)} konten.")
+        if progress:
+            progress.complete_stage("Running Classification")
         return {
             "unsafe_contents": unsafe_data,
             "all_processed_contents": state.get("all_processed_contents", []) + all_classified,
@@ -403,9 +447,12 @@ def create_gatekeeper_node(session: AsyncSession):
     return gatekeeper_node
 
 
-def create_fork_processor_node(keyword_model):
+def create_fork_processor_node(keyword_model, progress=None):
     async def fork_processor_node(state: PADState):
         print(f"[DEPTH {state['crawling_depth']}] Memproses Forking...")
+        # "Generating RAG Analysis": ekstraksi entitas + keyword turunan.
+        if progress:
+            progress.start_stage("Generating RAG Analysis")
         new_extracted_entities = []
         new_keywords_generated = []
 
@@ -442,6 +489,8 @@ def create_fork_processor_node(keyword_model):
             truly_new_kws = random.sample(truly_new_kws, 3)
             print(f"   [!] Snowball Limit: Memangkas keyword baru menjadi 3: {truly_new_kws}")
 
+        if progress:
+            progress.complete_stage("Generating RAG Analysis")
         return {
             "extracted_entities": state.get("extracted_entities", []) + new_extracted_entities,
             "current_keywords": truly_new_kws,

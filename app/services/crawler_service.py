@@ -197,19 +197,63 @@ def _generate_dummy_content(keyword: str, limit: int) -> list[dict]:
     return posts
 
 
-async def run_content_crawlers(keyword: str, limit: int = 5) -> list:
-    print(f"\n[*] Mengerahkan Crawler untuk keyword: '{keyword}' (limit: {limit})...")
+async def _crawl_one_platform(
+    source: str,
+    script_module: str,
+    keyword: str,
+    limit: int,
+    progress=None,
+) -> list[dict]:
+    """Crawl a single platform, reporting its stage status to `progress`.
 
-    ig_task = _run_sosmed_subprocess("scripts.crawler.instagram_apify", keyword, limit)
-    tiktok_task = _run_sosmed_subprocess("scripts.crawler.tiktok", keyword, limit)
-    twitter_task = _run_sosmed_subprocess("scripts.crawler.twitter_apify", keyword, limit)
+    `source` is the platform key (x / instagram / tiktok) the job tracker maps to
+    a UI stage. The underlying subprocess swallows its own errors and returns [],
+    so a hard failure here is rare but still surfaced as a failed stage.
+    """
+    if progress:
+        progress.start_platform(source)
+    try:
+        data = await _run_sosmed_subprocess(script_module, keyword, limit)
+        if progress:
+            progress.complete_platform(source)
+        return data
+    except Exception as exc:
+        if progress:
+            progress.fail_platform(source, exc)
+        return []
+
+
+async def run_content_crawlers(
+    keyword: str,
+    limit: int = 5,
+    platform_limits: dict | None = None,
+    progress=None,
+) -> list:
+    limits = platform_limits or {}
+    ig_limit = int(limits.get("instagram", limit))
+    tiktok_limit = int(limits.get("tiktok", limit))
+    x_limit = int(limits.get("x", limits.get("twitter", limit)))
+    print(
+        f"\n[*] Mengerahkan Crawler untuk keyword: '{keyword}' "
+        f"(x={x_limit}, ig={ig_limit}, tiktok={tiktok_limit})..."
+    )
+
+    ig_task = _crawl_one_platform(
+        "instagram", "scripts.crawler.instagram_apify", keyword, ig_limit, progress
+    )
+    tiktok_task = _crawl_one_platform(
+        "tiktok", "scripts.crawler.tiktok", keyword, tiktok_limit, progress
+    )
+    twitter_task = _crawl_one_platform(
+        "x", "scripts.crawler.twitter_apify", keyword, x_limit, progress
+    )
 
     results = await asyncio.gather(ig_task, tiktok_task, twitter_task)
     unified_data = results[0] + results[1] + results[2]
 
     if not unified_data:
         print(f"[!] Semua crawler gagal untuk '{keyword}'. Fallback ke dummy content agar pipeline tetap jalan.")
-        unified_data = _generate_dummy_content(keyword, limit)
+        unified_data = _generate_dummy_content(keyword, max(ig_limit, tiktok_limit, x_limit))
     else:
         print(f"[=] Total {len(unified_data)} konten diserahkan ke Gatekeeper.")
 

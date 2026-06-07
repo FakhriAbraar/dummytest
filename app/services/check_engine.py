@@ -9,8 +9,8 @@ import re
 from typing import Any
 
 from dotenv import load_dotenv
-from sqlalchemy.ext.asyncio import AsyncSession
 from openai import AsyncOpenAI
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.services.classification import get_igrs_rule_by_kategori
 from app.services.resolver import resolve_ai_conflict
@@ -132,7 +132,7 @@ async def run_crawler_subprocess(url: str) -> dict:
 
 
 async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[str, Any]:
-    print(f"\n[*] Menjalankan Public Checking Pipeline...")
+    print(f"\n[*] Menjalankan Public Checking Pipeline untuk: {url}")
 
     crawl_result = await run_crawler_subprocess(url)
 
