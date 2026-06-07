@@ -9,6 +9,7 @@ import re
 from typing import Any
 
 from dotenv import load_dotenv
+from openai import AsyncOpenAI
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.services.classification import get_igrs_rule_by_kategori
@@ -56,7 +57,7 @@ def extract_json_from_llm(raw_text: str) -> dict:
         except Exception:
             pass
 
-        print(f"[-] Gagal parse JSON dari LLM: {raw_text}")
+        print(f"[checker] LLM JSON parse failed: {raw_text!r}")
         return {}
 
 
@@ -64,7 +65,7 @@ def _get_qdrant_client() -> Any:
     global _qdrant_client
     if _qdrant_client is None:
         from qdrant_client import QdrantClient  # noqa: PLC0415
-        print("[*] Inisialisasi Qdrant Client...")
+        print("[checker] init Qdrant client")
         _qdrant_client = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
     return _qdrant_client
 
@@ -75,7 +76,7 @@ def _get_embedder() -> Any:
         from sentence_transformers import SentenceTransformer  # noqa: PLC0415
         # Cache ke path yang dikonfigurasi (default D: drive agar tidak penuh di C:)
         cache_dir = os.getenv("SENTENCE_TRANSFORMERS_HOME", "D:/sadam/Dev/.cache/sentence_transformers")
-        print(f"[*] Memuat Embedding Model (intfloat/multilingual-e5-large, 1024-dim) → cache: {cache_dir}")
+        print(f"[checker] loading embedding model intfloat/multilingual-e5-large (1024-dim) cache={cache_dir}")
         _embedder = SentenceTransformer("intfloat/multilingual-e5-large", cache_folder=cache_dir)
     return _embedder
 
@@ -105,7 +106,7 @@ def _build_dummy_crawl_result(url: str) -> dict:
 
 
 async def run_crawler_subprocess(url: str) -> dict:
-    print(f"\n[*] Menjalankan Scraper Subprocess untuk URL: {url}")
+    print(f"\n[checker] scraper subprocess START url={url}")
     try:
         cwd_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 
@@ -123,14 +124,14 @@ async def run_crawler_subprocess(url: str) -> dict:
         if process.returncode == 0:
             return json.loads(process.stdout)
         else:
-            print(f"[-] Crawler gagal (Exit {process.returncode}): {process.stderr[:200]} — fallback ke dummy data.")
+            print(f"[checker] scraper FAILED exit={process.returncode} stderr={process.stderr[:200]!r} -> using dummy fallback metadata")
             return _build_dummy_crawl_result(url)
     except Exception as e:
-        print(f"[-] Crawler subprocess gagal: {repr(e)} — fallback ke dummy data.")
+        print(f"[checker] scraper subprocess error: {e!r} -> using dummy fallback metadata")
         return _build_dummy_crawl_result(url)
 
 
-async def run_public_checking_pipeline(input_url: str, session: AsyncSession) -> dict[str, Any]:
+async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[str, Any]:
     print(f"\n[*] Menjalankan Public Checking Pipeline...")
 
     crawl_result = await run_crawler_subprocess(url)
@@ -144,9 +145,9 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
         target_url = context_data.get("url", url) or url
         platform = context_data.get("platform", "")
         username = (context_data.get("creator") or {}).get("username") or ""
-        print(f"[*] Berhasil mengekstrak {content_type}. Teks Preview: {text_payload[:50]}...")
+        print(f"[checker] extracted content_type={content_type} text_preview={text_payload[:50]!r}")
     else:
-        print("[-] Crawler tidak menghasilkan data — pipeline lanjut dengan teks kosong.")
+        print("[-] Crawler gagal narik data, fallback ke blind URL mode.")
         text_payload = ""
         content_type = "text"
         target_url = url
@@ -199,7 +200,7 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
                 "reason": parsed.get("reason", "Fallback Teks API")
             }
         except Exception as e:
-            print(f"[!] Tim 1 API Error: {e}")
+            print(f"[checker] tim1(text) API error: {e}")
             return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "API Error"}
 
     # TIM 3 — Analisis Visual via OpenRouter (dengan video keyframe extraction)
@@ -239,14 +240,14 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
                 is_video = url_data.lower().endswith(VIDEO_EXTENSIONS)
 
                 if is_video:
-                    print(f"[*] Memproses video untuk Tim 3: {url_data[:80]}...")
+                    print(f"[checker] tim3(visual) video keyframe extraction: {url_data[:80]}")
                     keyframe_urls = await process_media_url(url_data)
                     for frame_url in keyframe_urls:
                         content_array.append({
                             "type": "image_url",
                             "image_url": {"url": frame_url}
                         })
-                    print(f"[*] {len(keyframe_urls)} keyframes (Base64) ditambahkan ke payload.")
+                    print(f"[checker] tim3(visual) added {len(keyframe_urls)} keyframe(s) to payload")
                 else:
                     final_url = url_data
                     if not url_data.startswith("http") and not url_data.startswith("data:"):
@@ -261,7 +262,7 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
                     })
 
         total_images = len(content_array) - 1
-        print(f"[*] Total gambar/frame dalam payload Tim 3: {total_images}")
+        print(f"[checker] tim3(visual) payload images={total_images}")
 
         try:
             messages_payload: typing.Any = [{"role": "user", "content": content_array}]
@@ -280,7 +281,7 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
                 "reason": parsed.get("reason", "Fallback Visual API")
             }
         except Exception as e:
-            print(f"[!] Tim 3 API Error: {e}")
+            print(f"[checker] tim3(visual) API error: {e}")
             return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "API Error"}
 
     media_payloads: list[str] = []
@@ -290,18 +291,18 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
         fallback_thumb = context_data.get("thumbnail_url", "")
 
         if media_urls:
-            print(f"[*] Menyeleksi {len(media_urls)} file media untuk LLM...")
+            print(f"[checker] selecting {len(media_urls)} media file(s) for tim3(visual)")
             for media_url in media_urls[:5]:
                 media_payloads.append(media_url)
 
             if not media_payloads and fallback_thumb:
-                print("[*] Fallback ke Thumbnail URL.")
+                print("[checker] media empty, fallback to thumbnail_url")
                 media_payloads.append(fallback_thumb)
         else:
             if fallback_thumb:
                 media_payloads.append(fallback_thumb)
 
-    print(f"[*] Payload akhir untuk Tim 3 Visual AI: {len(media_payloads)} media (gambar/video).")
+    print(f"[checker] tim3(visual) final payload media={len(media_payloads)}")
 
     mock_text_ai, mock_visual_ai = await asyncio.gather(
         call_llm_tim1_api(target_url, text_payload),
@@ -332,6 +333,21 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
         visual_result=mock_visual_ai,
         igrs_rule=igrs_rule
     )
+
+    # Pertahankan tipe IGRS konkret untuk konten aman: bila pemenang resolver
+    # "SAFE" tapi salah satu AI mengenali kategori IGRS konkret yang ratingnya
+    # juga aman (SU/7+), pakai kategori konkret itu. Tidak melemahkan pelabelan
+    # konten berbahaya (lihat catatan sama di gatekeeper nodes.py).
+    _kf = final_decision.get("kategori_final", "SAFE")
+    _rf = final_decision.get("rating_final", "SU")
+    if (
+        _kf == "SAFE"
+        and _rf in ("SU", "7+")
+        and kategori_suspect not in ("SAFE", "")
+        and igrs_rule["age_rating_minimal"] in ("SU", "7+")
+    ):
+        print(f"[checker] kategori enrichment: SAFE -> {kategori_suspect} (rating tetap {_rf})")
+        final_decision["kategori_final"] = kategori_suspect
 
     # 4. QDRANT RAG — hanya diaktifkan jika QDRANT_URL di-set di .env
     _STATIC_LEGAL_FALLBACK = (
@@ -382,9 +398,9 @@ async def run_public_checking_pipeline(input_url: str, session: AsyncSession) ->
 
                 qdrant_context = f"[{referensi_hukum}] {konten_full}"
         except Exception as e:
-            print(f"[!] Qdrant tidak tersedia, menggunakan regulasi statis: {e}")
+            print(f"[checker] Qdrant unavailable, using static legal fallback: {e}")
     else:
-        print("[*] QDRANT_URL tidak di-set — menggunakan referensi hukum statis.")
+        print("[checker] QDRANT_URL not set, using static legal fallback")
 
     public_status = "NEEDS_REVIEW" if final_decision.get("rating_final") == "UNRATED" else "COMPLETED"
 

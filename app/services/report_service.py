@@ -345,8 +345,25 @@ async def save_mission_report(
             ))
 
     await session.commit()
-    print(f"[REPORT] Mission {mission_id[:8]} disimpan: {stats['total']} konten, {stats['unsafe']} berbahaya, {len(history_keywords)} keyword.")
+    print(f"[report] mission={mission_id[:8]} saved content={stats['total']} unsafe={stats['unsafe']} keywords={len(history_keywords)}")
     return stats
+
+
+def _log_to_report(log: AgentExecutionLog) -> dict[str, Any]:
+    """Shape a crawler execution log into the BatchReport the frontend expects."""
+    out = log.output_result or {}
+    inp = log.input_payload or {}
+    return {
+        "id": inp.get("mission_id", str(log.log_id)),
+        "seed_trend": inp.get("seed_trend", ""),
+        "started_at": log.execution_start.isoformat() if log.execution_start else "",
+        "finished_at": log.execution_end.isoformat() if log.execution_end else "",
+        "total_created": out.get("total_created", 0),
+        "safe": out.get("safe", 0),
+        "unsafe": out.get("unsafe", 0),
+        "by_platform": out.get("by_platform", {}),
+        "by_age_group": out.get("by_age_group", {}),
+    }
 
 
 async def get_recent_missions(session: AsyncSession, limit: int = 10) -> list[dict[str, Any]]:
@@ -357,21 +374,35 @@ async def get_recent_missions(session: AsyncSession, limit: int = 10) -> list[di
         .order_by(AgentExecutionLog.execution_start.desc())
         .limit(limit)
     )
-    logs = result.scalars().all()
+    return [_log_to_report(log) for log in result.scalars().all()]
 
-    reports = []
-    for log in logs:
-        out = log.output_result or {}
-        inp = log.input_payload or {}
-        reports.append({
-            "id": inp.get("mission_id", str(log.log_id)),
-            "seed_trend": inp.get("seed_trend", ""),
-            "started_at": log.execution_start.isoformat() if log.execution_start else "",
-            "finished_at": log.execution_end.isoformat() if log.execution_end else "",
-            "total_created": out.get("total_created", 0),
-            "safe": out.get("safe", 0),
-            "unsafe": out.get("unsafe", 0),
-            "by_platform": out.get("by_platform", {}),
-            "by_age_group": out.get("by_age_group", {}),
-        })
-    return reports
+
+async def get_mission_by_id(
+    session: AsyncSession, mission_id: str
+) -> dict[str, Any] | None:
+    """Single mission report by its mission_id (the BatchReport `id`).
+
+    Powers the laporan-hasil detail page (/admin/report/[id]). Matches the
+    mission_id stored in input_payload; falls back to the numeric log_id used
+    by older rows that predate mission_id tracking.
+    """
+    base = (
+        select(AgentExecutionLog)
+        .join(AiAgent, AgentExecutionLog.agent_id == AiAgent.agent_id)
+        .where(AiAgent.agent_name == "PAD Crawler Agent")
+    )
+
+    result = await session.execute(
+        base.where(AgentExecutionLog.input_payload["mission_id"].astext == mission_id)
+        .order_by(AgentExecutionLog.execution_start.desc())
+        .limit(1)
+    )
+    log = result.scalars().first()
+
+    if log is None and mission_id.isdigit():
+        result = await session.execute(
+            base.where(AgentExecutionLog.log_id == int(mission_id)).limit(1)
+        )
+        log = result.scalars().first()
+
+    return _log_to_report(log) if log else None

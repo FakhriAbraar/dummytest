@@ -121,6 +121,10 @@ scripts/crawler/twitter_session.json
 scripts/crawler/*.session
 scripts/crawler/.twitter_rr_counter
 
+# LangGraph checkpoint DB — runtime state, dibuat ulang otomatis saat app jalan
+# (AsyncSqliteSaver.from_conn_string), beda tiap mesin → sumber konflik merge biner.
+pad_checkpoint.db
+
 # Environments
 .env
 .venv

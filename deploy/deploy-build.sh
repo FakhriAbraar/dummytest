@@ -14,7 +14,8 @@ if [ ! -d aitf-backend ] || [ ! -d aitf-frontend ]; then
 fi
 
 echo ">> build + up (build pertama LAMA: torch + playwright + llama, butuh disk >=20GB) ..."
-$COMPOSE up -d --build --remove-orphans
+# TANPA --remove-orphans: di server bersama, jangan sampai menyentuh container lain.
+$COMPOSE up -d --build
 
 echo ">> tunggu DB & migrasi ..."
 sleep 12

@@ -3,14 +3,25 @@ from .state import PADState
 from .nodes import trend_crawler_node, content_crawler_node, create_gatekeeper_node, create_fork_processor_node
 from .router import check_loop_status  
 
-def build_pad_workflow(keyword_model, session):
+def build_pad_workflow(keyword_model, session, progress=None):
     workflow = StateGraph(PADState)
-    
-    workflow.add_node("TrendSeed", trend_crawler_node)
-    workflow.add_node("ContentCrawler", content_crawler_node)
-    
-    workflow.add_node("Gatekeeper", create_gatekeeper_node(session))
-    workflow.add_node("ForkProcessor", create_fork_processor_node(keyword_model))
+
+    # `progress` (optional) is a job_tracker.Job handle that the nodes use to
+    # report per-stage status for the "Detailed Crawl Progress & Logs" view.
+    # `trend_crawler_node`/`content_crawler_node` are coroutine functions; wrap
+    # them in an async closure (not a sync lambda) so LangGraph awaits the
+    # coroutine instead of receiving an un-awaited one (INVALID_GRAPH_NODE_RETURN_VALUE).
+    def _with_progress(node):
+        async def runner(state: PADState):
+            return await node(state, progress)
+
+        return runner
+
+    workflow.add_node("TrendSeed", _with_progress(trend_crawler_node))
+    workflow.add_node("ContentCrawler", _with_progress(content_crawler_node))
+
+    workflow.add_node("Gatekeeper", create_gatekeeper_node(session, progress))
+    workflow.add_node("ForkProcessor", create_fork_processor_node(keyword_model, progress))
     
     workflow.set_entry_point("TrendSeed")
     workflow.add_edge("TrendSeed", "ContentCrawler")

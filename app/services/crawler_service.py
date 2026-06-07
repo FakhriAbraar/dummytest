@@ -2,7 +2,6 @@ import os
 import sys
 import json
 import asyncio
-import random
 import subprocess
 
 # Force subprocess child processes to use UTF-8 encoding + redirect Playwright/temp ke D:
@@ -22,7 +21,7 @@ def _run_trend_subprocess_sync(script_module: str, *extra_args) -> list[str]:
     cwd_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
     cmd = [sys.executable, "-m", script_module] + list(extra_args)
 
-    print(f"[*] Triggering subprocess: {' '.join(cmd)}")
+    print(f"[trend_crawler] exec: {' '.join(cmd)}")
 
     proc = subprocess.run(
         cmd,
@@ -34,8 +33,8 @@ def _run_trend_subprocess_sync(script_module: str, *extra_args) -> list[str]:
     )
 
     if proc.returncode != 0:
-        err_preview = proc.stderr.decode("utf-8", errors="replace")[:500]
-        print(f"[-] Subprocess {script_module} meledak (Exit {proc.returncode}). Stderr preview: {err_preview!r}")
+        err_full = proc.stderr.decode("utf-8", errors="replace").strip()
+        print(f"[trend_crawler] subprocess FAILED module={script_module} exit={proc.returncode} stderr:\n{err_full}")
         return []
 
     try:
@@ -44,13 +43,13 @@ def _run_trend_subprocess_sync(script_module: str, *extra_args) -> list[str]:
         for item in result.get("extracted_data", []):
             if "topic" in item and item["topic"]:
                 topics.append(str(item["topic"]))
-        print(f"[+] {script_module} mengamankan {len(topics)} trending topics.")
+        print(f"[trend_crawler] module={script_module} OK topics={len(topics)}")
         return topics
     except json.JSONDecodeError:
-        print(f"[-] Output {script_module} bukan JSON murni.")
+        print(f"[trend_crawler] module={script_module} ERROR: stdout is not valid JSON")
         return []
     except Exception as e:
-        print(f"[-] Parsing error di {script_module}: {e}")
+        print(f"[trend_crawler] module={script_module} parse error: {e}")
         return []
 
 
@@ -58,22 +57,8 @@ async def _run_trend_subprocess(script_module: str, *extra_args) -> list[str]:
     return await asyncio.to_thread(_run_trend_subprocess_sync, script_module, *extra_args)
 
 
-_DUMMY_TRENDS = [
-    "cyberbullying anak sekolah",
-    "judi online telegram",
-    "konten dewasa tiktok",
-    "scam belanja online",
-    "pelecehan anak sosmed",
-    "hoaks kesehatan viral",
-    "kekerasan remaja instagram",
-    "narkoba slang sosmed",
-    "doxxing data pribadi",
-    "phishing whatsapp",
-]
-
-
 async def run_trend_crawlers() -> list:
-    print("\n[*] Menjalankan Real Trend Crawlers (Trends24 & Google Trends)...")
+    print("\n[trend_crawler] START sources=[trends24, google_trends]")
 
     t24_task = _run_trend_subprocess("scripts.crawler.trends24", "--region", "indonesia")
     gtrends_task = _run_trend_subprocess("scripts.crawler.google_trends")
@@ -82,11 +67,15 @@ async def run_trend_crawlers() -> list:
     combined_trends = results[0] + results[1]
 
     cleaned_trends = list({t.lower().strip() for t in combined_trends if t.strip()})
-    print(f"[=] Total unique trending topics: {len(cleaned_trends)}\n")
+    print(f"[trend_crawler] unique topics={len(cleaned_trends)}\n")
 
     if not cleaned_trends:
-        print("[!] WARNING: Trend crawlers gagal total. Fallback ke dummy trends agar pipeline tetap jalan.")
-        return random.sample(_DUMMY_TRENDS, k=min(5, len(_DUMMY_TRENDS)))
+        # Tidak ada fallback dummy: biarkan kosong dan log dengan jelas agar
+        # kegagalan trend crawler terlihat (bukan disamarkan dengan data palsu).
+        print(
+            "[trend_crawler] ERROR: 0 topics returned from all sources "
+            "(see subprocess stderr above)"
+        )
 
     return cleaned_trends
 
@@ -102,7 +91,7 @@ def _run_sosmed_subprocess_sync(script_module: str, keyword: str, limit: int, ex
         cmd.extend(extra_args)
 
     platform_name = script_module.split(".")[-1].upper()
-    print(f"[*] Menugaskan Agen {platform_name} untuk: '{keyword}'...")
+    print(f"[content_crawler] exec module={script_module} keyword={keyword!r} target_post={limit}")
 
     try:
         proc = subprocess.run(
@@ -115,8 +104,8 @@ def _run_sosmed_subprocess_sync(script_module: str, keyword: str, limit: int, ex
         )
 
         if proc.returncode != 0:
-            err_preview = proc.stderr.decode("utf-8", errors="replace")[:500]
-            print(f"[-] Agen {platform_name} Gagal (Exit {proc.returncode}). Stderr preview: {err_preview!r}")
+            err_full = proc.stderr.decode("utf-8", errors="replace").strip()
+            print(f"[content_crawler] subprocess FAILED platform={platform_name} exit={proc.returncode} stderr:\n{err_full}")
             return []
 
         result = json.loads(proc.stdout.decode("utf-8", errors="replace"))
@@ -147,14 +136,14 @@ def _run_sosmed_subprocess_sync(script_module: str, keyword: str, limit: int, ex
                 "thumbnail_url": thumb,
             })
 
-        print(f"[+] Agen {platform_name} mengamankan {len(formatted_data)} konten.")
+        print(f"[content_crawler] platform={platform_name} OK items={len(formatted_data)}")
         return formatted_data
 
     except json.JSONDecodeError:
-        print(f"[-] Output {platform_name} bukan JSON murni.")
+        print(f"[content_crawler] platform={platform_name} ERROR: stdout is not valid JSON")
         return []
     except Exception as e:
-        print(f"[-] Exception di Agen {platform_name}: {e}")
+        print(f"[content_crawler] platform={platform_name} exception: {e}")
         return []
 
 
@@ -162,55 +151,77 @@ async def _run_sosmed_subprocess(script_module: str, keyword: str, limit: int, e
     return await asyncio.to_thread(_run_sosmed_subprocess_sync, script_module, keyword, limit, extra_args)
 
 
-_DUMMY_CONTENT_TEMPLATES = [
-    "Awas ada link {kw} palsu beredar di group WhatsApp! Jangan klik sembarangan, banyak yang kena tipu.",
-    "Video terbaru soal {kw} lagi viral banget di sosmed, isinya bikin gelisah orang tua.",
-    "Gue nemuin akun yang nyebarin konten {kw} ke anak-anak di bawah umur. Tolong dilaporkan!",
-    "Tutorial cara dapetin {kw} gratis, dijamin work 100%! DM aja ya gaes.",
-    "BREAKING: Kasus {kw} yang menggemparkan netizen Indonesia, korban sudah puluhan.",
-    "Hati-hati! Ada scam berkedok {kw} beredar luas di Instagram dan TikTok.",
-    "Komunitas {kw} underground makin besar, sudah ada ribuan member di Telegram.",
-    "Anak SD sudah kenal {kw}? Ini fakta mengejutkan yang wajib diketahui orang tua!",
-    "Review jujur tentang {kw} dari perspektif yang berbeda, cek dulu sebelum judge.",
-    "Kenapa {kw} makin populer di kalangan remaja? Ini penjelasan psikolognya.",
-]
+async def _crawl_one_platform(
+    source: str,
+    script_module: str,
+    keyword: str,
+    limit: int,
+    progress=None,
+    extra_args: list | None = None,
+) -> list[dict]:
+    """Crawl a single platform, reporting its stage status to `progress`.
 
-_DUMMY_PLATFORMS = ["instagram", "tiktok"]
-
-
-def _generate_dummy_content(keyword: str, limit: int) -> list[dict]:
-    posts = []
-    kw_short = keyword.split()[0] if keyword else "ini"
-    templates = random.sample(_DUMMY_CONTENT_TEMPLATES, k=min(limit, len(_DUMMY_CONTENT_TEMPLATES)))
-    for i, tmpl in enumerate(templates[:limit]):
-        platform = _DUMMY_PLATFORMS[i % len(_DUMMY_PLATFORMS)]
-        slug = keyword.replace(" ", "_")[:20]
-        posts.append({
-            "type": random.choice(["text", "image"]),
-            "content": tmpl.format(kw=kw_short),
-            "source": platform,
-            "url": f"https://{platform}.com/p/dummy_{slug}_{i + 1}",
-            "username": f"dummy_user_{i + 1}",
-            "file_path": [],
-            "thumbnail_url": "",
-        })
-    return posts
+    `source` is the platform key (x / instagram / tiktok) the job tracker maps to
+    a UI stage. The underlying subprocess swallows its own errors and returns [],
+    so a hard failure here is rare but still surfaced as a failed stage.
+    """
+    if progress:
+        progress.start_platform(source)
+    try:
+        data = await _run_sosmed_subprocess(script_module, keyword, limit, extra_args)
+        if progress:
+            progress.complete_platform(source)
+        return data
+    except Exception as exc:
+        if progress:
+            progress.fail_platform(source, exc)
+        return []
 
 
-async def run_content_crawlers(keyword: str, limit: int = 5) -> list:
-    print(f"\n[*] Mengerahkan Crawler untuk keyword: '{keyword}' (limit: {limit})...")
+async def run_content_crawlers(
+    keyword: str,
+    limit: int = 5,
+    platform_limits: dict | None = None,
+    progress=None,
+) -> list:
+    limits = platform_limits or {}
+    ig_limit = int(limits.get("instagram", limit))
+    tiktok_limit = int(limits.get("tiktok", limit))
+    x_limit = int(limits.get("x", limits.get("twitter", limit)))
+    print(
+        f"\n[content_crawler] START keyword={keyword!r} "
+        f"limits(x={x_limit}, ig={ig_limit}, tiktok={tiktok_limit})"
+    )
 
-    ig_task = _run_sosmed_subprocess("scripts.crawler.instagram_apify", keyword, limit)
-    tiktok_task = _run_sosmed_subprocess("scripts.crawler.tiktok", keyword, limit)
-    twitter_task = _run_sosmed_subprocess("scripts.crawler.twitter_apify", keyword, limit)
+    # Pembagian engine (sesuai kebutuhan operasional):
+    #   - Instagram & Twitter/X  -> Playwright (scripts.crawler.instagram / twitter)
+    #   - TikTok                 -> Apify      (scripts.crawler.tiktok)
+    # instagram.py butuh --max_scroll (jumlah scroll kosong sebelum menyerah);
+    # diturunkan dari target post agar cukup menjangkau target.
+    ig_max_scroll = max(5, ig_limit * 2)
+
+    ig_task = _crawl_one_platform(
+        "instagram", "scripts.crawler.instagram", keyword, ig_limit, progress,
+        extra_args=["--max_scroll", str(ig_max_scroll)],
+    )
+    tiktok_task = _crawl_one_platform(
+        "tiktok", "scripts.crawler.tiktok", keyword, tiktok_limit, progress
+    )
+    twitter_task = _crawl_one_platform(
+        "x", "scripts.crawler.twitter", keyword, x_limit, progress
+    )
 
     results = await asyncio.gather(ig_task, tiktok_task, twitter_task)
     unified_data = results[0] + results[1] + results[2]
 
+    # Tidak ada fallback dummy: bila semua crawler gagal, kembalikan kosong dan
+    # log dengan jelas. Kegagalan dibiarkan terlihat (lihat stderr subprocess).
     if not unified_data:
-        print(f"[!] Semua crawler gagal untuk '{keyword}'. Fallback ke dummy content agar pipeline tetap jalan.")
-        unified_data = _generate_dummy_content(keyword, limit)
+        print(
+            f"[content_crawler] ERROR: all crawlers returned 0 items for "
+            f"keyword={keyword!r} (nothing forwarded to gatekeeper)"
+        )
     else:
-        print(f"[=] Total {len(unified_data)} konten diserahkan ke Gatekeeper.")
+        print(f"[content_crawler] total items={len(unified_data)} -> gatekeeper")
 
     return unified_data

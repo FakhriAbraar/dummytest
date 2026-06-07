@@ -283,3 +283,74 @@ class EngineDecision(Base):
     regulation: Mapped[RegulationDocument | None] = relationship(
         "RegulationDocument", back_populates="engine_decisions"
     )
+
+
+class CrawlerSchedule(Base):
+    """Singleton config (row id=1) for the auto-crawler scheduler.
+
+    Holds everything the Komdigi admin can tune on the Auto-Crawler settings page:
+    the schedule (mode + timing), how many trending keywords to pull, and the
+    per-platform content limits. The live APScheduler job in
+    ``app.services.scheduler`` reads this row to decide when and how to crawl.
+    """
+
+    __tablename__ = "crawler_schedule"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, default=1)
+
+    # Master ON/OFF for automatic crawling.
+    enabled: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
+    # Schedule: "interval" | "daily" | "monthly".
+    mode: Mapped[str] = mapped_column(String(20), default="interval", nullable=False)
+    interval_hours: Mapped[int] = mapped_column(Integer, default=6, nullable=False)
+    # Patokan jam untuk mode interval (anchor) & fallback bila `times` kosong.
+    start_hour: Mapped[int] = mapped_column(Integer, default=8, nullable=False)
+    start_minute: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    day_of_month: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
+
+    # Beberapa jam eksekusi untuk mode harian & bulanan: [{"hour":8,"minute":0}, ...].
+    times: Mapped[list[dict[str, int]] | None] = mapped_column(JSONB)
+    # Mode bulanan: "specific" (pilih beberapa tanggal) | "range" (rentang tanggal).
+    monthly_mode: Mapped[str] = mapped_column(String(10), default="specific", nullable=False)
+    # Daftar tanggal spesifik untuk monthly_mode="specific", mis. [1, 5, 20].
+    days_of_month: Mapped[list[int] | None] = mapped_column(JSONB)
+    # Rentang tanggal untuk monthly_mode="range" (1..28).
+    day_range_start: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
+    day_range_end: Mapped[int] = mapped_column(Integer, default=28, nullable=False)
+
+    # Crawl parameters.
+    trends_keyword_count: Mapped[int] = mapped_column(Integer, default=3, nullable=False)
+    max_content_x: Mapped[int] = mapped_column(Integer, default=3, nullable=False)
+    max_content_instagram: Mapped[int] = mapped_column(Integer, default=3, nullable=False)
+    max_content_tiktok: Mapped[int] = mapped_column(Integer, default=3, nullable=False)
+    max_depth: Mapped[int] = mapped_column(Integer, default=2, nullable=False)
+    custom_keywords: Mapped[list[str] | None] = mapped_column(JSONB)
+
+    last_run_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    updated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class PublicCheck(Base):
+    """A single content check submitted by the public via the Content Checker.
+
+    Distinct from crawled ``Content``: these are one-off URL/file checks people
+    run on the landing page. Persisted so the landing page can surface the most
+    recent submissions ("top 10") and so the history survives restarts.
+    """
+
+    __tablename__ = "public_check"
+    __table_args__ = (Index("ix_public_check_checked_at", "checked_at"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    target_url: Mapped[str | None] = mapped_column(Text)
+    platform: Mapped[str | None] = mapped_column(String(50))
+    username: Mapped[str | None] = mapped_column(String(255))
+    caption: Mapped[str | None] = mapped_column(Text)
+    thumbnail_url: Mapped[str | None] = mapped_column(Text)
+    final_kategori: Mapped[str | None] = mapped_column(String(100))
+    final_rating: Mapped[str | None] = mapped_column(String(10))
+    status: Mapped[str | None] = mapped_column(String(20))
+    reason_ai: Mapped[str | None] = mapped_column(Text)
+    legal_context: Mapped[str | None] = mapped_column(Text)
+    checked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
