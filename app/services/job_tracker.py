@@ -10,6 +10,7 @@ and is lost on restart. A single uvicorn worker is assumed.
 
 from __future__ import annotations
 
+import asyncio
 import threading
 import uuid
 from collections import OrderedDict
@@ -52,8 +53,13 @@ class Job:
     def __init__(self, job_id: str, config: dict[str, Any]) -> None:
         self.job_id = job_id
         self.config = config
-        self.status = "pending"  # pending | running | completed | failed
+        self.status = "pending"  # pending | running | completed | failed | cancelled
         self.error: str | None = None
+        # asyncio task running this job, attached by whoever created it (manual
+        # endpoint / scheduler) so a stop request can cancel it. Plus a flag so
+        # the cancel intent is visible even before the task actually unwinds.
+        self._task: asyncio.Task[Any] | None = None
+        self.stop_requested = False
         self.result: dict[str, Any] | None = None
         self.created_at = _now()
         self.updated_at = self.created_at
@@ -143,6 +149,25 @@ class Job:
         if name:
             self.fail_stage(name, error)
 
+    # ── stop / cancellation ──────────────────────────────────────────────
+    def attach_task(self, task: asyncio.Task[Any]) -> None:
+        """Register the asyncio task running this job so it can be cancelled."""
+        self._task = task
+
+    def request_stop(self) -> bool:
+        """Ask the running job to stop by cancelling its task.
+
+        Returns True if a live task was signalled. The job's status flips to
+        ``cancelled`` only once the task actually unwinds (see
+        ``run_crawl_job``); we just mark the intent here.
+        """
+        self.stop_requested = True
+        self._touch()
+        if self._task is not None and not self._task.done():
+            self._task.cancel()
+            return True
+        return False
+
     # ── lifecycle ────────────────────────────────────────────────────────
     def mark_running(self) -> None:
         self.status = "running"
@@ -168,6 +193,18 @@ class Job:
             if stage["status"] == "running":
                 stage["status"] = "failed"
                 stage["error"] = str(error)
+                stage["timestamp"] = _now()
+        self._touch()
+
+    def mark_cancelled(self) -> None:
+        self.flush_log()
+        self.status = "cancelled"
+        self.error = "Dihentikan oleh pengguna."
+        # Whatever stage was in flight is marked as the stop point.
+        for stage in self.stages:
+            if stage["status"] == "running":
+                stage["status"] = "failed"
+                stage["error"] = "Dihentikan oleh pengguna."
                 stage["timestamp"] = _now()
         self._touch()
 

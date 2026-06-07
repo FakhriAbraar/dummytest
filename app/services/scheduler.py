@@ -124,6 +124,7 @@ def spawn_crawl(config: dict[str, Any]) -> job_tracker.Job:
     """Create a tracked job and run it as a detached task. Returns the job."""
     job = job_tracker.create_job(config)
     task = asyncio.create_task(run_crawl_job(job, _keyword_model))
+    job.attach_task(task)
     _RUNNING_TASKS.add(task)
     task.add_done_callback(_RUNNING_TASKS.discard)
     return job

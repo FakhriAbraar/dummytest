@@ -146,10 +146,41 @@ async def start_crawl_job(request: StartCrawlRequest, fastapi_req: Request):
     job = job_tracker.create_job(request.model_dump())
 
     task = asyncio.create_task(run_crawl_job(job, keyword_model))
+    job.attach_task(task)
     _RUNNING_TASKS.add(task)
     task.add_done_callback(_RUNNING_TASKS.discard)
 
     return {"job_id": job.job_id, "status": job.status}
+
+
+@router.post("/jobs/{job_id}/stop")
+async def stop_crawl_job(job_id: str):
+    """Stop a running crawl job by cancelling its background task.
+
+    Returns immediately; the job's status flips to ``cancelled`` once the task
+    unwinds (the frontend's poll picks it up). Note: a crawler subprocess already
+    in flight finishes in its own OS thread — stopping halts the pipeline
+    orchestration, it cannot kill an in-progress external scrape mid-call.
+    """
+    job = job_tracker.get_job(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail=f"Job {job_id} tidak ditemukan.")
+
+    if job.status not in ("pending", "running"):
+        return {
+            "job_id": job_id,
+            "status": job.status,
+            "stopped": False,
+            "message": "Job sudah selesai; tidak ada yang dihentikan.",
+        }
+
+    signalled = job.request_stop()
+    return {
+        "job_id": job_id,
+        "status": "stopping",
+        "stopped": signalled,
+        "message": "Permintaan stop dikirim." if signalled else "Job ditandai stop.",
+    }
 
 
 @router.get("/jobs")
@@ -185,7 +216,7 @@ async def stream_crawl_job_logs(job_id: str):
                 for entry in pending:
                     yield f"data: {json.dumps(entry, ensure_ascii=False)}\n\n"
                 last_seq = pending[-1]["seq"]
-            elif job.status in ("completed", "failed"):
+            elif job.status in ("completed", "failed", "cancelled"):
                 yield f"event: done\ndata: {job.status}\n\n"
                 break
             await asyncio.sleep(0.35)

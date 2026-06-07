@@ -75,7 +75,7 @@ def _get_embedder() -> Any:
     if _embedder is None:
         from sentence_transformers import SentenceTransformer  # noqa: PLC0415
         # Cache ke path yang dikonfigurasi (default D: drive agar tidak penuh di C:)
-        cache_dir = os.getenv("SENTENCE_TRANSFORMERS_HOME", "D:/sadam/Dev/.cache/sentence_transformers")
+        cache_dir = os.getenv("SENTENCE_TRANSFORMERS_HOME", "../.cache/sentence_transformers")
         print(f"[checker] loading embedding model intfloat/multilingual-e5-large (1024-dim) cache={cache_dir}")
         _embedder = SentenceTransformer("intfloat/multilingual-e5-large", cache_folder=cache_dir)
     return _embedder

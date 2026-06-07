@@ -8,6 +8,7 @@ progress to a :class:`job_tracker.Job`. Used by both the manual crawl endpoint
 
 from __future__ import annotations
 
+import asyncio
 import traceback
 from datetime import datetime, timezone
 
@@ -31,6 +32,12 @@ async def run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
     log_token = current_job.set(job)
     try:
         await _run_crawl_job(job, keyword_model)
+    except asyncio.CancelledError:
+        # User pressed Stop: cancellation propagates here (CancelledError is a
+        # BaseException, so the broad `except Exception` inside _run_crawl_job
+        # does not swallow it). Record it as a clean stop, not a crash.
+        print(f"[job_runner] job={job.job_id[:8]} DIHENTIKAN oleh pengguna.")  # noqa: T201
+        job.mark_cancelled()
     finally:
         job.flush_log()
         current_job.reset(log_token)
