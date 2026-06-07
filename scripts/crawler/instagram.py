@@ -75,7 +75,9 @@ IG_PASS = os.getenv("IG_PASS")
 BASE_DIR         = Path(__file__).resolve().parent
 SESSION_FILE     = BASE_DIR / "ig_session.json"   # Persistent antar run
 COLLECTION_NAME  = "social_media_posts"
-HEADLESS_FLAG    = False
+# Default headless=True (WAJIB di server/container tanpa X server). Untuk debug
+# lokal (mis. login manual IG), set env CRAWLER_HEADLESS=false agar browser headed.
+HEADLESS_FLAG    = os.getenv("CRAWLER_HEADLESS", "true").strip().lower() not in ("0", "false", "no")
 MEDIA_EXTENSIONS = {".jpg", ".jpeg", ".png", ".mp4"}
 
 TARGET_TAGS       = args.keyword

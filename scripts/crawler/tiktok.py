@@ -97,9 +97,9 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
     Raises:
             Exception: Jika Apify actor gagal dipanggil.
     """
-    api_key = APIFY_API_PREMIUM or APIFY_API_FREE
+    api_key = APIFY_API_FREE
     if not api_key:
-        raise RuntimeError("APIFY_API_PREMIUM atau APIFY_API_FREE harus diset di .env")
+        raise RuntimeError("APIFY_API_FREE harus diset di .env")
     client = ApifyClient(api_key)
     run_input = {
         "searchQueries": keyword,

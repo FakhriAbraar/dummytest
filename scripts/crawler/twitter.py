@@ -79,7 +79,9 @@ RR_STATE_FILE = BASE_DIR / ".twitter_rr_counter"
 RR_LOCK_FILE  = BASE_DIR / ".twitter_rr.lock"
 
 COLLECTION_NAME = "social_media_posts"
-HEADLESS_FLAG = False
+# Default headless=True (WAJIB di server/container tanpa X server). Untuk debug
+# lokal (mis. login manual X), set env CRAWLER_HEADLESS=false agar browser headed.
+HEADLESS_FLAG = os.getenv("CRAWLER_HEADLESS", "true").strip().lower() not in ("0", "false", "no")
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 Chrome/120.0.0.0 Safari/537.36"
