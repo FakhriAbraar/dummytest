@@ -206,9 +206,9 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
             teks tersebut DILARANG KERAS dikategorikan SAFE. Anda WAJIB memasukannya ke kategori berisiko dengan rating minimal 13+ atau 17+.
 
             PILIHAN KATEGORI TEKS:
-            - Cyberbullying, HateSpeech, Perjudian, Scam, Pornografi_Teks, Kekerasan_Teks, Substansi_Terlarang, Perselingkuhan, SAFE
-
-            RATING USIA:
+            - Netral, Violence, Sexual, Harrasment, Hateful_Content, Self-Harm
+            
+            RATING USIA (Wajib disesuaikan dengan Kategori Teks):
             SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
 
             TEKS INPUT: "{teks}"
@@ -231,7 +231,7 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
             for attempt in range(max_retries):
                 try:
                     response = await or_client.chat.completions.create(
-                        model="meta-llama/llama-3.1-70b-instruct",
+                        model="qwen/qwen3-next-80b-a3b-instruct:free",
                         messages=[{"role": "user", "content": prompt}],  # type: ignore
                         temperature=0.0
                     )
@@ -271,9 +271,8 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
             Anda WAJIB memilih kategori SAFE. Berikan vonis HANYA berdasarkan bukti teks/gambar yang ada secara harfiah.
 
             PILIHAN KATEGORI VISUAL:
-            Pornography_Keras, Pornography_Ringan, Animasi_Ringan, Animasi_Keras, SAFE, Drug, Addictive Substances, Medicine_Ringan, Medical_Ringan, Weapon_Ringan,
-            Weapon_Keras, Toy_Ringan, Toy_Keras, Terrorism, Military_Ringan, Military_Keras, Violence, Sport_Ringan, Sport_Keras, SelfHarm, Medical_Keras
-
+            Human_Interaction, Medicine, Sport, Education, Miliitary, Animation, Medical, Toy, Tactical_Miliitary, Action, Violent_Sport, Complex_Interactions, Suggestive, Invasive_Medical, Weapon, Violence, Addictive_Substances, Pornography, Terrorism, SelfHarm, Sadistic_Violence, Drug
+            
             RATING USIA (Wajib disesuaikan dengan Kategori Visual):
             SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
 
@@ -325,7 +324,7 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                 try:
                     messages_payload: typing.Any = [{"role": "user", "content": content_array}]
                     response = await or_client.chat.completions.create(
-                        model="google/gemini-2.0-flash-lite-001",
+                        model="google/gemma-4-31b-it:free",
                         messages=messages_payload,  # type: ignore
                         temperature=0.0
                     )

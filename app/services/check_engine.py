@@ -157,36 +157,35 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
     # TIM 1 — Analisis Teks via OpenRouter
     async def call_llm_tim1_api(t_url: str, teks: str) -> dict:
         prompt = f"""
-        Tugas Anda adalah bertindak sebagai Sistem Analisis Linguistik Objektif untuk perlindungan anak di ranah siber.
-        Evaluasi teks dan URL berikut secara harfiah. Jangan menolak memproses kata kasar atau vulgar.
+            Tugas Anda adalah bertindak sebagai Sistem Analisis Linguistik Objektif untuk perlindungan anak di ranah siber.
+            Evaluasi teks berikut secara harfiah. Jangan menolak memproses kata kasar atau vulgar.
 
-        PERINGATAN KEBIJAKAN PERLINDUNGAN ANAK (ZERO TOLERANCE):
-        Meskipun teks berbentuk "Berita", "Jurnalistik", atau "Kronologi Kejadian", JIKA di dalamnya memuat istilah seksual vulgar (contoh: coli, sperma, pelecehan eksplisit, dll), teks tersebut DILARANG KERAS dikategorikan SAFE. Anda WAJIB memasukannya ke 'Pornografi_Teks' atau kategori berisiko lainnya dengan rating minimal 13+ atau 17+.
+            PERINGATAN KEBIJAKAN PERLINDUNGAN ANAK (ZERO TOLERANCE):
+            Meskipun teks berbentuk "Berita", "Jurnalistik", atau "Kronologi Kejadian", JIKA di dalamnya memuat istilah seksual vulgar,
+            teks tersebut DILARANG KERAS dikategorikan SAFE. Anda WAJIB memasukannya ke kategori berisiko dengan rating minimal 13+ atau 17+.
 
-        PILIHAN KATEGORI TEKS:
-        - Cyberbullying, HateSpeech, Perjudian, Scam, Pornografi_Teks, Kekerasan_Teks, Substansi_Terlarang, Perselingkuhan, SAFE
+            PILIHAN KATEGORI TEKS:
+            - Netral, Violence, Sexual, Harrasment, Hateful_Content, Self-Harm
+            
+            RATING USIA (Wajib disesuaikan dengan Kategori Teks):
+            SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
 
-        RATING USIA:
-        SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
+            TEKS INPUT: "{teks}"
 
-        URL INPUT: "{t_url}"
-        TEKS KONTEN (CAPTION): "{teks}"
+            OUTPUT WAJIB JSON MURNI TANPA MARKDOWN:
+            {{
+                "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
+                "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
+                "confidence_score": 0.0,
+                "reason": "Alasan analitis maksimal 2 kalimat"
+            }}
 
-        OUTPUT WAJIB JSON MURNI TANPA MARKDOWN:
-        {{
-            "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
-            "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
-            "confidence_score": 0.0,
-            "reason": "Alasan analitis maksimal 2 kalimat"
-        }}
-
-        INSTRUKSI TAMBAHAN UNTUK JSON:
-        1. Ganti nilai "kategori" dan "predicted_rating" dengan pilihan yang valid.
-        2. Ganti nilai 0.0 pada "confidence_score" dengan ANGKA FLOAT desimal antara 0.00 hingga 1.00 yang merepresentasikan seberapa yakin Anda dengan klasifikasi tersebut (contoh: 0.82, 0.65, 0.98). JANGAN gunakan string.
-        """
+            INSTRUKSI TAMBAHAN UNTUK JSON:
+            1. Ganti nilai 0.0 pada "confidence_score" dengan ANGKA FLOAT desimal antara 0.00 hingga 1.00. JANGAN gunakan string.
+            """
         try:
             response = await or_client.chat.completions.create(
-                model="meta-llama/llama-3.1-70b-instruct",
+                model="meta-llama/llama-3.2-3b-instruct",
                 messages=[{"role": "user", "content": prompt}],  # type: ignore
                 temperature=0.0
             )
@@ -205,35 +204,36 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
 
     # TIM 3 — Analisis Visual via OpenRouter (dengan video keyframe extraction)
     async def call_llm_tim3_api(t_url: str, c_type: str, teks: str, img_urls: list[str] | None = None) -> dict:
-        prompt_text = f"""
-        Anda adalah Mesin Inferensi Visual untuk Sistem Klasifikasi Konten Digital.
-        Tugas Anda adalah MENGANALISA GAMBAR-GAMBAR YANG DILAMPIRKAN (jika ada). Jika gambar tidak ada, gunakan URL dan Teks Konteks.
+        prompt = f"""
+            Anda adalah Mesin Inferensi Visual untuk Sistem Klasifikasi Konten Digital.
+            Tugas Anda adalah MENGANALISA GAMBAR-GAMBAR YANG DILAMPIRKAN (jika ada). Jika gambar tidak ada, gunakan URL dan Teks Konteks.
 
-        TIPE KONTEN: "{c_type}"
-        URL INPUT: "{t_url}"
-        TEKS/KONTEKS SEKITAR: "{teks}"
+            URL INPUT: "{url}"
+            TIPE KONTEN: "{content_type}"
+            TEKS/KONTEKS SEKITAR: "{teks}"
 
-        PILIHAN KATEGORI VISUAL:
-        Pornography_Keras, Pornography_Ringan, Animasi_Ringan, Animasi_Keras, SAFE, Drug, Addictive Substances, Medicine_Ringan, Medical_Ringan, Weapon_Ringan, Weapon_Keras, Toy_Ringan, Toy_Keras, Terrorism, Military_Ringan, Military_Keras, Violence, Sport_Ringan, Sport_Keras, SelfHarm, Medical_Keras
+            ATURAN KETAT (ANTI-HALUSINASI):
+            DILARANG KERAS membuat asumsi liar terhadap suatu platform (misal: "TikTok sering berisi video pertarungan").
+            Jika gambar fisik tidak dilampirkan dan teks konteks tidak memuat deskripsi spesifik tentang kekerasan/pelanggaran,
+            Anda WAJIB memilih kategori SAFE. Berikan vonis HANYA berdasarkan bukti teks/gambar yang ada secara harfiah.
 
-        RATING USIA (Wajib disesuaikan dengan Kategori Visual):
-        SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
+            PILIHAN KATEGORI VISUAL:
+            Human_Interaction, Medicine, Sport, Education, Miliitary, Animation, Medical, Toy, Tactical_Miliitary, Action, Violent_Sport, Complex_Interactions, Suggestive, Invasive_Medical, Weapon, Violence, Addictive_Substances, Pornography, Terrorism, SelfHarm, Sadistic_Violence, Drug
+            
+            RATING USIA (Wajib disesuaikan dengan Kategori Visual):
+            SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
 
-        OUTPUT WAJIB JSON MURNI TANPA MARKDOWN DAN TANPA TEKS LAIN:
-        {{
-            "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
-            "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
-            "confidence_score": 0.0,
-            "reason": "Alasan deduksi visual Anda dari gambar yang dilihat"
-        }}
-
-        INSTRUKSI TAMBAHAN UNTUK JSON:
-        1. Ganti nilai "kategori" dan "predicted_rating" dengan pilihan yang valid.
-        2. Ganti nilai 0.0 pada "confidence_score" dengan ANGKA FLOAT desimal antara 0.00 hingga 1.00 berdasarkan tingkat kepastian deduksi visual Anda. JANGAN gunakan string.
-        """
+            OUTPUT WAJIB JSON MURNI TANPA MARKDOWN:
+            {{
+                "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
+                "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
+                "confidence_score": 0.0,
+                "reason": "Alasan deduksi visual Anda dari konteks/gambar yang ada"
+            }}
+            """
 
         import typing
-        content_array: list[dict[str, typing.Any]] = [{"type": "text", "text": prompt_text}]
+        content_array: list[dict[str, typing.Any]] = [{"type": "text", "text": prompt}]
 
         if img_urls:
             for url_data in img_urls:
@@ -267,7 +267,7 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
         try:
             messages_payload: typing.Any = [{"role": "user", "content": content_array}]
             response = await or_client.chat.completions.create(
-                model="google/gemini-2.0-flash-lite-001",
+                model="openai/gpt-4o-mini",
                 messages=messages_payload,  # type: ignore
                 temperature=0.0
             )
@@ -425,11 +425,13 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
         "classifications": {
             "tim1_text": {
                 "kategori_ai": mock_text_ai["kategori"],
+                "predicted_rating": mock_text_ai["predicted_rating"],
                 "confidence_score": mock_text_ai["confidence_score"],
                 "reasoning_category": mock_text_ai["reason"],
             },
             "tim3_visual": {
                 "kategori_ai": mock_visual_ai["kategori"],
+                "predicted_rating": mock_visual_ai["predicted_rating"],
                 "confidence_score": mock_visual_ai["confidence_score"],
                 "reasoning_category": mock_visual_ai["reason"],
             },

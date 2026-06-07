@@ -49,6 +49,7 @@ async def _persist_public_check(session: AsyncSession, result: dict[str, Any]) -
                 legal_context=(result.get("legal_context") or {}).get(
                     "bunyi_pasal_qdrant", ""
                 ),
+                classifications_json=result.get("classifications"),
                 checked_at=datetime.now(tz=timezone.utc),
             )
         )
@@ -77,6 +78,7 @@ class LegalContext(BaseModel):
 
 class ClassificationDetail(BaseModel):
     kategori_ai: str
+    predicted_rating: str
     confidence_score: float
     reasoning_category: str
 
@@ -145,6 +147,7 @@ async def recent_public_checks(
             "thumbnailUrl": r.thumbnail_url or "",
             "reasonAi": r.reason_ai or "",
             "legalContext": r.legal_context or "",
+            "classifications": r.classifications_json,
             "keyword": "",
             "createdAt": r.checked_at.isoformat() if r.checked_at else "",
         }
@@ -282,11 +285,13 @@ async def check_upload_endpoint(
         "classifications": {
             "tim1_text": {
                 "kategori_ai": tim1_result["kategori"],
+                "predicted_rating": tim1_result["predicted_rating"],
                 "confidence_score": tim1_result["confidence_score"],
                 "reasoning_category": tim1_result["reason"],
             },
             "tim3_visual": {
                 "kategori_ai": tim3_result["kategori"],
+                "predicted_rating": tim3_result["predicted_rating"],
                 "confidence_score": tim3_result["confidence_score"],
                 "reasoning_category": tim3_result["reason"],
             },

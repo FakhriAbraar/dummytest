@@ -353,4 +353,5 @@ class PublicCheck(Base):
     status: Mapped[str | None] = mapped_column(String(20))
     reason_ai: Mapped[str | None] = mapped_column(Text)
     legal_context: Mapped[str | None] = mapped_column(Text)
+    classifications_json: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     checked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

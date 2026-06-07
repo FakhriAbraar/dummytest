@@ -15,8 +15,8 @@ from openai import AsyncOpenAI, RateLimitError, APIError
 load_dotenv()
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-MODEL_TIM1 = os.getenv("OPENROUTER_MODEL_TIM1", "meta-llama/llama-3.1-70b-instruct")
-MODEL_TIM3 = os.getenv("OPENROUTER_MODEL_TIM3", "google/gemma-3-4b-it")
+MODEL_TIM1 = os.getenv("OPENROUTER_MODEL_TIM1", "meta-llama/llama-3.2-3b-instruct")
+MODEL_TIM3 = os.getenv("OPENROUTER_MODEL_TIM3", "openai/gpt-4o-mini")
 
 VALID_CATEGORIES_TEXT = {
     "Cyberbullying", "HateSpeech", "Perjudian", "Scam",
@@ -33,8 +33,7 @@ VALID_RATINGS = {"SU", "7+", "13+", "17+", "PRC"}
 SYSTEM_TIM1 = (
     "Kamu adalah AI Klasifikator Konten Digital untuk sistem Perlindungan Anak Digital (PAD) Indonesia. "
     "Analisis konten teks dari media sosial dan tentukan apakah berpotensi membahayakan anak-anak.\n\n"
-    "Kategori valid: SAFE, Cyberbullying, HateSpeech, Perjudian, Scam, "
-    "Pornografi_Teks, Kekerasan_Teks, Substansi_Terlarang, Perselingkuhan.\n"
+    "Kategori valid: Netral, Violence, Sexual, Harrasment, Hateful_Content, Self-Harm. \n "
     "Rating valid: SU, 7+, 13+, 17+, PRC.\n\n"
     "Respond HANYA dengan JSON: "
     "{\"kategori\": \"<kategori>\", \"predicted_rating\": \"<rating>\", "
@@ -44,8 +43,8 @@ SYSTEM_TIM1 = (
 SYSTEM_TIM3 = (
     "Kamu adalah AI Visual Content Classifier untuk sistem Perlindungan Anak Digital (PAD) Indonesia. "
     "Analisis konten visual (gambar/video) dari media sosial dan tentukan apakah berpotensi membahayakan anak-anak.\n\n"
-    "Kategori valid: SAFE, Pornography_Keras, Pornography_Ringan, Animasi_Ringan, "
-    "Drug, Addictive Substances, Violence, Weapon_Ringan.\n"
+    "Kategori valid: Human_Interaction, Medicine, Sport, Education, Miliitary, Animation, Medical, Toy, "
+    "Tactical_Miliitary, Action, Violent_Sport, Complex_Interactions, Suggestive, Invasive_Medical, Weapon, Violence, Addictive_Substances, Pornography, Terrorism, SelfHarm, Sadistic_Violence, Drug.\n"
     "Rating valid: SU, 7+, 13+, 17+, PRC.\n\n"
     "Respond HANYA dengan JSON: "
     "{\"kategori\": \"<kategori>\", \"predicted_rating\": \"<rating>\", "
