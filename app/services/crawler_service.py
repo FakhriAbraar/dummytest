@@ -4,16 +4,14 @@ import json
 import asyncio
 import subprocess
 
-# Force subprocess child processes to use UTF-8 encoding + redirect Playwright/temp ke D:
+# Force subprocess child processes to use UTF-8 encoding. Tidak ada override
+# TEMP/TMP/PLAYWRIGHT_BROWSERS_PATH ke path device lokal: aplikasi deploy di VPS
+# (Linux container), jadi Playwright pakai /tmp + lokasi browser default. Bila
+# perlu kustom, set env var tsb di environment container (bukan hardcode di sini).
 _subprocess_env = {
     **os.environ,
     "PYTHONIOENCODING": "utf-8",
     "PYTHONUTF8": "1",
-    "PLAYWRIGHT_BROWSERS_PATH": os.environ.get(
-        "PLAYWRIGHT_BROWSERS_PATH", "D:/sadam/Dev/.cache/ms-playwright"
-    ),
-    "TEMP": os.environ.get("TEMP", "D:/sadam/tmp"),
-    "TMP": os.environ.get("TMP", "D:/sadam/tmp"),
 }
 
 
@@ -181,10 +179,10 @@ async def _crawl_one_platform(
 async def run_content_crawlers(
     keyword: str,
     limit: int = 5,
-    platform_limits: dict | None = None,
+    platform_limits: dict[str, int] | None = None,
     progress=None,
 ) -> list:
-    limits = platform_limits or {}
+    limits: dict[str, int] = platform_limits or {}
     ig_limit = int(limits.get("instagram", limit))
     tiktok_limit = int(limits.get("tiktok", limit))
     x_limit = int(limits.get("x", limits.get("twitter", limit)))
