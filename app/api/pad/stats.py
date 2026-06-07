@@ -11,6 +11,14 @@ from app.services.minio import get_presigned_url
 
 router = APIRouter(prefix="/stats", tags=["Stats"])
 
+_AGE_ORDER = ["SU", "7+", "13+", "17+", "PRC"]
+
+# Bobot poin risiko per kategori umur (makin tinggi rating, makin berisiko).
+# PRC (Perlu Pendampingan) tertinggi. Skor akun = total poin seluruh kontennya.
+_AGE_POINTS = {"SU": 0, "7+": 1, "13+": 2, "17+": 4, "PRC": 6}
+# Akun ditandai "warning" bila skor >= ambang ATAU punya konten 17+/PRC.
+_WARNING_SCORE_THRESHOLD = 8
+
 
 @router.get("/dashboard")
 async def get_dashboard_stats(
@@ -264,6 +272,153 @@ async def delete_content(
     await session.execute(delete(Content).where(Content.content_id == content_id))
     await session.commit()
     return {"status": "ok", "content_id": content_id}
+
+
+@router.get("/chart")
+async def get_platform_chart(
+    platform: str,
+    category: str = "",
+    date_from: str = "",
+    date_to: str = "",
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Data Statistik Detail per platform: distribusi kategori umur + distribusi
+    kategori IGRS (data nyata), bisa difilter kategori IGRS & rentang tanggal."""
+    from datetime import datetime
+
+    filters: list = [Platform.platform_name.ilike(platform)]
+    if date_from:
+        try:
+            filters.append(Content.crawl_timestamp >= datetime.fromisoformat(date_from.replace("Z", "+00:00")))
+        except ValueError:
+            pass
+    if date_to:
+        try:
+            filters.append(Content.crawl_timestamp <= datetime.fromisoformat(date_to.replace("Z", "+00:00")))
+        except ValueError:
+            pass
+
+    cat = category.strip()
+    cat_filter = []
+    if cat and cat.lower() != "semua":
+        cat_filter.append(EngineDecision.final_kategori == cat)
+
+    # Distribusi kategori umur (ikut filter kategori IGRS bila dipilih).
+    age_rows = (await session.execute(
+        select(Content.final_rating, func.count().label("cnt"))
+        .join(Account, Content.account_id == Account.account_id)
+        .join(Platform, Account.platform_id == Platform.platform_id)
+        .outerjoin(EngineDecision, EngineDecision.content_id == Content.content_id)
+        .where(*filters, *cat_filter)
+        .group_by(Content.final_rating)
+    )).all()
+    age_map = {r: c for r, c in age_rows if r in _AGE_ORDER}
+    age_group_dist = [{"age_group": a, "count": age_map.get(a, 0)} for a in _AGE_ORDER]
+
+    # Distribusi kategori IGRS (selalu ikut filter tanggal/platform; tidak
+    # disempitkan oleh filter kategori agar breakdown penuh tetap terlihat).
+    cat_rows = (await session.execute(
+        select(EngineDecision.final_kategori, func.count().label("cnt"))
+        .join(Content, EngineDecision.content_id == Content.content_id)
+        .join(Account, Content.account_id == Account.account_id)
+        .join(Platform, Account.platform_id == Platform.platform_id)
+        .where(*filters)
+        .group_by(EngineDecision.final_kategori)
+        .order_by(func.count().desc())
+    )).all()
+    category_dist = [{"category": k, "count": c} for k, c in cat_rows if k]
+
+    total = sum(d["count"] for d in age_group_dist)
+    return {
+        "platform": platform,
+        "total": total,
+        "age_group_dist": age_group_dist,
+        "category_dist": category_dist,
+    }
+
+
+@router.get("/accounts/risky")
+async def get_risky_accounts(
+    limit: int = 50,
+    date_from: str = "",
+    date_to: str = "",
+    only_warning: bool = False,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Daftar akun berisiko: skor dihitung dari poin tiap kategori umur kontennya.
+
+    Akun ditandai 'warning' jika skor >= ambang atau memiliki konten 17+/PRC.
+    Mengembalikan rincian jumlah & poin per kategori umur untuk tiap akun.
+    """
+    from datetime import datetime
+
+    filters: list = []
+    if date_from:
+        try:
+            filters.append(Content.crawl_timestamp >= datetime.fromisoformat(date_from.replace("Z", "+00:00")))
+        except ValueError:
+            pass
+    if date_to:
+        try:
+            filters.append(Content.crawl_timestamp <= datetime.fromisoformat(date_to.replace("Z", "+00:00")))
+        except ValueError:
+            pass
+
+    rows = (await session.execute(
+        select(
+            Account.account_id,
+            Account.username,
+            Platform.platform_name,
+            Content.final_rating,
+            func.count().label("cnt"),
+        )
+        .join(Platform, Account.platform_id == Platform.platform_id)
+        .join(Content, Content.account_id == Account.account_id)
+        .where(*filters)
+        .group_by(
+            Account.account_id,
+            Account.username,
+            Platform.platform_name,
+            Content.final_rating,
+        )
+    )).all()
+
+    accounts: dict = {}
+    for acc_id, username, plat, rating, cnt in rows:
+        a = accounts.setdefault(acc_id, {
+            "account_id": acc_id,
+            "username": username or "",
+            "platform": (plat or "").lower(),
+            "total_content": 0,
+            "age_groups": {k: 0 for k in _AGE_ORDER},
+            "age_points": {k: 0 for k in _AGE_ORDER},
+            "score": 0,
+        })
+        a["total_content"] += cnt
+        if rating in _AGE_POINTS:
+            a["age_groups"][rating] += cnt
+            pts = _AGE_POINTS[rating] * cnt
+            a["age_points"][rating] += pts
+            a["score"] += pts
+
+    result = []
+    for a in accounts.values():
+        has_high = a["age_groups"]["17+"] > 0 or a["age_groups"]["PRC"] > 0
+        a["is_warning"] = a["score"] >= _WARNING_SCORE_THRESHOLD or has_high
+        if only_warning and not a["is_warning"]:
+            continue
+        result.append(a)
+
+    # Urutkan: yang warning dulu, lalu skor tertinggi.
+    result.sort(key=lambda x: (x["is_warning"], x["score"]), reverse=True)
+    result = result[:limit]
+
+    return {
+        "accounts": result,
+        "count": len(result),
+        "threshold": _WARNING_SCORE_THRESHOLD,
+        "weights": _AGE_POINTS,
+    }
 
 
 @router.get("/keywords")

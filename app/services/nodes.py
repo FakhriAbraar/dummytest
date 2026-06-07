@@ -17,7 +17,10 @@ or_client = AsyncOpenAI(
 )
 
 TARGET_POST_PER_KEYWORD = 2
-MAX_TOTAL_CONTENTS = 25
+# Circuit-breaker keseluruhan agar snowball tidak meledak tak terbatas.
+# Jumlah konten per platform diatur via Crawl Config / Auto-Crawler (adjustable),
+# jadi nilai ini sengaja dibuat besar (praktis "tanpa batas" untuk kebutuhan POC).
+MAX_TOTAL_CONTENTS = 1000
 
 
 def extract_json_from_llm(raw_text: str | None) -> dict:
@@ -29,7 +32,7 @@ def extract_json_from_llm(raw_text: str | None) -> dict:
             return json.loads(match.group(0))
         return json.loads(raw_text)
     except json.JSONDecodeError:
-        print(f"[-] Gagal parse JSON dari LLM: {raw_text}")
+        print(f"[gatekeeper] LLM JSON parse failed: {raw_text!r}")
         return {}
 
 
@@ -45,7 +48,7 @@ async def generate_keyword_local(text_input: str, platform: str, keyword_model) 
         }})
         result = random.sample(unique_words, k=min(3, len(unique_words)))
         if result:
-            print(f"   [+] Keyword dummy diekstrak dari teks: {result}")
+            print(f"[fork] keyword extraction (regex fallback, GGUF unavailable): {result}")
         return result
 
     system_prompt = (
@@ -89,7 +92,7 @@ async def generate_keyword_local(text_input: str, platform: str, keyword_model) 
         return list(set(keywords)) if keywords else []
 
     except Exception as e:
-        print(f"[-] Keyword model error: {e}")
+        print(f"[fork] keyword model error: {e}")
         return []
 
 
@@ -99,7 +102,7 @@ async def generate_keyword_local(text_input: str, platform: str, keyword_model) 
 
 async def trend_crawler_node(state: PADState, progress=None):
     retry_count = state.get("trend_retry", 0)
-    print(f"\n[INIT] Menjalankan Trend Crawler (Batch ke-{retry_count + 1})...")
+    print(f"\n[trend_crawler] START batch={retry_count + 1}")
 
     # "Loading Keywords": keyword kustom dari form Crawl Config.
     if progress:
@@ -148,10 +151,10 @@ async def content_crawler_node(state: PADState, progress=None):
     current_total = state.get("total_processed_contents", 0)
 
     if current_total >= MAX_TOTAL_CONTENTS:
-        print(f"[!] Limit {MAX_TOTAL_CONTENTS} konten tercapai. Crawler disetop.")
+        print(f"[content_crawler] STOP: total content limit reached (max={MAX_TOTAL_CONTENTS})")
         return {"raw_contents": []}
 
-    print(f"[DEPTH {state['crawling_depth']}] Ngeruk data: {state['current_keywords']}")
+    print(f"[content_crawler] depth={state['crawling_depth']} keywords={state['current_keywords']}")
     platform_limits = state.get("platform_limits") or {}
     all_crawled_data = []
 
@@ -169,18 +172,13 @@ async def content_crawler_node(state: PADState, progress=None):
         progress.start_stage("Saving Raw Content")
         progress.complete_stage("Saving Raw Content")
 
-    # Safety net: kalau crawler benar-benar mati, inject satu konten dummy
+    # Tanpa dummy: bila crawler tidak mengembalikan konten apa pun, biarkan
+    # kosong dan log dengan jelas (kegagalan tidak disamarkan dengan data palsu).
     if not all_crawled_data:
-        print("[!] Content crawler kosong total. Inject 1 dummy konten untuk menjaga alur graph.")
-        all_crawled_data = [{
-            "type": "text",
-            "content": "awas link scam phising telegram",
-            "source": "dummy",
-            "url": "",
-            "username": "",
-            "file_path": [],
-            "thumbnail_url": "",
-        }]
+        print(
+            "[content_crawler] ERROR: 0 items returned for "
+            f"keywords={state['current_keywords']} (see crawler subprocess stderr above)"
+        )
 
     return {
         "raw_contents": all_crawled_data,
@@ -190,7 +188,7 @@ async def content_crawler_node(state: PADState, progress=None):
 
 def create_gatekeeper_node(session: AsyncSession, progress=None):
     async def gatekeeper_node(state: PADState):
-        print(f"\n[DEPTH {state['crawling_depth']}] Gatekeeper menyaring {len(state['raw_contents'])} konten menggunakan OpenRouter...")
+        print(f"\n[gatekeeper] depth={state['crawling_depth']} classifying {len(state['raw_contents'])} item(s) via OpenRouter")
         # "Running Classification": Tim 1 (teks) + Tim 3 (visual) per konten.
         if progress:
             progress.start_stage("Running Classification")
@@ -248,11 +246,11 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                     }
                 except RateLimitError as e:
                     wait_time = base_delay * (2 ** attempt)
-                    print(f"[!] Kena Rate Limit Tim 1. Detail: {e.message}")
-                    print(f"[!] Retry ke-{attempt+1} dalam {wait_time} detik...")
+                    print(f"[gatekeeper] tim1(text) rate limited: {e.message}")
+                    print(f"[gatekeeper] retry {attempt+1}/{max_retries} in {wait_time}s")
                     await asyncio.sleep(wait_time)
                 except APIError as e:
-                    print(f"[!] API Tim 1 Error dari OpenRouter: {e.message}")
+                    print(f"[gatekeeper] tim1(text) OpenRouter API error: {e.message}")
                     break
 
             return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "Rate Limit / API Error Maksimal"}
@@ -296,14 +294,14 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                     is_video = url_data.lower().endswith(VIDEO_EXTENSIONS)
 
                     if is_video:
-                        print(f"[*] Memproses video untuk Tim 3: {url_data[:80]}...")
+                        print(f"[gatekeeper] tim3(visual) video keyframe extraction: {url_data[:80]}")
                         keyframe_urls = await process_media_url(url_data)
                         for frame_url in keyframe_urls:
                             content_array.append({
                                 "type": "image_url",
                                 "image_url": {"url": frame_url}
                             })
-                        print(f"[*] {len(keyframe_urls)} keyframes (Base64) ditambahkan ke payload.")
+                        print(f"[gatekeeper] tim3(visual) added {len(keyframe_urls)} keyframe(s) to payload")
                     else:
                         final_url = url_data
                         if not url_data.startswith("http") and not url_data.startswith("data:"):
@@ -318,7 +316,7 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                         })
 
             total_images = len(content_array) - 1
-            print(f"[*] Total gambar/frame dalam payload Tim 3: {total_images}")
+            print(f"[gatekeeper] tim3(visual) payload images={total_images}")
 
             max_retries = 3
             base_delay = 2.0
@@ -342,11 +340,11 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                     }
                 except RateLimitError as e:
                     wait_time = base_delay * (2 ** attempt)
-                    print(f"[!] Kena Rate Limit Tim 3. Detail: {e.message}")
-                    print(f"[!] Retry ke-{attempt+1} dalam {wait_time} detik...")
+                    print(f"[gatekeeper] tim3(visual) rate limited: {e.message}")
+                    print(f"[gatekeeper] retry {attempt+1}/{max_retries} in {wait_time}s")
                     await asyncio.sleep(wait_time)
                 except APIError as e:
-                    print(f"[!] API Tim 3 Error dari OpenRouter: {e.message}")
+                    print(f"[gatekeeper] tim3(visual) OpenRouter API error: {e.message}")
                     break
 
             return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "Rate Limit / API Error Maksimal"}
@@ -362,26 +360,26 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
             fallback_thumb = item.get("thumbnail_url", "")
 
             if media_urls:
-                print(f"[*] Menyeleksi {len(media_urls)} file media untuk LLM...")
+                print(f"[gatekeeper] selecting {len(media_urls)} media file(s) for tim3(visual)")
                 for u in media_urls[:5]:
                     media_payloads.append(u)
 
                 if not media_payloads and fallback_thumb:
-                    print("[*] Fallback ke Thumbnail URL.")
+                    print("[gatekeeper] media empty, fallback to thumbnail_url")
                     media_payloads.append(fallback_thumb)
             else:
                 if fallback_thumb:
                     media_payloads.append(fallback_thumb)
 
-            print(f"[*] Payload akhir untuk Tim 3 Visual AI: {len(media_payloads)} media (gambar/video).")
+            print(f"[gatekeeper] tim3(visual) final payload media={len(media_payloads)}")
 
             # Eksekusi sekuensial untuk menghindari rate limit OpenRouter
-            print("[*] Meminta analisis Tim 1 (Teks)...")
+            print("[gatekeeper] tim1(text) request")
             hasil_tim1 = await call_llm_tim1_api(text_payload)
 
             await asyncio.sleep(2.0)
 
-            print("[*] Meminta analisis Tim 3 (Visual)...")
+            print("[gatekeeper] tim3(visual) request")
             hasil_tim3 = await call_llm_tim3_api(url_payload, content_type, text_payload, media_payloads)
 
             if hasil_tim1["kategori"] == "SAFE" and hasil_tim3["kategori"] == "SAFE":
@@ -402,20 +400,42 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
             }
 
             final_decision = resolve_ai_conflict(hasil_tim1, hasil_tim3, igrs_rule)
-            item["engine_decision"] = final_decision
 
             kategori_final = final_decision.get("kategori_final", "SAFE")
             rating_info = final_decision.get("rating_final", "SU")
 
+            # Pertahankan tipe IGRS konkret untuk konten aman.
+            # Kasus: salah satu AI mengembalikan "SAFE" generik sehingga pemenang
+            # resolver = "SAFE", padahal AI lain sudah mengenali kategori IGRS
+            # konkret yang ratingnya juga aman (mis. Sport_Ringan/Animasi_Ringan).
+            # Hanya berlaku saat rating final aman (SU/7+) DAN kategori suspect
+            # juga ber-rating aman -> tidak melemahkan pelabelan konten berbahaya.
+            SAFE_RATINGS = {"SU", "7+"}
+            suspect_min_rating = igrs_rule.get("age_rating_minimal", "SU")
+            if (
+                kategori_final == "SAFE"
+                and rating_info in SAFE_RATINGS
+                and kategori_suspect not in ("SAFE", "")
+                and suspect_min_rating in SAFE_RATINGS
+            ):
+                print(
+                    f"[gatekeeper] kategori enrichment: SAFE -> {kategori_suspect} "
+                    f"(rating tetap {rating_info})"
+                )
+                kategori_final = kategori_suspect
+                final_decision["kategori_final"] = kategori_final
+
+            item["engine_decision"] = final_decision
+
             TARGET_RATINGS = {"13+", "17+", "PRC"}
 
             if kategori_final == "UNRATED" or rating_info == "UNRATED":
-                print(f"   [?] NEEDS REVIEW: Kategori/Rating UNRATED. Masuk Dashboard, DIABAIKAN dari Keyword Generator.")
+                print("[gatekeeper] verdict=NEEDS_REVIEW (UNRATED) -> stored, excluded from keyword generator")
             elif rating_info in TARGET_RATINGS:
-                print(f"   [!] KONTEN BAHAYA (Rating: {rating_info}): Kategori '{kategori_final}' | Diteruskan ke Keyword Generator.")
+                print(f"[gatekeeper] verdict=UNSAFE rating={rating_info} kategori={kategori_final} -> keyword generator")
                 unsafe_data.append(item)
             else:
-                print(f"   [v] SAFE/KIDS (Rating: {rating_info}): Kategori '{kategori_final}'. Masuk Dashboard, DIABAIKAN dari Keyword Generator.")
+                print(f"[gatekeeper] verdict=SAFE rating={rating_info} kategori={kategori_final} -> stored, excluded from keyword generator")
 
             all_classified.append({
                 "platform": item.get("source", "Umum"),
@@ -433,10 +453,10 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                 },
             })
 
-            print("[*] Jeda 4 detik sebelum memproses konten berikutnya...\n")
+            print("[gatekeeper] sleep 4s before next item\n")
             await asyncio.sleep(4.0)
 
-        print(f"\n[DEPTH {state['crawling_depth']}] GATEKEEPER: {len(unsafe_data)} beracun dari {len(all_classified)} konten.")
+        print(f"\n[gatekeeper] depth={state['crawling_depth']} done: flagged_unsafe={len(unsafe_data)}/{len(all_classified)}")
         if progress:
             progress.complete_stage("Running Classification")
         return {
@@ -449,7 +469,7 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
 
 def create_fork_processor_node(keyword_model, progress=None):
     async def fork_processor_node(state: PADState):
-        print(f"[DEPTH {state['crawling_depth']}] Memproses Forking...")
+        print(f"[fork] depth={state['crawling_depth']} START (keyword expansion)")
         # "Generating RAG Analysis": ekstraksi entitas + keyword turunan.
         if progress:
             progress.start_stage("Generating RAG Analysis")
@@ -479,7 +499,7 @@ def create_fork_processor_node(keyword_model, progress=None):
 
             generated_kws = await generate_keyword_local(text_payload, platform, keyword_model)
             if generated_kws:
-                print(f"   [+] Keyword diekstrak: {generated_kws}")
+                print(f"[fork] extracted keywords: {generated_kws}")
             new_keywords_generated.extend(generated_kws)
 
         new_keywords_generated = list(set(new_keywords_generated))
@@ -487,7 +507,7 @@ def create_fork_processor_node(keyword_model, progress=None):
 
         if len(truly_new_kws) > 3:
             truly_new_kws = random.sample(truly_new_kws, 3)
-            print(f"   [!] Snowball Limit: Memangkas keyword baru menjadi 3: {truly_new_kws}")
+            print(f"[fork] snowball cap: trimmed new keywords to 3: {truly_new_kws}")
 
         if progress:
             progress.complete_stage("Generating RAG Analysis")

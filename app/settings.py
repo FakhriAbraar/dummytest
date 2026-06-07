@@ -97,6 +97,14 @@ class Settings(BaseSettings):
         scheme = "https" if self.minio_use_ssl else "http"
         return f"{scheme}://{self.minio_host}:{self.minio_port}"
 
+    # Auth (JWT + akun admin default). Aman dengan default untuk POC; override via
+    # .env pakai prefix PAD_ (mis. PAD_JWT_SECRET, PAD_ADMIN_PASSWORD).
+    jwt_secret: str = "pad-dev-secret-change-me-in-production-please-32b"  # noqa: S105
+    jwt_expire_minutes: int = 720  # 12 jam
+    admin_email: str = "admin@aitf.id"
+    admin_password: str = "admin123"  # noqa: S105
+    admin_full_name: str = "Admin Komdigi"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="PAD_",

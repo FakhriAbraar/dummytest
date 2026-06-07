@@ -39,6 +39,28 @@ async def lifespan_setup(
     # created.
     async with get_engine().begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        # Migrasi ringan & idempoten: tambahkan kolom jadwal baru ke tabel lama
+        # (create_all tidak meng-ALTER tabel yang sudah ada). Aman dijalankan
+        # berulang — ADD COLUMN IF NOT EXISTS.
+        from sqlalchemy import text
+
+        await conn.execute(
+            text(
+                """
+                ALTER TABLE crawler_schedule
+                    ADD COLUMN IF NOT EXISTS times JSONB,
+                    ADD COLUMN IF NOT EXISTS monthly_mode VARCHAR(10) NOT NULL DEFAULT 'specific',
+                    ADD COLUMN IF NOT EXISTS days_of_month JSONB,
+                    ADD COLUMN IF NOT EXISTS day_range_start INTEGER NOT NULL DEFAULT 1,
+                    ADD COLUMN IF NOT EXISTS day_range_end INTEGER NOT NULL DEFAULT 28
+                """
+            )
+        )
+
+    # Pastikan akun admin default ada & bisa login (auth halaman admin).
+    from app.services.auth import ensure_default_admin
+
+    await ensure_default_admin()
 
     BASE_DIR = Path(__file__).resolve().parent.parent.parent
     KEYWORD_MODEL_PATH = BASE_DIR / "app" / "models" / "keyword_generator" / "ministral-3b-base-f16.gguf"

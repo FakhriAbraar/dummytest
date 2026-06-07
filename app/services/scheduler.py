@@ -28,7 +28,7 @@ from app.services import job_tracker
 from app.services.job_runner import run_crawl_job
 
 WIB = ZoneInfo("Asia/Jakarta")
-_JOB_ID = "auto_crawl"
+_JOB_PREFIX = "auto_crawl"  # semua job auto-crawl pakai prefix ini (bisa >1)
 
 _scheduler: AsyncIOScheduler | None = None
 _keyword_model: Any = None
@@ -63,23 +63,61 @@ def crawl_config_from_row(cfg: CrawlerSchedule) -> dict[str, Any]:
     }
 
 
-def _build_trigger(cfg: CrawlerSchedule) -> CronTrigger | IntervalTrigger:
-    """Map the stored schedule onto an APScheduler trigger (Asia/Jakarta)."""
+def _times_of_day(cfg: CrawlerSchedule) -> list[tuple[int, int]]:
+    """Daftar (jam, menit) eksekusi untuk mode harian/bulanan.
+
+    Fallback ke start_hour:start_minute bila `times` kosong (kompat data lama).
+    """
+    raw = cfg.times or []
+    pairs: list[tuple[int, int]] = []
+    for t in raw:
+        if isinstance(t, dict):
+            pairs.append((int(t.get("hour", 0)), int(t.get("minute", 0))))
+    if not pairs:
+        pairs = [(cfg.start_hour, cfg.start_minute)]
+    # unik + terurut
+    return sorted(set(pairs))
+
+
+def _monthly_day_expr(cfg: CrawlerSchedule) -> str:
+    """Ekspresi `day` untuk CronTrigger bulanan: "1,5,20" (specific) atau "1-15" (range)."""
+    if (cfg.monthly_mode or "specific") == "range":
+        lo = max(1, min(28, cfg.day_range_start))
+        hi = max(1, min(28, cfg.day_range_end))
+        if lo > hi:
+            lo, hi = hi, lo
+        return f"{lo}-{hi}"
+    days = sorted({int(d) for d in (cfg.days_of_month or []) if 1 <= int(d) <= 28})
+    if not days:
+        days = [cfg.day_of_month]
+    return ",".join(str(d) for d in days)
+
+
+def _build_triggers(cfg: CrawlerSchedule) -> list[CronTrigger | IntervalTrigger]:
+    """Map jadwal tersimpan ke satu/lebih trigger APScheduler (Asia/Jakarta).
+
+    - interval : satu IntervalTrigger (tiap N jam dari jam patokan).
+    - daily    : satu CronTrigger per jam eksekusi.
+    - monthly  : satu CronTrigger per jam eksekusi, dengan ekspresi tanggal
+                 (beberapa tanggal atau rentang).
+    """
     if cfg.mode == "daily":
-        return CronTrigger(hour=cfg.start_hour, minute=cfg.start_minute, timezone=WIB)
+        return [
+            CronTrigger(hour=h, minute=m, timezone=WIB)
+            for (h, m) in _times_of_day(cfg)
+        ]
     if cfg.mode == "monthly":
-        return CronTrigger(
-            day=cfg.day_of_month,
-            hour=cfg.start_hour,
-            minute=cfg.start_minute,
-            timezone=WIB,
-        )
+        day_expr = _monthly_day_expr(cfg)
+        return [
+            CronTrigger(day=day_expr, hour=h, minute=m, timezone=WIB)
+            for (h, m) in _times_of_day(cfg)
+        ]
     # interval (default): every N hours, anchored to today's start_hour:start_minute.
     now = datetime.now(WIB)
     start = now.replace(
         hour=cfg.start_hour, minute=cfg.start_minute, second=0, microsecond=0
     )
-    return IntervalTrigger(hours=cfg.interval_hours, start_date=start, timezone=WIB)
+    return [IntervalTrigger(hours=cfg.interval_hours, start_date=start, timezone=WIB)]
 
 
 def spawn_crawl(config: dict[str, Any]) -> job_tracker.Job:
@@ -122,30 +160,40 @@ def reschedule_from_config(cfg: CrawlerSchedule) -> None:
     the row is still attached/loaded (e.g. before the session closes).
     """
     sched = _ensure_scheduler()
-    if sched.get_job(_JOB_ID):
-        sched.remove_job(_JOB_ID)
+    # Bersihkan semua job auto-crawl lama (bisa lebih dari satu).
+    for job in sched.get_jobs():
+        if job.id and job.id.startswith(_JOB_PREFIX):
+            sched.remove_job(job.id)
     if not cfg.enabled:
         print("[scheduler] Auto-crawl disabled; no job scheduled.")  # noqa: T201
         return
-    sched.add_job(
-        _run_scheduled_crawl,
-        trigger=_build_trigger(cfg),
-        id=_JOB_ID,
-        max_instances=1,
-        coalesce=True,
-        replace_existing=True,
+    triggers = _build_triggers(cfg)
+    for idx, trigger in enumerate(triggers):
+        sched.add_job(
+            _run_scheduled_crawl,
+            trigger=trigger,
+            id=f"{_JOB_PREFIX}_{idx}",
+            max_instances=1,
+            coalesce=True,
+            replace_existing=True,
+        )
+    nxt = get_next_run_time()
+    print(  # noqa: T201
+        f"[scheduler] Auto-crawl scheduled (mode={cfg.mode}, {len(triggers)} jadwal); "
+        f"next run: {nxt}"
     )
-    job = sched.get_job(_JOB_ID)
-    nxt = job.next_run_time if job else None
-    print(f"[scheduler] Auto-crawl scheduled (mode={cfg.mode}); next run: {nxt}")  # noqa: T201
 
 
 def get_next_run_time() -> datetime | None:
-    """Next scheduled fire time (Asia/Jakarta), or None when idle/disabled."""
+    """Waktu fire terdekat di antara semua job auto-crawl (Asia/Jakarta)."""
     if _scheduler is None:
         return None
-    job = _scheduler.get_job(_JOB_ID)
-    return job.next_run_time if job else None
+    candidates = [
+        job.next_run_time
+        for job in _scheduler.get_jobs()
+        if job.id and job.id.startswith(_JOB_PREFIX) and job.next_run_time
+    ]
+    return min(candidates) if candidates else None
 
 
 async def start_scheduler() -> None:

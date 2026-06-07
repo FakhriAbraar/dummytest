@@ -22,3 +22,7 @@ pydantic             # Validasi data schema
 
 # Crawler (Target Integrasi Fase 2)
 playwright           # Buat content pengerukan [cite: 933]
+
+# Auth (login admin)
+bcrypt               # Hash & verifikasi kata sandi
+PyJWT                # Token JWT untuk sesi login admin

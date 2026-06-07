@@ -107,6 +107,6 @@ async def _run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
         )
 
     except Exception as e:  # surface any failure to the UI
-        print(f"[-] ERROR FATAL PADA JOB {mission_id[:8]}: {e}")  # noqa: T201
+        print(f"[job_runner] FATAL job={mission_id[:8]}: {e}")  # noqa: T201
         traceback.print_exc()
         job.mark_failed(e)

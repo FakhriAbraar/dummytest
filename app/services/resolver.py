@@ -8,21 +8,16 @@ def resolve_ai_conflict(text_result: dict, visual_result: dict, igrs_rule: dict)
     text_valid = text_conf >= CONFIDENCE_THRESHOLD
     visual_valid = visual_conf >= CONFIDENCE_THRESHOLD
     
-    print("\n" + "="*60)
-    print(" [RESOLVER] PERSIDANGAN ADU MEKANIK AI")
-    print("="*60)
-    print(f" [TIM 1 - TEKS]   Kategori: {text_result.get('kategori', 'SAFE'):<18} | Conf: {text_conf:.2f} | Valid: {text_valid}")
-    print(f" [TIM 3 - VISUAL] Kategori: {visual_result.get('kategori', 'SAFE'):<18} | Conf: {visual_conf:.2f} | Valid: {visual_valid}")
-    print("-" * 60)
-    
-    dominant_modality = igrs_rule.get("dominant_modality", "EQUAL")
-    print(f" [HUKUM IGRS] Dominant Modality yang berlaku: {dominant_modality}")
-    print("-" * 60)
+    print(f"[resolver] conflict resolution (confidence_threshold={CONFIDENCE_THRESHOLD})")
+    print(f"[resolver] tim1(text)   kategori={text_result.get('kategori', 'SAFE')} conf={text_conf:.2f} valid={text_valid}")
+    print(f"[resolver] tim3(visual) kategori={visual_result.get('kategori', 'SAFE')} conf={visual_conf:.2f} valid={visual_valid}")
 
-    # GUARD 1: THE BLINDNESS CHECK
+    dominant_modality = igrs_rule.get("dominant_modality", "EQUAL")
+    print(f"[resolver] igrs dominant_modality={dominant_modality}")
+
+    # GUARD 1: kedua confidence di bawah threshold -> tidak bisa diputuskan.
     if not text_valid and not visual_valid:
-        print(" [VONIS] KEDUA AI BUTA (Di bawah threshold).")
-        print("="*60 + "\n")
+        print("[resolver] result=UNRATED (both confidences below threshold)")
         return {
             "kategori_final": "UNRATED", 
             "veto_applied": False,
@@ -36,25 +31,23 @@ def resolve_ai_conflict(text_result: dict, visual_result: dict, igrs_rule: dict)
     if dominant_modality == "VISUAL" and visual_valid:
         winner = visual_result
         is_tim3_winner = True
-        alasan_menang = "Sesuai Yurisdiksi Mutlak IGRS (VISUAL)."
+        alasan_menang = "igrs dominant_modality=VISUAL"
     elif dominant_modality == "TEXT" and text_valid:
         winner = text_result
-        alasan_menang = "Sesuai Yurisdiksi Mutlak IGRS (TEXT)."
+        alasan_menang = "igrs dominant_modality=TEXT"
     else:
-        # Berlaku kalau EQUAL, atau kalau AI yang dominan malah buta (di bawah threshold)
+        # EQUAL, atau modality dominan di bawah threshold -> pilih confidence tertinggi.
         if visual_conf > text_conf:
             winner = visual_result
             is_tim3_winner = True
-            alasan_menang = "Adu Mekanik Murni (Confidence Visual > Teks)."
+            alasan_menang = "highest confidence (visual > text)"
         else:
             winner = text_result
-            alasan_menang = "Adu Mekanik Murni (Confidence Teks >= Visual)."
+            alasan_menang = "highest confidence (text >= visual)"
 
-    pemenang_str = "TIM 3 (VISUAL)" if is_tim3_winner else "TIM 1 (TEKS)"
-    
-    print(f" [VONIS] PEMENANG: {pemenang_str}")
-    print(f" [ALASAN] {alasan_menang}")
-    print("="*60 + "\n")
+    pemenang_str = "tim3(visual)" if is_tim3_winner else "tim1(text)"
+
+    print(f"[resolver] winner={pemenang_str} reason={alasan_menang}")
 
     final_kategori = winner.get("kategori", "SAFE")
     final_reason = winner.get("reason", "Tidak ada alasan spesifik yang diberikan AI.")
@@ -69,7 +62,7 @@ def resolve_ai_conflict(text_result: dict, visual_result: dict, igrs_rule: dict)
     
     if ai_rating not in VALID_RATINGS:
         final_rating = igrs_rule.get("age_rating_minimal", "SU")
-        print(f" [!] AI Halusinasi Format Rating ({ai_rating}). Di-fallback ke hukum IGRS: {final_rating}\n")
+        print(f"[resolver] invalid rating from AI ({ai_rating}), fallback to igrs minimal={final_rating}")
     else:
         final_rating = ai_rating
         

@@ -345,7 +345,7 @@ async def save_mission_report(
             ))
 
     await session.commit()
-    print(f"[REPORT] Mission {mission_id[:8]} disimpan: {stats['total']} konten, {stats['unsafe']} berbahaya, {len(history_keywords)} keyword.")
+    print(f"[report] mission={mission_id[:8]} saved content={stats['total']} unsafe={stats['unsafe']} keywords={len(history_keywords)}")
     return stats
 
 

@@ -304,9 +304,20 @@ class CrawlerSchedule(Base):
     # Schedule: "interval" | "daily" | "monthly".
     mode: Mapped[str] = mapped_column(String(20), default="interval", nullable=False)
     interval_hours: Mapped[int] = mapped_column(Integer, default=6, nullable=False)
+    # Patokan jam untuk mode interval (anchor) & fallback bila `times` kosong.
     start_hour: Mapped[int] = mapped_column(Integer, default=8, nullable=False)
     start_minute: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     day_of_month: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
+
+    # Beberapa jam eksekusi untuk mode harian & bulanan: [{"hour":8,"minute":0}, ...].
+    times: Mapped[list[dict[str, int]] | None] = mapped_column(JSONB)
+    # Mode bulanan: "specific" (pilih beberapa tanggal) | "range" (rentang tanggal).
+    monthly_mode: Mapped[str] = mapped_column(String(10), default="specific", nullable=False)
+    # Daftar tanggal spesifik untuk monthly_mode="specific", mis. [1, 5, 20].
+    days_of_month: Mapped[list[int] | None] = mapped_column(JSONB)
+    # Rentang tanggal untuk monthly_mode="range" (1..28).
+    day_range_start: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
+    day_range_end: Mapped[int] = mapped_column(Integer, default=28, nullable=False)
 
     # Crawl parameters.
     trends_keyword_count: Mapped[int] = mapped_column(Integer, default=3, nullable=False)

@@ -32,14 +32,18 @@ class TriggerRequest(BaseModel):
 
 
 class StartCrawlRequest(BaseModel):
-    """Crawl configuration submitted from the dedicated config page."""
+    """Crawl configuration submitted from the dedicated config page.
+
+    Depth dibatasi maksimal 3 (sesuai kebutuhan operasional). Jumlah konten &
+    keyword tidak dibatasi ketat (hanya soft-cap besar agar tidak meledak).
+    """
 
     keywords: list[str] = Field(default_factory=list)
-    max_depth: int = Field(default=3, ge=1, le=10)
-    max_content_x: int = Field(default=5, ge=1, le=5)
-    max_content_instagram: int = Field(default=5, ge=1, le=5)
-    max_content_tiktok: int = Field(default=5, ge=1, le=5)
-    trends_keyword_count: int = Field(default=3, ge=1, le=20)
+    max_depth: int = Field(default=2, ge=1, le=3)
+    max_content_x: int = Field(default=3, ge=1, le=1000)
+    max_content_instagram: int = Field(default=3, ge=1, le=1000)
+    max_content_tiktok: int = Field(default=3, ge=1, le=1000)
+    trends_keyword_count: int = Field(default=3, ge=1, le=1000)
 
 
 @router.post("/trigger")
@@ -50,7 +54,7 @@ async def trigger_agentic_crawler(
 ):
     mission_id = str(uuid.uuid4())
     started_at = datetime.now(tz=timezone.utc)
-    print(f"\n=== MEMULAI MISI CRAWLING [{mission_id[:8]}]: '{request.seed_trend}' depth={request.max_depth} ===")
+    print(f"\n[crawler_api] mission START id={mission_id[:8]} seed={request.seed_trend!r} depth={request.max_depth}")
 
     initial_state = {
         "seed_trend": request.seed_trend,
@@ -101,7 +105,7 @@ async def trigger_agentic_crawler(
         }
 
     except Exception as e:
-        print(f"[-] ERROR FATAL PADA PIPELINE: {e}")
+        print(f"[crawler_api] FATAL pipeline error: {e}")
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
