@@ -23,6 +23,8 @@ Catatan: model di-fine-tune dan output JSON-nya longgar (kadang pakai key
 from __future__ import annotations
 
 import asyncio
+import base64
+import io
 import json
 import os
 import re
@@ -41,6 +43,9 @@ VISUAL_MAX_IMAGES = int(os.getenv("VISUAL_MAX_IMAGES", "2"))
 VISUAL_MAX_TOKENS = int(os.getenv("VISUAL_MAX_TOKENS", "400"))
 VISUAL_MAX_RETRIES = int(os.getenv("VISUAL_MAX_RETRIES", "2"))
 VISUAL_DEFAULT_CONFIDENCE = float(os.getenv("VISUAL_DEFAULT_CONFIDENCE", "0.75"))
+# pad3_model context-nya kecil (max_model_len=2048). Gambar full-res bisa makan
+# >2000 token sendirian -> error 400. Downscale dulu ke sisi maksimal ini (px).
+VISUAL_MAX_IMAGE_DIM = int(os.getenv("VISUAL_MAX_IMAGE_DIM", "512"))
 
 VALID_RATINGS = {"SU", "7+", "13+", "17+", "PRC", "UNRATED"}
 
@@ -78,6 +83,48 @@ def _get_client() -> AsyncOpenAI:
     if _client is None:
         _client = AsyncOpenAI(base_url=VISUAL_API_BASE_URL, api_key=VISUAL_API_KEY)
     return _client
+
+
+def _bytes_to_jpeg_data_uri(raw: bytes, max_dim: int) -> str:
+    from PIL import Image  # noqa: PLC0415
+
+    img = Image.open(io.BytesIO(raw))
+    if img.mode != "RGB":
+        img = img.convert("RGB")
+    img.thumbnail((max_dim, max_dim))  # in-place, jaga rasio aspek
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG", quality=85)
+    return "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+
+
+def _fetch_bytes(url: str) -> bytes:
+    import httpx  # noqa: PLC0415
+
+    with httpx.Client(timeout=15.0, follow_redirects=True) as c:
+        resp = c.get(url)
+        resp.raise_for_status()
+        return resp.content
+
+
+def _downscale_image(url: str, max_dim: int) -> str:
+    """Kembalikan data-URI JPEG kecil (<= max_dim px) dari data-URI/URL http.
+
+    Penting untuk pad3_model yang context-nya 2048 token: tanpa ini, 1 gambar
+    full-res saja bisa menembus limit dan bikin error 400. Gagal proses ->
+    kembalikan url asli (biar tetap dicoba, tidak menghentikan klasifikasi).
+    """
+    try:
+        if url.startswith("data:"):
+            _, _, b64data = url.partition(",")
+            raw = base64.b64decode(b64data)
+        elif url.startswith("http"):
+            raw = _fetch_bytes(url)
+        else:
+            return url
+        return _bytes_to_jpeg_data_uri(raw, max_dim)
+    except Exception as e:  # noqa: BLE001
+        print(f"[visual] downscale gagal ({url[:48]}...): {e}")
+        return url
 
 
 def _normalize_rating(val: object) -> str | None:
