@@ -238,13 +238,19 @@ async def run_content_crawlers(
     # diturunkan dari target post agar cukup menjangkau target.
     ig_max_scroll = max(5, ig_limit * 2)
 
-    ig_task = _crawl_instagram_with_fallback(keyword, ig_limit, ig_max_scroll, progress)
+    async def _skip_task(platform_id: str):
+        if progress:
+            progress.start_platform(platform_id)
+            progress.complete_platform(platform_id)
+        return []
+
+    ig_task = _crawl_instagram_with_fallback(keyword, ig_limit, ig_max_scroll, progress) if ig_limit > 0 else _skip_task("instagram")
     tiktok_task = _crawl_one_platform(
         "tiktok", "scripts.crawler.tiktok", keyword, tiktok_limit, progress
-    )
+    ) if tiktok_limit > 0 else _skip_task("tiktok")
     twitter_task = _crawl_one_platform(
         "x", "scripts.crawler.twitter", keyword, x_limit, progress
-    )
+    ) if x_limit > 0 else _skip_task("x")
 
     results = await asyncio.gather(ig_task, tiktok_task, twitter_task)
     unified_data = results[0] + results[1] + results[2]

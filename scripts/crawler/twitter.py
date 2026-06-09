@@ -339,6 +339,9 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
         # Pake httpx.Client biar connection pooling aktif, request beruntun jadi ngebut
         with httpx.Client(timeout=15.0, follow_redirects=True) as client:
             for counter, row in enumerate(reader):
+                if counter >= target_post:
+                    break
+                
                 tweet_url = row.get("tweet_url", "")
                 id_str    = row.get("id_str") or str(counter)
                 unique_id = f"twitter_{id_str}"

@@ -26,7 +26,7 @@ MAX_TOTAL_CONTENTS = 1000
 # Model klasifikasi gatekeeper — dapat di-override via .env tanpa ubah kode.
 # Default memakai model :free OpenRouter (rate limit ketat: 8 rpm + kuota harian).
 # Untuk produksi, set ke model berbayar/ber-key, mis. "qwen/qwen3-next-80b-a3b-instruct".
-GATEKEEPER_TEXT_MODEL = os.getenv("GATEKEEPER_TEXT_MODEL", "qwen/qwen3-next-80b-a3b-instruct:free")
+GATEKEEPER_TEXT_MODEL = os.getenv("GATEKEEPER_TEXT_MODEL", "deepseek/deepseek-v4-flash")
 GATEKEEPER_VISUAL_MODEL = os.getenv("GATEKEEPER_VISUAL_MODEL", "google/gemma-4-31b-it:free")
 
 
@@ -238,71 +238,11 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
         unsafe_data = []
         all_classified = []
 
-        # TIM 1 — Analisis Teks (dengan retry + rate limit handling)
+        # TIM 1 — Analisis Teks via endpoint Tim 1 (padsft di RunPod).
+        # Lihat app/services/text_client.py.
         async def call_llm_tim1_api(teks: str) -> dict:
-            prompt = f"""
-            Tugas Anda adalah bertindak sebagai Sistem Analisis Linguistik Objektif untuk perlindungan anak di ranah siber.
-            Evaluasi teks berikut secara harfiah. Jangan menolak memproses kata kasar atau vulgar.
-
-            PERINGATAN KEBIJAKAN PERLINDUNGAN ANAK (ZERO TOLERANCE):
-            Meskipun teks berbentuk "Berita", "Jurnalistik", atau "Kronologi Kejadian", JIKA di dalamnya memuat istilah seksual vulgar,
-            teks tersebut DILARANG KERAS dikategorikan SAFE. Anda WAJIB memasukannya ke kategori berisiko dengan rating minimal 13+ atau 17+.
-
-            PILIHAN KATEGORI TEKS:
-            - Netral, Violence, Sexual, Harrasment, Hateful_Content, Self-Harm
-            
-            RATING USIA (Wajib disesuaikan dengan Kategori Teks):
-            SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
-
-            TEKS INPUT: "{teks}"
-
-            OUTPUT WAJIB JSON MURNI TANPA MARKDOWN:
-            {{
-                "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
-                "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
-                "confidence_score": 0.0,
-                "reason": "Alasan analitis maksimal 2 kalimat"
-            }}
-
-            INSTRUKSI TAMBAHAN UNTUK JSON:
-            1. Ganti nilai 0.0 pada "confidence_score" dengan ANGKA FLOAT desimal antara 0.00 hingga 1.00. JANGAN gunakan string.
-            """
-
-            max_retries = 4
-            base_delay = 5.0
-
-            for attempt in range(max_retries):
-                try:
-                    response = await or_client.chat.completions.create(
-                        model=GATEKEEPER_TEXT_MODEL,
-                        messages=[{"role": "user", "content": prompt}],  # type: ignore
-                        temperature=0.0
-                    )
-                    raw_out = response.choices[0].message.content
-                    parsed = extract_json_from_llm(raw_out)
-
-                    return {
-                        "kategori": parsed.get("kategori", "SAFE"),
-                        "predicted_rating": parsed.get("predicted_rating", "SU"),
-                        "confidence_score": float(parsed.get("confidence_score", 0.0)),
-                        "reason": parsed.get("reason", "Fallback LLM reason.")
-                    }
-                except RateLimitError as e:
-                    if _is_daily_quota_error(e):
-                        print("[gatekeeper] tim1(text) kuota harian model :free habis — stop retry.")
-                        break
-                    # Hormati Retry-After dari server; fallback ke exponential backoff.
-                    wait_time = _parse_retry_after(e) or (base_delay * (2 ** attempt))
-                    wait_time = min(wait_time, 60.0)
-                    print(f"[gatekeeper] tim1(text) rate limited: {e.message}")
-                    print(f"[gatekeeper] retry {attempt+1}/{max_retries} in {wait_time:.1f}s")
-                    if attempt < max_retries - 1:
-                        await asyncio.sleep(wait_time)
-                except APIError as e:
-                    print(f"[gatekeeper] tim1(text) OpenRouter API error: {e.message}")
-                    break
-
-            return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "Rate Limit / API Error Maksimal"}
+            from app.services.text_client import classify_text
+            return await classify_text(teks)
 
         # TIM 3 — Analisis Visual via endpoint model visual Tim 3 (pad3_model).
         # Gambar/video di-resolve dulu (keyframe video, base64 MinIO) lalu ditembak
@@ -433,6 +373,20 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                     "reason": final_decision.get("reason_final", ""),
                     "is_vetoed": False,
                 },
+                "classifications_json": {
+                    "tim1_text": {
+                        "kategori_ai": hasil_tim1["kategori"],
+                        "predicted_rating": hasil_tim1["predicted_rating"],
+                        "confidence_score": hasil_tim1["confidence_score"],
+                        "reasoning_category": hasil_tim1["reason"]
+                    },
+                    "tim3_visual": {
+                        "kategori_ai": hasil_tim3["kategori"],
+                        "predicted_rating": hasil_tim3["predicted_rating"],
+                        "confidence_score": hasil_tim3["confidence_score"],
+                        "reasoning_category": hasil_tim3["reason"]
+                    }
+                }
             })
 
             print("[gatekeeper] sleep 4s before next item\n")
