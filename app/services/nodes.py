@@ -26,7 +26,7 @@ MAX_TOTAL_CONTENTS = 1000
 # Model klasifikasi gatekeeper — dapat di-override via .env tanpa ubah kode.
 # Default memakai model :free OpenRouter (rate limit ketat: 8 rpm + kuota harian).
 # Untuk produksi, set ke model berbayar/ber-key, mis. "qwen/qwen3-next-80b-a3b-instruct".
-GATEKEEPER_TEXT_MODEL = os.getenv("GATEKEEPER_TEXT_MODEL", "qwen/qwen3-next-80b-a3b-instruct:free")
+GATEKEEPER_TEXT_MODEL = os.getenv("GATEKEEPER_TEXT_MODEL", "deepseek/deepseek-v4-flash")
 GATEKEEPER_VISUAL_MODEL = os.getenv("GATEKEEPER_VISUAL_MODEL", "google/gemma-4-31b-it:free")
 
 
