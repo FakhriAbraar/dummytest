@@ -15,7 +15,7 @@ from openai import AsyncOpenAI, RateLimitError, APIError
 load_dotenv()
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-MODEL_TIM1 = os.getenv("OPENROUTER_MODEL_TIM1", "meta-llama/llama-3.2-3b-instruct")
+MODEL_TIM1 = os.getenv("OPENROUTER_MODEL_TIM1", "deepseek/deepseek-v4-flash")
 MODEL_TIM3 = os.getenv("OPENROUTER_MODEL_TIM3", "openai/gpt-4o-mini")
 
 VALID_CATEGORIES_TEXT = {

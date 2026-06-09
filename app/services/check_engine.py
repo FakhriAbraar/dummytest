@@ -187,7 +187,7 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
             """
         try:
             response = await or_client.chat.completions.create(
-                model="meta-llama/llama-3.2-3b-instruct",
+                model="deepseek/deepseek-v4-flash",
                 messages=[{"role": "user", "content": prompt}],  # type: ignore
                 temperature=0.0
             )
