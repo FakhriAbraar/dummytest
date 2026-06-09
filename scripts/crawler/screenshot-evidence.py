@@ -253,6 +253,45 @@ def take_screenshots(urls: list[str], output_dir: Path) -> list[dict]:
                             logger.warning(
                                 "Gagal memanipulasi UI Instagram: %s", e)
 
+                    elif "tiktok.com" in url:
+                        page.wait_for_load_state("domcontentloaded")
+                        try:
+                            # Skenario A: Mencoba klik tombol "Got it" pada onboarding overlay
+                            # Gunakan regex untuk antisipasi perbedaan case huruf
+                            page.locator("button:has-text('Got it')").click(timeout=5000)
+                        except Exception:
+                            pass
+
+                        # Skenario B: Fallback hapus elemen DOM overlay secara paksa
+                        page.evaluate("""
+                            () => {
+                                // Hapus modal onboarding, login pop-up, dan banner bawah aplikasi
+                                const selectors = [
+                                    'div[data-e2e="modal-container"]',
+                                    'div[id*="login-modal"]',
+                                    'div[class*="login-modal"]',
+                                    'div[data-e2e="bottom-banner-container"]'
+                                ];
+                                
+                                document.querySelectorAll(selectors.join(', ')).forEach(el => {
+                                    el.style.setProperty('display', 'none', 'important');
+                                });
+
+                                // Hapus overlay transparan yang memblokir interaksi
+                                document.querySelectorAll('div').forEach(el => {
+                                    const style = window.getComputedStyle(el);
+                                    if (style.position === 'fixed' || style.position === 'absolute') {
+                                        if (el.innerText.includes('Scroll, use the') || el.innerText.includes('Log in')) {
+                                            el.style.setProperty('display', 'none', 'important');
+                                        }
+                                    }
+                                });
+                                
+                                // Pulihkan scroll jika terkunci oleh modal
+                                document.body.style.setProperty('overflow', 'auto', 'important');
+                            }
+                        """)
+                        page.wait_for_timeout(3000)
                     else:
                         page.wait_for_timeout(5000)
 
