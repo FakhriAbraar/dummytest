@@ -13,8 +13,10 @@ from openai import AsyncOpenAI
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.services.classification import get_igrs_rule_by_kategori
+from app.services.parent_advice import get_random_parent_advice
 from app.services.resolver import resolve_ai_conflict
 from app.services.video_extractor import process_media_url, VIDEO_EXTENSIONS
+from app.services.visual_client import classify_visual
 
 load_dotenv()
 
@@ -202,38 +204,11 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
             print(f"[checker] tim1(text) API error: {e}")
             return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "API Error"}
 
-    # TIM 3 — Analisis Visual via OpenRouter (dengan video keyframe extraction)
+    # TIM 3 — Analisis Visual via endpoint Tim 3 (pad3_model di RunPod, lihat
+    # app/services/visual_client.py). Gambar/video di-resolve dulu (keyframe video,
+    # base64 MinIO) menjadi daftar URL siap kirim, lalu ditembak ke model visual.
     async def call_llm_tim3_api(t_url: str, c_type: str, teks: str, img_urls: list[str] | None = None) -> dict:
-        prompt = f"""
-            Anda adalah Mesin Inferensi Visual untuk Sistem Klasifikasi Konten Digital.
-            Tugas Anda adalah MENGANALISA GAMBAR-GAMBAR YANG DILAMPIRKAN (jika ada). Jika gambar tidak ada, gunakan URL dan Teks Konteks.
-
-            URL INPUT: "{url}"
-            TIPE KONTEN: "{content_type}"
-            TEKS/KONTEKS SEKITAR: "{teks}"
-
-            ATURAN KETAT (ANTI-HALUSINASI):
-            DILARANG KERAS membuat asumsi liar terhadap suatu platform (misal: "TikTok sering berisi video pertarungan").
-            Jika gambar fisik tidak dilampirkan dan teks konteks tidak memuat deskripsi spesifik tentang kekerasan/pelanggaran,
-            Anda WAJIB memilih kategori SAFE. Berikan vonis HANYA berdasarkan bukti teks/gambar yang ada secara harfiah.
-
-            PILIHAN KATEGORI VISUAL:
-            Human_Interaction, Medicine, Sport, Education, Miliitary, Animation, Medical, Toy, Tactical_Miliitary, Action, Violent_Sport, Complex_Interactions, Suggestive, Invasive_Medical, Weapon, Violence, Addictive_Substances, Pornography, Terrorism, SelfHarm, Sadistic_Violence, Drug
-            
-            RATING USIA (Wajib disesuaikan dengan Kategori Visual):
-            SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
-
-            OUTPUT WAJIB JSON MURNI TANPA MARKDOWN:
-            {{
-                "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
-                "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
-                "confidence_score": 0.0,
-                "reason": "Alasan deduksi visual Anda dari konteks/gambar yang ada"
-            }}
-            """
-
-        import typing
-        content_array: list[dict[str, typing.Any]] = [{"type": "text", "text": prompt}]
+        resolved_images: list[str] = []
 
         if img_urls:
             for url_data in img_urls:
@@ -242,11 +217,7 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
                 if is_video:
                     print(f"[checker] tim3(visual) video keyframe extraction: {url_data[:80]}")
                     keyframe_urls = await process_media_url(url_data)
-                    for frame_url in keyframe_urls:
-                        content_array.append({
-                            "type": "image_url",
-                            "image_url": {"url": frame_url}
-                        })
+                    resolved_images.extend(keyframe_urls)
                     print(f"[checker] tim3(visual) added {len(keyframe_urls)} keyframe(s) to payload")
                 else:
                     final_url = url_data
@@ -255,34 +226,10 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
                         b64_res = await get_file_base64(url_data)
                         if b64_res.get("status") == "success":
                             final_url = b64_res["data_uri"]
+                    resolved_images.append(final_url)
 
-                    content_array.append({
-                        "type": "image_url",
-                        "image_url": {"url": final_url}
-                    })
-
-        total_images = len(content_array) - 1
-        print(f"[checker] tim3(visual) payload images={total_images}")
-
-        try:
-            messages_payload: typing.Any = [{"role": "user", "content": content_array}]
-            response = await or_client.chat.completions.create(
-                model="openai/gpt-4o-mini",
-                messages=messages_payload,  # type: ignore
-                temperature=0.0
-            )
-            raw_content = response.choices[0].message.content or "{}"
-            parsed = extract_json_from_llm(raw_content)
-
-            return {
-                "kategori": parsed.get("kategori", "SAFE"),
-                "predicted_rating": parsed.get("predicted_rating", "SU"),
-                "confidence_score": float(parsed.get("confidence_score", 0.0)),
-                "reason": parsed.get("reason", "Fallback Visual API")
-            }
-        except Exception as e:
-            print(f"[checker] tim3(visual) API error: {e}")
-            return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "API Error"}
+        print(f"[checker] tim3(visual) payload images={len(resolved_images)}")
+        return await classify_visual(teks, resolved_images, content_type=c_type)
 
     media_payloads: list[str] = []
 
@@ -404,6 +351,11 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
 
     public_status = "NEEDS_REVIEW" if final_decision.get("rating_final") == "UNRATED" else "COMPLETED"
 
+    # Saran untuk orang tua sesuai rating final (dipilih acak dari tabel parent_advice).
+    parent_advice = await get_random_parent_advice(
+        final_decision.get("rating_final", "SU"), session
+    )
+
     return {
         "target_url": target_url,
         "status": public_status,
@@ -413,6 +365,7 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
             "reason_ai": final_decision.get("reason_final", ""),
             "is_vetoed_by_backend": False,
         },
+        "parent_advice": parent_advice,
         "legal_context": {
             "bunyi_pasal_qdrant": qdrant_context,
         },

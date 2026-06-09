@@ -24,6 +24,7 @@ from app.db.tables import (
     TrendingKeyword,
 )
 from app.seeds.igrs_seed import IGRS_DATA, seed_igrs_rules
+from app.seeds.parent_advice_seed import seed_parent_advice
 from app.settings import settings
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -649,6 +650,7 @@ async def seed_all() -> None:
         print("\n=== AITF Main Seeder ===")  # noqa: T201
 
         await seed_igrs_rules(session)
+        await seed_parent_advice(session)
         users = await seed_system_users(session)
         platforms = await seed_platforms(session)
         agents = await seed_ai_agents(session)

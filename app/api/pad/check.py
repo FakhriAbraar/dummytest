@@ -15,6 +15,7 @@ from app.db.sql import get_db_session
 from app.db.tables import PublicCheck
 from app.services.check_engine import run_public_checking_pipeline
 from app.services.classification import get_igrs_rule_by_kategori
+from app.services.parent_advice import get_random_parent_advice
 from app.services.real_ml import call_llm_tim1, call_llm_tim3
 from app.services.resolver import resolve_ai_conflict
 
@@ -102,6 +103,8 @@ class CheckResponse(BaseModel):
     legal_context: LegalContext
     content_meta: ContentMeta | None = None
     classifications: Classifications | None = None
+    # Saran untuk orang tua sesuai rating final (acak dari tabel parent_advice).
+    parent_advice: str | None = None
 
 @router.post("/verify", response_model=CheckResponse)
 async def public_checking_endpoint(
@@ -148,6 +151,7 @@ async def recent_public_checks(
             "reasonAi": r.reason_ai or "",
             "legalContext": r.legal_context or "",
             "classifications": r.classifications_json,
+            "parentAdvice": await get_random_parent_advice(r.final_rating, session) or "",
             "keyword": "",
             "createdAt": r.checked_at.isoformat() if r.checked_at else "",
         }
@@ -266,6 +270,10 @@ async def check_upload_endpoint(
     # Video tidak perlu (terlalu berat untuk inline).
     thumbnail_for_response = img_urls[0] if img_urls else ""
 
+    parent_advice = await get_random_parent_advice(
+        final_decision.get("rating_final", "SU"), session
+    )
+
     response = {
         "target_url": target_url,
         "status": public_status,
@@ -275,6 +283,7 @@ async def check_upload_endpoint(
             "reason_ai": final_decision.get("reason_final", ""),
             "is_vetoed_by_backend": False,
         },
+        "parent_advice": parent_advice,
         "legal_context": {"bunyi_pasal_qdrant": legal_context},
         "content_meta": {
             "platform": "upload",

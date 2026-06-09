@@ -75,6 +75,8 @@ def _stdout_to_stderr():
 # 3. KONSTANTA
 # ============================================================
 load_dotenv()
+# Token Apify universal (akun sadam) diutamakan untuk semua crawler Apify.
+APIFY_API_TOKEN = os.getenv("APIFY_API_TOKEN")
 APIFY_API_FREE = os.getenv("APIFY_API_FREE")
 APIFY_API_PREMIUM = os.getenv("APIFY_API_PREMIUM")
 COLLECTION_NAME = "social_media_posts"
@@ -97,9 +99,9 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
     Raises:
             Exception: Jika Apify actor gagal dipanggil.
     """
-    api_key = APIFY_API_FREE
+    api_key = APIFY_API_TOKEN or APIFY_API_PREMIUM or APIFY_API_FREE
     if not api_key:
-        raise RuntimeError("APIFY_API_FREE harus diset di .env")
+        raise RuntimeError("APIFY_API_TOKEN / APIFY_API_FREE harus diset di .env")
     client = ApifyClient(api_key)
     run_input = {
         "searchQueries": keyword,
@@ -112,7 +114,12 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
         run = client.actor("GdWCkxBtKWOsKjdch").call(run_input=run_input)
     if not run:
         raise RuntimeError("Apify actor tidak mengembalikan run object (None). Cek token dan quota.")
-    dataset_id = run["defaultDatasetId"]
+    # apify_client >=3 mengembalikan objek Run (atribut snake_case);
+    # versi lama mengembalikan dict ("defaultDatasetId"). Dukung keduanya.
+    if isinstance(run, dict):
+        dataset_id = run["defaultDatasetId"]
+    else:
+        dataset_id = run.default_dataset_id
     logger.info("Actor selesai. Dataset ID: %s", dataset_id)
 
     batch_id = str(uuid.uuid4())

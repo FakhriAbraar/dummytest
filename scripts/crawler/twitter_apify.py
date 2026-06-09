@@ -34,7 +34,12 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 load_dotenv()
-APIFY_TOKEN = os.getenv("APIFY_API_PREMIUM") or os.getenv("APIFY_API_FREE")
+# Token Apify universal (akun sadam) diutamakan untuk semua crawler Apify.
+APIFY_TOKEN = (
+    os.getenv("APIFY_API_TOKEN")
+    or os.getenv("APIFY_API_PREMIUM")
+    or os.getenv("APIFY_API_FREE")
+)
 TWITTER_ACTOR = os.getenv("TWITTER_ACTOR", "quacker/twitter-scraper")
 
 

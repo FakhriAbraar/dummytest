@@ -355,3 +355,20 @@ class PublicCheck(Base):
     legal_context: Mapped[str | None] = mapped_column(Text)
     classifications_json: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     checked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class ParentAdvice(Base):
+    """Saran/anjuran untuk orang tua per rating usia (sumber: tim konten).
+
+    Tabel sederhana: hanya ``rating`` + ``saran``. Rating disimpan dalam skala
+    sistem (SU/7+/13+/17+/PRC). Ketika Content Checker menghasilkan rating final,
+    satu saran dengan rating yang cocok dipilih acak untuk ditampilkan di modal
+    hasil pemeriksaan ("Saran untuk Orang Tua").
+    """
+
+    __tablename__ = "parent_advice"
+    __table_args__ = (Index("ix_parent_advice_rating", "rating"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    rating: Mapped[str] = mapped_column(String(10), nullable=False)
+    saran: Mapped[str] = mapped_column(Text, nullable=False)

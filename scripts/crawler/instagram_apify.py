@@ -38,7 +38,14 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 load_dotenv()
-APIFY_TOKEN = os.getenv("APIFY_API_PREMIUM") or os.getenv("APIFY_API_FREE")
+# Token Apify universal (APIFY_API_TOKEN, akun sadam) dipakai untuk semua crawler
+# Apify; APIFY_API_INSTAGRAM/PREMIUM/FREE hanya cadangan kompatibilitas.
+APIFY_TOKEN = (
+    os.getenv("APIFY_API_TOKEN")
+    or os.getenv("APIFY_API_INSTAGRAM")
+    or os.getenv("APIFY_API_PREMIUM")
+    or os.getenv("APIFY_API_FREE")
+)
 INSTAGRAM_HASHTAG_ACTOR = "apify/instagram-hashtag-scraper"  # search by hashtag
 
 VIDEO_EXTS = (".mp4", ".webm", ".mkv", ".mov", ".avi")
@@ -79,7 +86,12 @@ def scrape_instagram(keyword: str, target_post: int) -> list[dict]:
         logger.warning("Apify run mengembalikan None.")
         return []
 
-    dataset_id = run.get("defaultDatasetId")
+    # apify_client >=3 mengembalikan objek Run (atribut snake_case);
+    # versi lama mengembalikan dict ("defaultDatasetId"). Dukung keduanya.
+    if isinstance(run, dict):
+        dataset_id = run.get("defaultDatasetId")
+    else:
+        dataset_id = getattr(run, "default_dataset_id", None)
     if not dataset_id:
         logger.warning("Tidak ada defaultDatasetId di response actor.")
         return []

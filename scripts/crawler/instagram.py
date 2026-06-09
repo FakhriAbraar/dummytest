@@ -226,9 +226,23 @@ def scrape_instagram() -> dict[str, list[str]]:
 
             logger.info("Menjelajahi #%s (dari original: '%s')...", tag, raw_tag)
             
+            # Catatan: IG kini mengalihkan /explore/tags/<tag>/ ke halaman
+            # pencarian keyword (/explore/search/keyword/?q=%23<tag>). Ekstraksi
+            # link /p/ dan /reel/ tetap berfungsi untuk hashtag yang punya konten.
             page.goto(f"https://www.instagram.com/explore/tags/{tag}/")
             time.sleep(3.5)
-            
+
+            # Bila hashtag tidak punya konten, IG menampilkan "No results".
+            # Deteksi lebih awal agar tidak menyia-nyiakan waktu untuk scroll.
+            try:
+                body_text = page.inner_text("body")[:600].lower()
+            except Exception:
+                body_text = ""
+            if any(s in body_text for s in ("no results", "couldn't find", "tidak ada hasil")):
+                logger.info("  #%s — Instagram: tidak ada hasil pencarian. Skip.", tag)
+                hasil_final[raw_tag] = []
+                continue
+
             links_found: set[str] = set()
             retry_scroll = 0
 

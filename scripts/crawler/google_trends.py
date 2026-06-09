@@ -61,14 +61,15 @@ KEY_MAPPING = {
 # ============================================================
 # 3. SCRAPING — Semua log ke stderr, tidak ada print() di sini
 # ============================================================
-def scrape_google_trends() -> list[dict[str, Any]]:
-    """Scrape data Google Trends Indonesia via export CSV menggunakan Playwright.
+def _scrape_once() -> list[dict[str, Any]]:
+    """Satu kali percobaan scrape Google Trends via export CSV (Playwright).
 
     Menggunakan direktori temporer untuk menyimpan file CSV sementara.
     File CSV dihapus otomatis setelah dikonversi ke list of dict.
 
     Returns:
-        List of dict berisi data tren yang berhasil di-scrape.
+        List of dict berisi data tren. Bisa kosong bila Google Trends sempat
+        meng-export CSV header-only (race kondisi intermiten di sisi mereka).
 
     Raises:
         Exception: Jika terjadi kegagalan Playwright (timeout, elemen tidak ditemukan,
@@ -97,8 +98,14 @@ def scrape_google_trends() -> list[dict[str, Any]]:
         # setidaknya satu baris data trending sudah ada di DOM.
         logger.info("Menunggu data trending ter-render...")
         page.wait_for_selector("tr.enOdEe-wZVHld-vqLbZd-oKdM2c", timeout=30000)
-        # Jeda singkat agar seluruh baris selesai dirender
-        page.wait_for_timeout(2000)
+        # Tunggu network reda + jeda agar seluruh baris (dan data di balik
+        # export) selesai termuat. Tanpa ini, export kadang hanya berisi header
+        # sehingga parsing menghasilkan 0 item.
+        try:
+            page.wait_for_load_state("networkidle", timeout=15000)
+        except Exception:
+            logger.warning("networkidle tidak tercapai dalam 15s, lanjut tetap.")
+        page.wait_for_timeout(2500)
         logger.info("Data tabel terdeteksi, siap di-export.")
 
         # --- Klik tombol Export ---
@@ -118,8 +125,10 @@ def scrape_google_trends() -> list[dict[str, Any]]:
             logger.info("CSV tersimpan sementara di: %s", csv_path)
 
             # --- Parse CSV → list of dict ---
+            # encoding utf-8-sig agar BOM (jika Google menambahkannya) tidak
+            # ikut menempel pada nama kolom pertama sehingga "Trends" tetap cocok.
             data: list[dict[str, Any]] = []
-            with open(csv_path, newline="", encoding="utf-8") as csvfile:
+            with open(csv_path, newline="", encoding="utf-8-sig") as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     new_row: dict[str, Any] = {}
@@ -147,6 +156,34 @@ def scrape_google_trends() -> list[dict[str, Any]]:
         if playwright_instance:
             playwright_instance.stop()
             logger.info("Playwright instance dihentikan.")
+
+
+def scrape_google_trends(max_attempts: int = 3) -> list[dict[str, Any]]:
+    """Scrape Google Trends Indonesia dengan retry untuk export CSV kosong.
+
+    Google Trends sesekali meng-export CSV yang hanya berisi header (race
+    kondisi di sisi mereka) sehingga parsing menghasilkan 0 item meski tabel
+    sudah terlihat. Fungsi ini mengulang seluruh proses scrape hingga
+    mendapatkan data atau kehabisan percobaan.
+
+    Args:
+        max_attempts: Jumlah maksimum percobaan scrape.
+
+    Returns:
+        List of dict berisi data tren yang berhasil di-scrape (bisa kosong bila
+        semua percobaan menghasilkan CSV header-only).
+    """
+    data: list[dict[str, Any]] = []
+    for attempt in range(1, max_attempts + 1):
+        logger.info("Percobaan scrape %d/%d...", attempt, max_attempts)
+        data = _scrape_once()
+        if data:
+            return data
+        logger.warning(
+            "Percobaan %d menghasilkan 0 item (kemungkinan export CSV header-only).",
+            attempt,
+        )
+    return data
 
 
 # ============================================================

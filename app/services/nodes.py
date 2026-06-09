@@ -10,6 +10,7 @@ from .crawler_service import run_trend_crawlers, run_content_crawlers
 from app.services.resolver import resolve_ai_conflict
 from app.services.classification import get_igrs_rule_by_kategori
 from app.services.video_extractor import process_media_url, VIDEO_EXTENSIONS
+from app.services.visual_client import classify_visual
 
 or_client = AsyncOpenAI(
     base_url="https://openrouter.ai/api/v1",
@@ -21,6 +22,48 @@ TARGET_POST_PER_KEYWORD = 2
 # Jumlah konten per platform diatur via Crawl Config / Auto-Crawler (adjustable),
 # jadi nilai ini sengaja dibuat besar (praktis "tanpa batas" untuk kebutuhan POC).
 MAX_TOTAL_CONTENTS = 1000
+
+# Model klasifikasi gatekeeper — dapat di-override via .env tanpa ubah kode.
+# Default memakai model :free OpenRouter (rate limit ketat: 8 rpm + kuota harian).
+# Untuk produksi, set ke model berbayar/ber-key, mis. "qwen/qwen3-next-80b-a3b-instruct".
+GATEKEEPER_TEXT_MODEL = os.getenv("GATEKEEPER_TEXT_MODEL", "qwen/qwen3-next-80b-a3b-instruct:free")
+GATEKEEPER_VISUAL_MODEL = os.getenv("GATEKEEPER_VISUAL_MODEL", "google/gemma-4-31b-it:free")
+
+
+def _parse_retry_after(exc: Exception) -> float | None:
+    """Ekstrak waktu tunggu (detik) dari error 429 OpenRouter bila tersedia.
+
+    Mengecek berurutan: metadata.retry_after_seconds, header Retry-After, lalu
+    X-RateLimit-Reset (epoch ms). Reset yang terlalu jauh (>120s, mis. kuota
+    harian) diabaikan agar tidak tidur berjam-jam.
+    """
+    try:
+        body = getattr(exc, "body", None) or {}
+        if not isinstance(body, dict):
+            return None
+        meta = body.get("error", {}).get("metadata", {}) or {}
+        secs = meta.get("retry_after_seconds")
+        if secs is not None:
+            return float(secs) + 1
+        headers = meta.get("headers", {}) or {}
+        ra = headers.get("Retry-After")
+        if ra is not None:
+            return float(ra) + 1
+        reset = headers.get("X-RateLimit-Reset")
+        if reset is not None:
+            import time as _t
+            delta = float(reset) / 1000.0 - _t.time()
+            if 0 < delta <= 120:
+                return delta + 1
+    except Exception:
+        pass
+    return None
+
+
+def _is_daily_quota_error(exc: Exception) -> bool:
+    """True bila 429 berasal dari kuota harian model :free (tidak bisa di-retry)."""
+    msg = str(getattr(exc, "message", "") or exc).lower()
+    return "per-day" in msg or "per day" in msg
 
 
 def extract_json_from_llm(raw_text: str | None) -> dict:
@@ -225,13 +268,13 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
             1. Ganti nilai 0.0 pada "confidence_score" dengan ANGKA FLOAT desimal antara 0.00 hingga 1.00. JANGAN gunakan string.
             """
 
-            max_retries = 3
-            base_delay = 2.0
+            max_retries = 4
+            base_delay = 5.0
 
             for attempt in range(max_retries):
                 try:
                     response = await or_client.chat.completions.create(
-                        model="qwen/qwen3-next-80b-a3b-instruct:free",
+                        model=GATEKEEPER_TEXT_MODEL,
                         messages=[{"role": "user", "content": prompt}],  # type: ignore
                         temperature=0.0
                     )
@@ -245,48 +288,27 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                         "reason": parsed.get("reason", "Fallback LLM reason.")
                     }
                 except RateLimitError as e:
-                    wait_time = base_delay * (2 ** attempt)
+                    if _is_daily_quota_error(e):
+                        print("[gatekeeper] tim1(text) kuota harian model :free habis — stop retry.")
+                        break
+                    # Hormati Retry-After dari server; fallback ke exponential backoff.
+                    wait_time = _parse_retry_after(e) or (base_delay * (2 ** attempt))
+                    wait_time = min(wait_time, 60.0)
                     print(f"[gatekeeper] tim1(text) rate limited: {e.message}")
-                    print(f"[gatekeeper] retry {attempt+1}/{max_retries} in {wait_time}s")
-                    await asyncio.sleep(wait_time)
+                    print(f"[gatekeeper] retry {attempt+1}/{max_retries} in {wait_time:.1f}s")
+                    if attempt < max_retries - 1:
+                        await asyncio.sleep(wait_time)
                 except APIError as e:
                     print(f"[gatekeeper] tim1(text) OpenRouter API error: {e.message}")
                     break
 
             return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "Rate Limit / API Error Maksimal"}
 
-        # TIM 3 — Analisis Visual (dengan retry, rate limit handling, dan video keyframe extraction)
+        # TIM 3 — Analisis Visual via endpoint model visual Tim 3 (pad3_model).
+        # Gambar/video di-resolve dulu (keyframe video, base64 MinIO) lalu ditembak
+        # ke visual_client.classify_visual (lihat app/services/visual_client.py).
         async def call_llm_tim3_api(url: str, content_type: str, context_text: str = "", img_urls: list[str] | None = None) -> dict:
-            prompt = f"""
-            Anda adalah Mesin Inferensi Visual untuk Sistem Klasifikasi Konten Digital.
-            Tugas Anda adalah MENGANALISA GAMBAR-GAMBAR YANG DILAMPIRKAN (jika ada). Jika gambar tidak ada, gunakan URL dan Teks Konteks.
-
-            URL INPUT: "{url}"
-            TIPE KONTEN: "{content_type}"
-            TEKS/KONTEKS SEKITAR: "{context_text}"
-
-            ATURAN KETAT (ANTI-HALUSINASI):
-            DILARANG KERAS membuat asumsi liar terhadap suatu platform (misal: "TikTok sering berisi video pertarungan").
-            Jika gambar fisik tidak dilampirkan dan teks konteks tidak memuat deskripsi spesifik tentang kekerasan/pelanggaran,
-            Anda WAJIB memilih kategori SAFE. Berikan vonis HANYA berdasarkan bukti teks/gambar yang ada secara harfiah.
-
-            PILIHAN KATEGORI VISUAL:
-            Human_Interaction, Medicine, Sport, Education, Miliitary, Animation, Medical, Toy, Tactical_Miliitary, Action, Violent_Sport, Complex_Interactions, Suggestive, Invasive_Medical, Weapon, Violence, Addictive_Substances, Pornography, Terrorism, SelfHarm, Sadistic_Violence, Drug
-            
-            RATING USIA (Wajib disesuaikan dengan Kategori Visual):
-            SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
-
-            OUTPUT WAJIB JSON MURNI TANPA MARKDOWN:
-            {{
-                "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
-                "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
-                "confidence_score": 0.0,
-                "reason": "Alasan deduksi visual Anda dari konteks/gambar yang ada"
-            }}
-            """
-
-            import typing
-            content_array: list[dict[str, typing.Any]] = [{"type": "text", "text": prompt}]
+            resolved_images: list[str] = []
 
             if img_urls:
                 for url_data in img_urls:
@@ -295,11 +317,7 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                     if is_video:
                         print(f"[gatekeeper] tim3(visual) video keyframe extraction: {url_data[:80]}")
                         keyframe_urls = await process_media_url(url_data)
-                        for frame_url in keyframe_urls:
-                            content_array.append({
-                                "type": "image_url",
-                                "image_url": {"url": frame_url}
-                            })
+                        resolved_images.extend(keyframe_urls)
                         print(f"[gatekeeper] tim3(visual) added {len(keyframe_urls)} keyframe(s) to payload")
                     else:
                         final_url = url_data
@@ -308,45 +326,10 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
                             b64_res = await get_file_base64(url_data)
                             if b64_res.get("status") == "success":
                                 final_url = b64_res["data_uri"]
+                        resolved_images.append(final_url)
 
-                        content_array.append({
-                            "type": "image_url",
-                            "image_url": {"url": final_url}
-                        })
-
-            total_images = len(content_array) - 1
-            print(f"[gatekeeper] tim3(visual) payload images={total_images}")
-
-            max_retries = 3
-            base_delay = 2.0
-
-            for attempt in range(max_retries):
-                try:
-                    messages_payload: typing.Any = [{"role": "user", "content": content_array}]
-                    response = await or_client.chat.completions.create(
-                        model="google/gemma-4-31b-it:free",
-                        messages=messages_payload,  # type: ignore
-                        temperature=0.0
-                    )
-                    raw_out = response.choices[0].message.content
-                    parsed = extract_json_from_llm(raw_out)
-
-                    return {
-                        "kategori": parsed.get("kategori", "SAFE"),
-                        "predicted_rating": parsed.get("predicted_rating", "SU"),
-                        "confidence_score": float(parsed.get("confidence_score", 0.0)),
-                        "reason": parsed.get("reason", "Fallback LLM reason.")
-                    }
-                except RateLimitError as e:
-                    wait_time = base_delay * (2 ** attempt)
-                    print(f"[gatekeeper] tim3(visual) rate limited: {e.message}")
-                    print(f"[gatekeeper] retry {attempt+1}/{max_retries} in {wait_time}s")
-                    await asyncio.sleep(wait_time)
-                except APIError as e:
-                    print(f"[gatekeeper] tim3(visual) OpenRouter API error: {e.message}")
-                    break
-
-            return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "Rate Limit / API Error Maksimal"}
+            print(f"[gatekeeper] tim3(visual) payload images={len(resolved_images)}")
+            return await classify_visual(context_text, resolved_images, content_type=content_type)
 
         for item in state["raw_contents"]:
             text_payload = item.get("content", "")

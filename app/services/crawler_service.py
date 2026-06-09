@@ -176,6 +176,45 @@ async def _crawl_one_platform(
         return []
 
 
+async def _crawl_instagram_with_fallback(
+    keyword: str,
+    limit: int,
+    ig_max_scroll: int,
+    progress=None,
+) -> list[dict]:
+    """Instagram: coba Playwright (scripts.crawler.instagram) dulu; bila 0 item,
+    fallback ke Apify (scripts.crawler.instagram_apify, pakai APIFY_API_TOKEN).
+
+    IG anti-bot sering membuat Playwright pulang dengan 0 link; Apify hashtag
+    scraper jauh lebih stabil sebagai cadangan. Satu stage UI "instagram" dipakai
+    untuk seluruh upaya (primary + fallback).
+    """
+    if progress:
+        progress.start_platform("instagram")
+    try:
+        data = await _run_sosmed_subprocess(
+            "scripts.crawler.instagram", keyword, limit,
+            ["--max_scroll", str(ig_max_scroll)],
+        )
+        if not data:
+            print("[content_crawler] instagram (Playwright) 0 item -> fallback ke Apify")
+            data = await _run_sosmed_subprocess(
+                "scripts.crawler.instagram_apify", keyword, limit,
+                ["--max_scroll", str(ig_max_scroll)],
+            )
+            if data:
+                print(f"[content_crawler] instagram Apify fallback OK items={len(data)}")
+            else:
+                print("[content_crawler] instagram Apify fallback juga 0 item")
+        if progress:
+            progress.complete_platform("instagram")
+        return data
+    except Exception as exc:
+        if progress:
+            progress.fail_platform("instagram", exc)
+        return []
+
+
 async def run_content_crawlers(
     keyword: str,
     limit: int = 5,
@@ -192,16 +231,14 @@ async def run_content_crawlers(
     )
 
     # Pembagian engine (sesuai kebutuhan operasional):
-    #   - Instagram & Twitter/X  -> Playwright (scripts.crawler.instagram / twitter)
-    #   - TikTok                 -> Apify      (scripts.crawler.tiktok)
+    #   - Instagram   -> Playwright, fallback Apify (instagram_apify) bila 0 item
+    #   - Twitter/X   -> Playwright (scripts.crawler.twitter)
+    #   - TikTok      -> Apify      (scripts.crawler.tiktok)
     # instagram.py butuh --max_scroll (jumlah scroll kosong sebelum menyerah);
     # diturunkan dari target post agar cukup menjangkau target.
     ig_max_scroll = max(5, ig_limit * 2)
 
-    ig_task = _crawl_one_platform(
-        "instagram", "scripts.crawler.instagram", keyword, ig_limit, progress,
-        extra_args=["--max_scroll", str(ig_max_scroll)],
-    )
+    ig_task = _crawl_instagram_with_fallback(keyword, ig_limit, ig_max_scroll, progress)
     tiktok_task = _crawl_one_platform(
         "tiktok", "scripts.crawler.tiktok", keyword, tiktok_limit, progress
     )

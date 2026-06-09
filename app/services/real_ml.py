@@ -159,60 +159,9 @@ async def call_llm_tim3(
     text: str = "",
     img_urls: list | None = None,
 ) -> dict:
-    if not OPENROUTER_API_KEY:
-        print("[!] OPENROUTER_API_KEY tidak dikonfigurasi — Tim3 menggunakan dummy.")
-        from app.services.dummy_ml import call_dummy_tim3
-        return await call_dummy_tim3(url, content_type, text, img_urls)
+    # Tim 3 (Visual) selalu ditembak ke endpoint model visual Tim 3 (pad3_model),
+    # tidak lagi ke OpenRouter. img_urls untuk upload sudah berupa data-URI base64.
+    from app.services.visual_client import classify_visual
 
-    client = _get_or_client()
-    text_prompt = (
-        f"URL: {url}\nTipe Konten: {content_type}\n"
-        f"Keterangan Teks: {text[:2000] if text else '(tidak ada)'}"
-    )
-
-    # Build message content — vision model jika ada gambar
-    if img_urls:
-        user_content = []
-        for img_url in img_urls[:2]:
-            user_content.append({"type": "image_url", "image_url": {"url": img_url}})
-        user_content.append({"type": "text", "text": text_prompt})
-        model_to_use = MODEL_TIM3
-    else:
-        user_content = text_prompt
-        model_to_use = MODEL_TIM1  # Text-only fallback untuk Tim3 tanpa gambar
-
-    for attempt in range(3):
-        try:
-            resp = await client.chat.completions.create(
-                model=model_to_use,
-                messages=[
-                    {"role": "system", "content": SYSTEM_TIM3},
-                    {"role": "user", "content": user_content},
-                ],
-                temperature=0.1,
-                max_tokens=300,
-            )
-            raw = resp.choices[0].message.content or ""
-            result = _extract_json_from_response(raw)
-            if result:
-                return _sanitize_result(result, VALID_CATEGORIES_VISUAL, raw)
-
-        except RateLimitError as e:
-            wait = _parse_retry_after(e) or (35 * (attempt + 1))
-            print(f"[!] Tim3 RateLimit (attempt {attempt + 1}/3) — retry in {wait}s")
-            if attempt < 2:
-                await asyncio.sleep(wait)
-        except APIError as e:
-            print(f"[!] Tim3 APIError (attempt {attempt + 1}/3): {e}")
-            if attempt < 2:
-                await asyncio.sleep(2 ** attempt)
-        except Exception as e:
-            print(f"[!] Tim3 unexpected error: {e}")
-            break
-
-    return {
-        "kategori": "SAFE",
-        "predicted_rating": "SU",
-        "confidence_score": 0.3,
-        "reason": "LLM Tim3 gagal merespons setelah 3 percobaan.",
-    }
+    context = f"{text} {url}".strip()
+    return await classify_visual(context, img_urls, content_type=content_type)
