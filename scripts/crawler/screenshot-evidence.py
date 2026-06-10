@@ -252,46 +252,71 @@ def take_screenshots(urls: list[str], output_dir: Path) -> list[dict]:
                         except Exception as e:
                             logger.warning(
                                 "Gagal memanipulasi UI Instagram: %s", e)
-
+                    
                     elif "tiktok.com" in url:
-                        page.wait_for_load_state("domcontentloaded")
+                        # Tunggu hingga aktivitas jaringan mereda agar pop-up dinamis sempat dimuat
                         try:
-                            # Skenario A: Mencoba klik tombol "Got it" pada onboarding overlay
-                            # Gunakan regex untuk antisipasi perbedaan case huruf
-                            page.locator("button:has-text('Got it')").click(timeout=5000)
+                            page.wait_for_load_state("networkidle", timeout=15000)
                         except Exception:
+                            # Jika networkidle timeout (karena video terus streaming), lanjutkan eksekusi
                             pass
+                        
+                        # Jalankan pembersihan dalam loop untuk menangani pop-up yang lazy-loaded
+                        for _ in range(3):
+                            try:
+                                # Skenario A: Coba klik tombol penutup umum
+                                close_selectors = [
+                                    "button:has-text('Got it')",
+                                    "button:has-text('Not now')",
+                                    "button:has-text('Continue as guest')",
+                                    "div[data-e2e='modal-close-inner-button']",
+                                    "div[aria-label='Close']"
+                                ]
+                                for sel in close_selectors:
+                                    # Gunakan query_selector alih-alih locator click untuk menghindari exception jika terhalang
+                                    el = page.query_selector(sel)
+                                    if el and el.is_visible():
+                                        el.click()
+                            except Exception:
+                                pass
 
-                        # Skenario B: Fallback hapus elemen DOM overlay secara paksa
-                        page.evaluate("""
-                            () => {
-                                // Hapus modal onboarding, login pop-up, dan banner bawah aplikasi
-                                const selectors = [
-                                    'div[data-e2e="modal-container"]',
-                                    'div[id*="login-modal"]',
-                                    'div[class*="login-modal"]',
-                                    'div[data-e2e="bottom-banner-container"]'
-                                ];
-                                
-                                document.querySelectorAll(selectors.join(', ')).forEach(el => {
-                                    el.style.setProperty('display', 'none', 'important');
-                                });
+                            # Skenario B: Penghapusan DOM secara paksa berbasis struktur dan hierarki visual
+                            page.evaluate("""
+                                () => {
+                                    // 1. Hapus elemen berdasarkan role WAI-ARIA standar untuk modal
+                                    document.querySelectorAll('[role="dialog"], [aria-modal="true"]').forEach(el => {
+                                        el.style.setProperty('display', 'none', 'important');
+                                    });
 
-                                // Hapus overlay transparan yang memblokir interaksi
-                                document.querySelectorAll('div').forEach(el => {
-                                    const style = window.getComputedStyle(el);
-                                    if (style.position === 'fixed' || style.position === 'absolute') {
-                                        if (el.innerText.includes('Scroll, use the') || el.innerText.includes('Log in')) {
+                                    // 2. Hapus container spesifik TikTok
+                                    const specificSelectors = [
+                                        'div[data-e2e="bottom-banner-container"]',
+                                        'tiktok-cookie-banner',
+                                        '#login-modal'
+                                    ];
+                                    document.querySelectorAll(specificSelectors.join(', ')).forEach(el => {
+                                        el.style.setProperty('display', 'none', 'important');
+                                    });
+
+                                    // 3. Sapu bersih overlay gelap: elemen fixed/absolute dengan z-index di atas standar konten
+                                    document.querySelectorAll('div').forEach(el => {
+                                        const style = window.getComputedStyle(el);
+                                        const zIndex = parseInt(style.zIndex) || 0;
+                                        
+                                        // Pop-up dan backdrop biasanya menggunakan fixed position dan z-index tinggi
+                                        if ((style.position === 'fixed' || style.position === 'absolute') && zIndex > 50) {
                                             el.style.setProperty('display', 'none', 'important');
                                         }
-                                    }
-                                });
-                                
-                                // Pulihkan scroll jika terkunci oleh modal
-                                document.body.style.setProperty('overflow', 'auto', 'important');
-                            }
-                        """)
-                        page.wait_for_timeout(3000)
+                                    });
+
+                                    // Pulihkan properti scroll yang sering kali dikunci saat pop-up aktif
+                                    document.body.style.setProperty('overflow', 'auto', 'important');
+                                    document.documentElement.style.setProperty('overflow', 'auto', 'important');
+                                }
+                            """)
+                            # Jeda sebelum iterasi berikutnya untuk memberi waktu pop-up lain jika ada yang bereaksi
+                            page.wait_for_timeout(1500)
+                    
                     else:
                         page.wait_for_timeout(5000)
 
@@ -301,7 +326,7 @@ def take_screenshots(urls: list[str], output_dir: Path) -> list[dict]:
                     filename = f"{uuid.uuid4()}_{unique_name}.png"
                     local_path = output_dir / filename
 
-                    page.screenshot(path=str(local_path), full_page=True)
+                    page.screenshot(path=str(local_path), clip={"x": 0, "y": 0, "width": 1280, "height": 720})
                     logger.info("Berhasil disimpan: %s", filename)
 
                     results.append({
