@@ -323,9 +323,8 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
     )
 
     if not csv_path.exists():
-        raise RuntimeError(
-            f"tweet-harvest selesai tapi CSV tidak ditemukan: {csv_path}"
-        )
+        logger.warning(f"File CSV tidak ditemukan di: {csv_path}. tweet-harvest mungkin tidak menemukan hasil apa pun.")
+        return []
     logger.info("tweet-harvest selesai. CSV: %s", csv_path)
 
     # ---- Tahap 3: Baca CSV + Ekstrak Multi-Media via vxtwitter ----
