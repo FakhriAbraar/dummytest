@@ -15,3 +15,6 @@ twitter_session_5.json
 .twitter_session_*.lock
 .twitter_rr_counter
 .twitter_rr.lock
+
+# sessions browser persistent context
+sessions/
