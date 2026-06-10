@@ -73,7 +73,7 @@ IG_USER = os.getenv("IG_USER")
 IG_PASS = os.getenv("IG_PASS")
 
 BASE_DIR         = Path(__file__).resolve().parent
-SESSION_FILE     = BASE_DIR / "ig_session.json"   # Persistent antar run
+SESSION_DIR      = BASE_DIR / "sessions" / "instagram"   # Persistent antar run
 COLLECTION_NAME  = "social_media_posts"
 # Default headless=True (WAJIB di server/container tanpa X server). Untuk debug
 # lokal (mis. login manual IG), set env CRAWLER_HEADLESS=false agar browser headed.
@@ -177,22 +177,22 @@ def scrape_instagram() -> dict[str, list[str]]:
     """
     hasil_final: dict[str, list[str]] = {}
     playwright_instance = None
-    browser = None
+    context = None
 
     try:
         logger.info("Memulai Playwright...")
         playwright_instance = sync_playwright().start()
 
-        logger.info("Membuka browser Chromium (headless=%s)...", HEADLESS_FLAG)
-        browser = playwright_instance.chromium.launch(headless=HEADLESS_FLAG)
+        logger.info("Membuka browser Chromium (headless=%s) dengan persistent context...", HEADLESS_FLAG)
+        # Pastikan folder session otomatis terbuat jika belum ada
+        SESSION_DIR.mkdir(parents=True, exist_ok=True)
+        
+        context = playwright_instance.chromium.launch_persistent_context(
+            user_data_dir=str(SESSION_DIR),
+            headless=HEADLESS_FLAG
+        )
 
-        if SESSION_FILE.exists():
-            logger.info("Memuat sesi login dari: %s", SESSION_FILE)
-            context = browser.new_context(storage_state=str(SESSION_FILE))
-        else:
-            context = browser.new_context()
-
-        page = context.new_page()
+        page = context.pages[0] if context.pages else context.new_page()
         page.goto("https://www.instagram.com/")
         time.sleep(4)
         is_logged_in = False
@@ -200,8 +200,7 @@ def scrape_instagram() -> dict[str, list[str]]:
         if page.query_selector('input[name="email"]'):
             is_logged_in = do_login(page)
             if is_logged_in:
-                context.storage_state(path=str(SESSION_FILE))
-                logger.info("Sesi baru disimpan ke: %s", SESSION_FILE)
+                logger.info("Sesi baru disimpan otomatis ke: %s", SESSION_DIR)
         else:
             if page.query_selector('svg[aria-label="Home"]') or page.query_selector('svg[aria-label="Beranda"]'):
                 logger.info("Berhasil masuk menggunakan sesi tersimpan.")
@@ -211,8 +210,7 @@ def scrape_instagram() -> dict[str, list[str]]:
                 logger.warning("Sesi tidak valid. Mencoba login ulang...")
                 is_logged_in = do_login(page)
                 if is_logged_in:
-                    context.storage_state(path=str(SESSION_FILE))
-                    logger.info("Sesi diperbarui di: %s", SESSION_FILE)
+                    logger.info("Sesi diperbarui secara otomatis di: %s", SESSION_DIR)
 
         if not is_logged_in:
             raise RuntimeError("Gagal memverifikasi login Instagram.")
@@ -269,9 +267,9 @@ def scrape_instagram() -> dict[str, list[str]]:
         return hasil_final
 
     finally:
-        if browser:
-            browser.close()
-            logger.info("Browser Chromium ditutup.")
+        if context:
+            context.close()
+            logger.info("Context Chromium ditutup.")
         if playwright_instance:
             playwright_instance.stop()
             logger.info("Playwright instance dihentikan.")

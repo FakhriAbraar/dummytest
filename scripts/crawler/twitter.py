@@ -73,7 +73,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 # ---- Session Pool ----
 POOL_SIZE     = 5
-SESSION_FILES = [BASE_DIR / f"twitter_session_{i}.json" for i in range(1, POOL_SIZE + 1)]
+SESSION_DIRS  = [BASE_DIR / "sessions" / "twitter" / f"twitter_session_{i}" for i in range(1, POOL_SIZE + 1)]
 LOCK_FILES    = [BASE_DIR / f".twitter_session_{i}.lock" for i in range(1, POOL_SIZE + 1)]
 RR_STATE_FILE = BASE_DIR / ".twitter_rr_counter"
 RR_LOCK_FILE  = BASE_DIR / ".twitter_rr.lock"
@@ -207,7 +207,7 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
     # ---- Tahap 1: Playwright → round-robin session pool → ekstrak auth_token ----
     for offset in range(POOL_SIZE):
         slot_idx     = (start_idx + offset) % POOL_SIZE
-        session_file = SESSION_FILES[slot_idx]
+        session_dir  = SESSION_DIRS[slot_idx]
         lock         = FileLock(str(LOCK_FILES[slot_idx]), timeout=0)
 
         # Coba kunci slot (non-blocking). Jika gagal → slot sibuk, geser ke berikutnya.
@@ -219,29 +219,28 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
             continue
 
         playwright_instance = None
-        browser             = None
+        context             = None
 
         try:
-            # File session tidak ada → skip slot ini
-            if not session_file.exists():
+            # Folder session tidak ada → skip slot ini
+            if not session_dir.exists():
                 logger.warning(
-                    "[Pool] Slot %d: file session '%s' tidak ditemukan, skip.",
-                    slot_idx + 1, session_file.name
+                    "[Pool] Slot %d: folder session '%s' tidak ditemukan, skip.",
+                    slot_idx + 1, session_dir.name
                 )
                 continue  # finally: cleanup + release lock, lanjut iterasi berikutnya
 
             logger.info("[Pool] Memulai Playwright untuk slot %d ...", slot_idx + 1)
             playwright_instance = sync_playwright().start()
-            browser = playwright_instance.chromium.launch(
+            
+            context = playwright_instance.chromium.launch_persistent_context(
+                user_data_dir=str(session_dir),
                 headless=HEADLESS_FLAG,
+                user_agent=USER_AGENT,
                 args=["--disable-blink-features=AutomationControlled"],
             )
 
-            context = browser.new_context(
-                storage_state=str(session_file),
-                user_agent=USER_AGENT,
-            )
-            page = context.new_page()
+            page = context.pages[0] if context.pages else context.new_page()
             page.add_init_script(
                 "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
             )
@@ -278,9 +277,9 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
         finally:
             # Selalu dijalankan: sebelum continue, break, maupun exception tak terduga.
             # Lock dilepas di sini — sebelum tweet-harvest — agar slot tidak terblokir lama.
-            if browser:
-                browser.close()
-                logger.info("[Pool] Browser Chromium ditutup (slot %d).", slot_idx + 1)
+            if context:
+                context.close()
+                logger.info("[Pool] Context Chromium ditutup (slot %d).", slot_idx + 1)
             if playwright_instance:
                 playwright_instance.stop()
                 logger.info("[Pool] Playwright instance dihentikan (slot %d).", slot_idx + 1)
@@ -298,7 +297,7 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
         raise RuntimeError(
             f"Tidak ada session pool yang valid atau tersedia "
             f"({POOL_SIZE} slot dicoba). "
-            "Periksa file twitter_session_1..5.json dan refresh session yang expired."
+            "Periksa folder sessions/twitter/twitter_session_* dan silakan jalankan tw_login_manual.py untuk login manual."
         )
 
     # ---- Tahap 2: tweet-harvest → CSV ----
