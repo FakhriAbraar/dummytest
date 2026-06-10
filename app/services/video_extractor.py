@@ -20,7 +20,7 @@ from minio.error import S3Error
 from scenedetect import ContentDetector, detect
 
 VIDEO_EXTENSIONS = (".mp4", ".webm", ".mov", ".mkv", ".avi")
-MAX_KEYFRAMES = 5  
+MAX_KEYFRAMES = 10  
 KEYFRAME_EXPIRE_SECONDS = 3600  
 
 

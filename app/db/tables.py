@@ -157,6 +157,8 @@ class Content(Base):
     raw_metadata: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     engine_status: Mapped[str | None] = mapped_column(String(20))
     final_rating: Mapped[str | None] = mapped_column(String(10))
+    reviewed_by: Mapped[str | None] = mapped_column(String(255))
+    reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     account: Mapped[Account] = relationship("Account", back_populates="contents")
     classifications: Mapped[list[Classification]] = relationship(

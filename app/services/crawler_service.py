@@ -55,27 +55,38 @@ async def _run_trend_subprocess(script_module: str, *extra_args) -> list[str]:
     return await asyncio.to_thread(_run_trend_subprocess_sync, script_module, *extra_args)
 
 
-async def run_trend_crawlers() -> list:
+async def run_trend_crawlers() -> tuple[list[str], list[str]]:
     print("\n[trend_crawler] START sources=[trends24, google_trends]")
 
     t24_task = _run_trend_subprocess("scripts.crawler.trends24", "--region", "indonesia")
     gtrends_task = _run_trend_subprocess("scripts.crawler.google_trends")
 
     results = await asyncio.gather(t24_task, gtrends_task)
-    combined_trends = results[0] + results[1]
+    
+    # Clean and deduplicate while keeping order within each source
+    def clean_list(raw_list):
+        seen = set()
+        cleaned = []
+        for t in raw_list:
+            t_clean = t.lower().strip()
+            if t_clean and t_clean not in seen:
+                seen.add(t_clean)
+                cleaned.append(t_clean)
+        return cleaned
 
-    cleaned_trends = list({t.lower().strip() for t in combined_trends if t.strip()})
-    print(f"[trend_crawler] unique topics={len(cleaned_trends)}\n")
+    t24_cleaned = clean_list(results[0])
+    gtrends_cleaned = clean_list(results[1])
+    
+    print(f"[trend_crawler] unique topics: trends24={len(t24_cleaned)}, gtrends={len(gtrends_cleaned)}\n")
 
-    if not cleaned_trends:
-        # Tidak ada fallback dummy: biarkan kosong dan log dengan jelas agar
-        # kegagalan trend crawler terlihat (bukan disamarkan dengan data palsu).
+    if not t24_cleaned and not gtrends_cleaned:
+        # Tidak ada fallback dummy: biarkan kosong dan log dengan jelas
         print(
             "[trend_crawler] ERROR: 0 topics returned from all sources "
             "(see subprocess stderr above)"
         )
 
-    return cleaned_trends
+    return t24_cleaned, gtrends_cleaned
 
 
 def _run_sosmed_subprocess_sync(script_module: str, keyword: str, limit: int, extra_args: list | None = None) -> list[dict]:

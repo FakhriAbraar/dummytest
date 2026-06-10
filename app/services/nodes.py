@@ -163,9 +163,15 @@ async def trend_crawler_node(state: PADState, progress=None):
         if state.get("seed_trend", "").strip():
             trending = [state["seed_trend"]]
         else:
-            trending_data = await run_trend_crawlers()
+            t24_data, gtrends_data = await run_trend_crawlers()
             start_idx = retry_count * keyword_count
-            trending = trending_data[start_idx : start_idx + keyword_count]
+            end_idx = start_idx + keyword_count
+            
+            # Ambil masing-masing top N (keyword_count) dari Trends24 dan Google Trends
+            trending = (
+                t24_data[start_idx : end_idx] + 
+                gtrends_data[start_idx : end_idx]
+            )
         if progress:
             progress.complete_stage("Fetching Trending Keywords")
     except Exception as exc:
@@ -283,7 +289,7 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
 
             if media_urls:
                 print(f"[gatekeeper] selecting {len(media_urls)} media file(s) for tim3(visual)")
-                for u in media_urls[:5]:
+                for u in media_urls[:10]:
                     media_payloads.append(u)
 
                 if not media_payloads and fallback_thumb:

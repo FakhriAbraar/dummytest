@@ -134,6 +134,8 @@ def _content_base_select():
             Content.crawl_timestamp,
             Content.raw_metadata,
             EngineDecision.final_kategori,
+            Content.reviewed_by,
+            Content.reviewed_at,
         )
         .join(Account, Content.account_id == Account.account_id)
         .join(Platform, Account.platform_id == Platform.platform_id)
@@ -144,7 +146,7 @@ def _content_base_select():
 async def _row_to_item(row) -> dict:
     """Map a content row (see `_content_base_select`) into the ContentItem shape
     the frontend expects, resolving a presigned screenshot URL when available."""
-    (cid, plat, username, desc, eng_status, rating, src_url, crawled_at, raw_meta, kategori) = row
+    (cid, plat, username, desc, eng_status, rating, src_url, crawled_at, raw_meta, kategori, reviewed_by, reviewed_at) = row
     meta = raw_meta or {}
 
     # Prefer real screenshot (MinIO) over CDN thumbnail.
@@ -172,6 +174,8 @@ async def _row_to_item(row) -> dict:
         "reasonAi": meta.get("reason", ""),
         "classifications": meta.get("classifications_json", None),
         "createdAt": crawled_at.isoformat() if crawled_at else "",
+        "reviewedBy": reviewed_by or "",
+        "reviewedAt": reviewed_at.isoformat() if reviewed_at else "",
     }
 
 
@@ -184,6 +188,7 @@ async def get_content_list(
     mission_id: str = "",
     date_from: str = "",
     date_to: str = "",
+    reviewed: str = "",
     page: int = 1,
     per_page: int = 12,
     session: AsyncSession = Depends(get_db_session),
@@ -205,6 +210,10 @@ async def get_content_list(
         stmt = stmt.where(Content.engine_status.in_(["VIOLATION", "NEEDS_REVIEW"]))
     if age_group:
         stmt = stmt.where(Content.final_rating == age_group)
+    if reviewed == "yes":
+        stmt = stmt.where(Content.reviewed_by.isnot(None))
+    elif reviewed == "no":
+        stmt = stmt.where(Content.reviewed_by.is_(None))
     if date_from:
         try:
             stmt = stmt.where(Content.crawl_timestamp >= datetime.fromisoformat(date_from.replace("Z", "+00:00")))
@@ -275,6 +284,54 @@ async def update_content_classification(
         decision.final_kategori = payload.category
         decision.final_rating = payload.age_group
 
+    await session.commit()
+    return {"status": "ok", "content_id": content_id}
+
+
+class ReviewContentRequest(BaseModel):
+    reviewed_by: str
+
+
+@router.patch("/content/{content_id}/review")
+async def review_content(
+    content_id: int,
+    payload: ReviewContentRequest,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Mark a content item as reviewed by an admin."""
+    from datetime import datetime, timezone as tz
+
+    content = (await session.execute(
+        select(Content).where(Content.content_id == content_id)
+    )).scalars().first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    content.reviewed_by = payload.reviewed_by
+    content.reviewed_at = datetime.now(tz.utc)
+    await session.commit()
+    return {
+        "status": "ok",
+        "content_id": content_id,
+        "reviewed_by": content.reviewed_by,
+        "reviewed_at": content.reviewed_at.isoformat(),
+    }
+
+
+@router.delete("/content/{content_id}/review")
+async def unreview_content(
+    content_id: int,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Remove the reviewed flag from a content item."""
+    content = (await session.execute(
+        select(Content).where(Content.content_id == content_id)
+    )).scalars().first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    content.reviewed_by = None
+    content.reviewed_at = None
     await session.commit()
     return {"status": "ok", "content_id": content_id}
 
