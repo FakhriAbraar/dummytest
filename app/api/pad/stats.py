@@ -88,12 +88,33 @@ async def get_dashboard_stats(
     )).all()
     top_keywords = [{"keyword": kw, "count": cnt} for kw, cnt in kw_rows]
 
+    keyword_stats = {}
+    for norm_source, raw_source in [("Google Trend", "google_trend"), ("Trends24", "trends24")]:
+        total_kws = (await session.execute(
+            select(func.count(func.distinct(TrendingKeyword.keyword)))
+            .where(TrendingKeyword.source == raw_source)
+        )).scalar() or 0
+        
+        top_kws = (await session.execute(
+            select(TrendingKeyword.keyword, func.count().label("cnt"))
+            .where(TrendingKeyword.source == raw_source)
+            .group_by(TrendingKeyword.keyword)
+            .order_by(func.count().desc())
+            .limit(5)
+        )).all()
+        
+        keyword_stats[norm_source] = {
+            "total": total_kws,
+            "top": [{"keyword": kw, "count": cnt} for kw, cnt in top_kws]
+        }
+
     return {
         "total_content": total,
         "safe_content": safe,
         "unsafe_content": unsafe,
         "platforms": platforms,
         "top_keywords": top_keywords,
+        "keyword_stats": keyword_stats,
         "pipeline_status": {},
     }
 
@@ -149,6 +170,7 @@ async def _row_to_item(row) -> dict:
         "keyword": meta.get("seed_trend", ""),
         "thumbnailUrl": thumbnail,
         "reasonAi": meta.get("reason", ""),
+        "classifications": meta.get("classifications_json", None),
         "createdAt": crawled_at.isoformat() if crawled_at else "",
     }
 

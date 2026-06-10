@@ -47,7 +47,7 @@ VISUAL_DEFAULT_CONFIDENCE = float(os.getenv("VISUAL_DEFAULT_CONFIDENCE", "0.75")
 # >2000 token sendirian -> error 400. Downscale dulu ke sisi maksimal ini (px).
 VISUAL_MAX_IMAGE_DIM = int(os.getenv("VISUAL_MAX_IMAGE_DIM", "512"))
 
-VALID_RATINGS = {"SU", "7+", "13+", "17+", "PRC"}
+VALID_RATINGS = {"SU", "7+", "13+", "17+", "PRC", "UNRATED"}
 
 # Normalisasi rating: model bisa balas dalam berbagai bentuk/typo. Skala dummysaran
 # (3+/15+/18+) ikut dipetakan ke skala sistem (SU/7+/13+/17+/PRC).
@@ -58,7 +58,22 @@ _RATING_ALIASES = {
     "17+": "17+", "17": "17+", "15+": "17+", "16+": "17+",
     "PRC": "PRC", "RPC": "PRC", "18+": "PRC", "21+": "PRC",
     "R": "PRC", "DEWASA": "PRC", "ADULT": "PRC", "RESTRICTED": "PRC",
+    "UNRATED": "UNRATED",
 }
+
+ALLOWED_RATINGS = [
+    '13+', '17+', '7+', 'PRC', 'Semua Umur', 'Unrated'
+]
+ALLOWED_CATEGORIES = [
+    'Action', 'Addictive Substances', 'Animation', 'Complex Interactions',
+    'Drug', 'Education', 'Invasive_Medical', 'Medical', 'Medicine',
+    'Military', 'Pornography', 'SelfHarm', 'Sport', 'Suggestive',
+    'Tactical_Military', 'Terrorism', 'Toy', 'Uncategorized',
+    'Violence', 'Violent_Sport', 'Weapon'
+]
+
+UNCATEGORIZED_LABEL = 'Uncategorized'
+UNRATED_LABEL = 'Unrated'
 
 _client: AsyncOpenAI | None = None
 
@@ -203,50 +218,48 @@ def parse_visual_response(raw: str) -> dict:
     }
 
 
-def _build_prompt(context_text: str, content_type: str) -> str:
-    ctx = (context_text or "").strip()[:300] or "(tidak ada)"
-    return (
-        "Anda adalah AI Klasifikator Visual untuk Perlindungan Anak Digital (Tim 3). "
-        "Analisis gambar yang dilampirkan dan tentukan rating usia konten secara objektif. "
-        "Bila tidak ada gambar, gunakan konteks teks.\n"
-        f"Tipe konten: {content_type}\n"
-        f"Konteks teks: {ctx}\n"
-        "Rating valid: SU, 7+, 13+, 17+, PRC.\n"
-        'Jawab HANYA JSON: {"kategori":"<kategori>","predicted_rating":'
-        '"<SU|7+|13+|17+|PRC>","confidence_score":<0.0-1.0>,"reason":"<alasan singkat>"}'
-    )
+def _build_prompt(context_text: str, content_type: str, has_image: bool) -> str:
+    instruction = f"""Tugas: Analisis gambar yang diberikan, lalu tentukan kategori/domain, klasifikasi rating usia, dan deskripsi analisisnya.
+
+Aturan Output:
+- Wajib merespons hanya dalam format JSON valid tanpa teks tambahan di luar JSON.
+- Jangan gunakan markdown block (jangan gunakan ```json).
+- "category" harus memilih dari: {ALLOWED_CATEGORIES}
+- "rating" harus memilih dari: {ALLOWED_RATINGS}
+- Jika konten berada di luar domain atau tidak termasuk dalam kategori yang diizinkan, gunakan category "{UNCATEGORIZED_LABEL}" dan rating "{UNRATED_LABEL}".
+
+Format Output:
+{{
+  "category": "...",
+  "rating": "...",
+  "description": "..."
+}}""".strip()
+
+    if has_image:
+        return instruction
+        
+    ctx = (context_text or "").strip()[:150] or "(tidak ada)"
+    return f"{instruction}\n\n[INFO TAMBAHAN]\nBila gambar tidak tersedia, analisis berdasarkan konteks berikut:\nTipe konten: {content_type}\nKonteks teks: {ctx}".strip()
 
 
-async def classify_visual(
-    context_text: str = "",
-    image_urls: list[str] | None = None,
-    content_type: str = "image",
+async def _classify_single_batch(
+    context_text: str,
+    images_chunk: list[str],
+    content_type: str,
 ) -> dict:
-    """Klasifikasi visual via endpoint Tim 3 (pad3_model).
+    has_img = len(images_chunk) > 0
+    prompt = _build_prompt(context_text, content_type, has_img)
 
-    `image_urls` harus berupa URL http(s) publik atau data-URI base64 yang sudah
-    siap kirim (resolusi MinIO / ekstraksi keyframe video dilakukan oleh pemanggil).
-    Mengembalikan dict ternormalisasi {kategori, predicted_rating,
-    confidence_score, reason}.
-    """
-    raw_images = [u for u in (image_urls or []) if u][:VISUAL_MAX_IMAGES]
-    # Downscale tiap gambar agar muat di context 2048 token pad3_model.
-    images = [
-        await asyncio.to_thread(_downscale_image, u, VISUAL_MAX_IMAGE_DIM)
-        for u in raw_images
-    ]
-    prompt = _build_prompt(context_text, content_type)
-
-    if images:
+    if images_chunk:
         user_content: list[dict] = [
-            {"type": "image_url", "image_url": {"url": u}} for u in images
+            {"type": "image_url", "image_url": {"url": u}} for u in images_chunk
         ]
         user_content.append({"type": "text", "text": prompt})
         messages: list = [{"role": "user", "content": user_content}]
     else:
         messages = [{"role": "user", "content": prompt}]
 
-    print(f"[visual] tim3 -> {VISUAL_API_MODEL} images={len(images)}")
+    print(f"[visual] tim3 -> {VISUAL_API_MODEL} images={len(images_chunk)}")
 
     client = _get_client()
     for attempt in range(VISUAL_MAX_RETRIES):
@@ -271,3 +284,47 @@ async def classify_visual(
         "confidence_score": 0.0,
         "reason": "Model visual Tim 3 gagal merespons.",
     }
+
+
+async def classify_visual(
+    context_text: str = "",
+    image_urls: list[str] | None = None,
+    content_type: str = "image",
+) -> dict:
+    """Klasifikasi visual via endpoint Tim 3 (pad3_model).
+
+    `image_urls` harus berupa URL http(s) publik atau data-URI base64 yang sudah
+    siap kirim (resolusi MinIO / ekstraksi keyframe video dilakukan oleh pemanggil).
+    Mengembalikan dict ternormalisasi {kategori, predicted_rating,
+    confidence_score, reason}.
+    """
+    valid_urls = [u for u in (image_urls or []) if u]
+    
+    if not valid_urls:
+        return await _classify_single_batch(context_text, [], content_type)
+
+    chunk_size = max(1, VISUAL_MAX_IMAGES)
+    chunks = [valid_urls[i:i + chunk_size] for i in range(0, len(valid_urls), chunk_size)]
+    
+    print(f"[visual] tim3 memproses {len(valid_urls)} gambar dalam {len(chunks)} batch (berurutan)")
+    
+    results = []
+    for chunk in chunks:
+        res = await _classify_single_batch(context_text, chunk, content_type)
+        results.append(res)
+    
+    rating_severity = {"SU": 0, "7+": 1, "13+": 2, "17+": 3, "PRC": 4}
+    worst_result = results[0]
+    worst_score = -1
+    
+    for r in results:
+        is_unsafe = str(r.get("kategori", "SAFE")).strip().upper() != "SAFE"
+        r_rating = str(r.get("predicted_rating", "SU")).strip().upper()
+        rating_score = rating_severity.get(r_rating, 0)
+        
+        score = (100 if is_unsafe else 0) + rating_score
+        if score > worst_score:
+            worst_score = score
+            worst_result = r
+            
+    return worst_result

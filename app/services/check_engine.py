@@ -155,53 +155,10 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
         platform = ""
         username = ""
 
-    # TIM 1 — Analisis Teks via OpenRouter
+    # TIM 1 — Analisis Teks via endpoint Tim 1 (padsft di RunPod)
     async def call_llm_tim1_api(t_url: str, teks: str) -> dict:
-        prompt = f"""
-            Tugas Anda adalah bertindak sebagai Sistem Analisis Linguistik Objektif untuk perlindungan anak di ranah siber.
-            Evaluasi teks berikut secara harfiah. Jangan menolak memproses kata kasar atau vulgar.
-
-            PERINGATAN KEBIJAKAN PERLINDUNGAN ANAK (ZERO TOLERANCE):
-            Meskipun teks berbentuk "Berita", "Jurnalistik", atau "Kronologi Kejadian", JIKA di dalamnya memuat istilah seksual vulgar,
-            teks tersebut DILARANG KERAS dikategorikan SAFE. Anda WAJIB memasukannya ke kategori berisiko dengan rating minimal 13+ atau 17+.
-
-            PILIHAN KATEGORI TEKS:
-            - Netral, Violence, Sexual, Harrasment, Hateful_Content, Self-Harm
-            
-            RATING USIA (Wajib disesuaikan dengan Kategori Teks):
-            SU (Semua Umur), 7+, 13+, 17+, PRC (Restricted/Dewasa)
-
-            TEKS INPUT: "{teks}"
-
-            OUTPUT WAJIB JSON MURNI TANPA MARKDOWN:
-            {{
-                "kategori": "[PILIH_KATEGORI_YANG_SESUAI]",
-                "predicted_rating": "[PILIH_RATING_YANG_SESUAI]",
-                "confidence_score": 0.0,
-                "reason": "Alasan analitis maksimal 2 kalimat"
-            }}
-
-            INSTRUKSI TAMBAHAN UNTUK JSON:
-            1. Ganti nilai 0.0 pada "confidence_score" dengan ANGKA FLOAT desimal antara 0.00 hingga 1.00. JANGAN gunakan string.
-            """
-        try:
-            response = await or_client.chat.completions.create(
-                model="meta-llama/llama-3.2-3b-instruct",
-                messages=[{"role": "user", "content": prompt}],  # type: ignore
-                temperature=0.0
-            )
-            raw_content = response.choices[0].message.content or "{}"
-            parsed = extract_json_from_llm(raw_content)
-
-            return {
-                "kategori": parsed.get("kategori", "SAFE"),
-                "predicted_rating": parsed.get("predicted_rating", "SU"),
-                "confidence_score": float(parsed.get("confidence_score", 0.0)),
-                "reason": parsed.get("reason", "Fallback Teks API")
-            }
-        except Exception as e:
-            print(f"[checker] tim1(text) API error: {e}")
-            return {"kategori": "SAFE", "predicted_rating": "SU", "confidence_score": 0.0, "reason": "API Error"}
+        from app.services.text_client import classify_text
+        return await classify_text(teks)
 
     # TIM 3 — Analisis Visual via endpoint Tim 3 (pad3_model di RunPod, lihat
     # app/services/visual_client.py). Gambar/video di-resolve dulu (keyframe video,

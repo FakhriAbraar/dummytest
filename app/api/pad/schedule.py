@@ -58,9 +58,9 @@ class ScheduleConfigIn(BaseModel):
     day_range_end: int = Field(default=28, ge=1, le=28)
 
     trends_keyword_count: int = Field(default=3, ge=1, le=1000)
-    max_content_x: int = Field(default=3, ge=1, le=1000)
-    max_content_instagram: int = Field(default=3, ge=1, le=1000)
-    max_content_tiktok: int = Field(default=3, ge=1, le=1000)
+    max_content_x: int = Field(default=3, ge=0, le=1000)
+    max_content_instagram: int = Field(default=3, ge=0, le=1000)
+    max_content_tiktok: int = Field(default=3, ge=0, le=1000)
     max_depth: int = Field(default=2, ge=1, le=3)
     custom_keywords: list[str] = Field(default_factory=list)
 

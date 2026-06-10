@@ -1,71 +1,48 @@
 def resolve_ai_conflict(text_result: dict, visual_result: dict, igrs_rule: dict) -> dict:
-    CONFIDENCE_THRESHOLD = 0.60
     VALID_RATINGS = {"SU", "7+", "13+", "17+", "PRC"}
+    RATING_SEVERITY = {"SU": 0, "7+": 1, "13+": 2, "17+": 3, "PRC": 4, "UNRATED": -1}
     
-    text_conf = text_result.get("confidence_score", 0)
-    visual_conf = visual_result.get("confidence_score", 0)
+    text_rating = text_result.get("predicted_rating", "SU")
+    if text_rating not in VALID_RATINGS: 
+        text_rating = "SU"
+        
+    visual_rating = visual_result.get("predicted_rating", "SU")
+    if visual_rating not in VALID_RATINGS: 
+        visual_rating = "SU"
+        
+    text_sev = RATING_SEVERITY.get(text_rating, 0)
+    visual_sev = RATING_SEVERITY.get(visual_rating, 0)
     
-    text_valid = text_conf >= CONFIDENCE_THRESHOLD
-    visual_valid = visual_conf >= CONFIDENCE_THRESHOLD
-    
-    print(f"[resolver] conflict resolution (confidence_threshold={CONFIDENCE_THRESHOLD})")
-    print(f"[resolver] tim1(text)   kategori={text_result.get('kategori', 'SAFE')} conf={text_conf:.2f} valid={text_valid}")
-    print(f"[resolver] tim3(visual) kategori={visual_result.get('kategori', 'SAFE')} conf={visual_conf:.2f} valid={visual_valid}")
+    print(f"[resolver] worst-case logic resolution")
+    print(f"[resolver] tim1(text)   kategori={text_result.get('kategori', 'SAFE')} rating={text_rating} sev={text_sev}")
+    print(f"[resolver] tim3(visual) kategori={visual_result.get('kategori', 'SAFE')} rating={visual_rating} sev={visual_sev}")
 
-    dominant_modality = igrs_rule.get("dominant_modality", "EQUAL")
-    print(f"[resolver] igrs dominant_modality={dominant_modality}")
-
-    # GUARD 1: kedua confidence di bawah threshold -> tidak bisa diputuskan.
-    if not text_valid and not visual_valid:
-        print("[resolver] result=UNRATED (both confidences below threshold)")
-        return {
-            "kategori_final": "UNRATED", 
-            "veto_applied": False,
-            "reason_final": "Confidence kedua AI terlalu rendah. Butuh peninjauan manual."
-        }
-    
-    # GUARD 2: STEALTH MODALITY & WINNER TRACKING
-    is_tim3_winner = False
-    alasan_menang = ""
-    
-    if dominant_modality == "VISUAL" and visual_valid:
+    if visual_sev > text_sev:
         winner = visual_result
-        is_tim3_winner = True
-        alasan_menang = "igrs dominant_modality=VISUAL"
-    elif dominant_modality == "TEXT" and text_valid:
+        final_rating = visual_rating
+        alasan = "visual severity > text severity"
+    elif text_sev > visual_sev:
         winner = text_result
-        alasan_menang = "igrs dominant_modality=TEXT"
+        final_rating = text_rating
+        alasan = "text severity > visual severity"
     else:
-        # EQUAL, atau modality dominan di bawah threshold -> pilih confidence tertinggi.
-        if visual_conf > text_conf:
+        # Equal severity
+        if visual_result.get("kategori", "SAFE") != "SAFE":
             winner = visual_result
-            is_tim3_winner = True
-            alasan_menang = "highest confidence (visual > text)"
+            final_rating = visual_rating
+            alasan = "equal severity, visual is specific category"
         else:
             winner = text_result
-            alasan_menang = "highest confidence (text >= visual)"
+            final_rating = text_rating
+            alasan = "equal severity, text prioritized or both SAFE"
 
-    pemenang_str = "tim3(visual)" if is_tim3_winner else "tim1(text)"
-
-    print(f"[resolver] winner={pemenang_str} reason={alasan_menang}")
-
-    final_kategori = winner.get("kategori", "SAFE")
-    final_reason = winner.get("reason", "Tidak ada alasan spesifik yang diberikan AI.")
+    print(f"[resolver] winner chosen reason={alasan}")
 
     response = {
-        "kategori_final": final_kategori,
+        "kategori_final": winner.get("kategori", "SAFE"),
         "veto_applied": False, 
-        "reason_final": final_reason 
+        "reason_final": winner.get("reason", "Tidak ada alasan spesifik yang diberikan AI."),
+        "rating_final": final_rating
     }
-
-    ai_rating = winner.get("predicted_rating", "SU")
-    
-    if ai_rating not in VALID_RATINGS:
-        final_rating = igrs_rule.get("age_rating_minimal", "SU")
-        print(f"[resolver] invalid rating from AI ({ai_rating}), fallback to igrs minimal={final_rating}")
-    else:
-        final_rating = ai_rating
-        
-    response["rating_final"] = final_rating
 
     return response

@@ -307,6 +307,7 @@ async def save_mission_report(
                 "thumbnail_url": thumbnail_url,
                 "file_path": file_paths,
                 "screenshot_path": screenshot_map.get(url, ""),
+                "classifications_json": entity.get("classifications_json", {}),
             },
         )
         session.add(content)
