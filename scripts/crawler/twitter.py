@@ -357,6 +357,9 @@ def scrape_twitter(keyword: list[str], target_post: int, temp_dir: Path) -> list
                         if resp.status_code == 200:
                             api_data   = resp.json()
                             media_urls = api_data.get("mediaURLs", [])
+                            vx_text = api_data.get("text", "")
+                            if vx_text and len(vx_text) > len(row.get("full_text", "")):
+                                row["full_text"] = vx_text
                     except Exception as e:
                         logger.warning(
                             "vxtwitter fetch gagal untuk %s: %s", unique_id, e)

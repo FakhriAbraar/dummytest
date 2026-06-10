@@ -39,7 +39,7 @@ VISUAL_API_BASE_URL = os.getenv(
 )
 VISUAL_API_MODEL = os.getenv("VISUAL_API_MODEL", "pad3_model")
 VISUAL_API_KEY = os.getenv("VISUAL_API_KEY", "EMPTY")
-VISUAL_MAX_IMAGES = int(os.getenv("VISUAL_MAX_IMAGES", "2"))
+VISUAL_MAX_IMAGES = int(os.getenv("VISUAL_MAX_IMAGES", "10"))
 VISUAL_MAX_TOKENS = int(os.getenv("VISUAL_MAX_TOKENS", "400"))
 VISUAL_MAX_RETRIES = int(os.getenv("VISUAL_MAX_RETRIES", "2"))
 VISUAL_DEFAULT_CONFIDENCE = float(os.getenv("VISUAL_DEFAULT_CONFIDENCE", "0.75"))
@@ -314,17 +314,34 @@ async def classify_visual(
         results.append(res)
     
     rating_severity = {"SU": 0, "7+": 1, "13+": 2, "17+": 3, "PRC": 4}
-    worst_result = results[0]
-    worst_score = -1
     
+    from collections import defaultdict
+    counts = defaultdict(list)
     for r in results:
-        is_unsafe = str(r.get("kategori", "SAFE")).strip().upper() != "SAFE"
-        r_rating = str(r.get("predicted_rating", "SU")).strip().upper()
-        rating_score = rating_severity.get(r_rating, 0)
+        kat = str(r.get("kategori", "SAFE")).strip()
+        rat = str(r.get("predicted_rating", "SU")).strip().upper()
+        counts[(kat, rat)].append(r)
         
-        score = (100 if is_unsafe else 0) + rating_score
-        if score > worst_score:
-            worst_score = score
-            worst_result = r
+    max_count = -1
+    tied_combos = []
+    for combo, items in counts.items():
+        if len(items) > max_count:
+            max_count = len(items)
+            tied_combos = [combo]
+        elif len(items) == max_count:
+            tied_combos.append(combo)
             
-    return worst_result
+    best_combo = tied_combos[0]
+    if len(tied_combos) > 1:
+        worst_score = -1
+        for combo in tied_combos:
+            kat, rat = combo
+            is_unsafe = kat.upper() != "SAFE"
+            r_rating = rat.upper()
+            rating_score = rating_severity.get(r_rating, 0)
+            score = (100 if is_unsafe else 0) + rating_score
+            if score > worst_score:
+                worst_score = score
+                best_combo = combo
+                
+    return counts[best_combo][0]

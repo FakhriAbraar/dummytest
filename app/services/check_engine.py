@@ -195,7 +195,7 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
 
         if media_urls:
             print(f"[checker] selecting {len(media_urls)} media file(s) for tim3(visual)")
-            for media_url in media_urls[:5]:
+            for media_url in media_urls[:10]:
                 media_payloads.append(media_url)
 
             if not media_payloads and fallback_thumb:

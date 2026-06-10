@@ -371,6 +371,30 @@ def extract_content(
         "Berhasil diekstrak: %s (%s, %d file)", unique_id, content_type, len(local_paths)
     )
 
+    # ---- Caption enrichment: yt-dlp sering mengembalikan `title` yang terpotong
+    # untuk Twitter/TikTok. Coba ambil caption lengkap dari sumber lain. ----
+    ydl_caption = info.get("description") or info.get("title") or ""
+
+    if platform == "twitter":
+        # vxtwitter selalu mengembalikan full tweet text, tanpa truncation.
+        try:
+            vx_api_url = re.sub(
+                r'(https?://)(www\.)?(twitter\.com|x\.com)',
+                r'\1api.vxtwitter.com', url,
+            )
+            with httpx.Client(timeout=10.0) as vx_client:
+                vx_resp = vx_client.get(vx_api_url)
+                if vx_resp.status_code == 200:
+                    vx_text = vx_resp.json().get("text", "")
+                    if vx_text and len(vx_text) > len(ydl_caption):
+                        logger.info(
+                            "Caption enrichment (vxtwitter): %d -> %d chars",
+                            len(ydl_caption), len(vx_text),
+                        )
+                        ydl_caption = vx_text
+        except Exception as e:
+            logger.warning("Caption enrichment vxtwitter gagal: %s", e)
+
     return {
         "batch_id":       batch_id,
         "platform":       platform,
@@ -380,7 +404,7 @@ def extract_content(
         "unique_id":      unique_id,
         "url":            info.get("webpage_url") or url,
         "type":           content_type,
-        "caption":        info.get("title") or info.get("description") or "",
+        "caption":        ydl_caption,
         "thumbnail_url":  info.get("thumbnail") or "",
         "published_at":   published_at,
         "file_path":      local_paths,  

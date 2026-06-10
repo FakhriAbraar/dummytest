@@ -172,6 +172,16 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
                 except Exception as e:
                     logger.warning(
                         "Gagal download slideshow image %d untuk %s: %s", i, unique_id, e)
+                        
+            try:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    info = ydl.extract_info(video_url, download=False)
+                    if info:
+                        full_desc = info.get("description")
+                        if full_desc and len(full_desc) > len(item.get("text", "")):
+                            item["text"] = full_desc
+            except Exception as e:
+                pass
 
         elif video_url:
             content_type = "video" if "/video/" in video_url else "text"
@@ -183,6 +193,10 @@ def scrape_tiktok(keyword: list[str], target_post: int, temp_dir: Path) -> list[
                         file_paths.append(str(Path(filename)))
                         logger.info(
                             "Video %d berhasil didownload: %s", index, video_url)
+                            
+                        full_desc = info.get("description")
+                        if full_desc and len(full_desc) > len(item.get("text", "")):
+                            item["text"] = full_desc
             except Exception as e:
                 logger.warning("Gagal download video %d (%s): %s",
                                index, video_url, e)

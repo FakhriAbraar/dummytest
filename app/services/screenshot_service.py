@@ -29,26 +29,36 @@ async def take_screenshots_for_urls(urls: list[str]) -> dict[str, str]:
         os.path.join(os.path.dirname(__file__), "../../")
     )
 
-    def _run() -> subprocess.CompletedProcess[str]:
-        return subprocess.run(
-            [sys.executable, "scripts/crawler/screenshot-evidence.py", "--url", *urls],
-            capture_output=True,
-            text=True,
-            cwd=cwd_path,
-            timeout=300,
-        )
+    BATCH_SIZE = 15
+    final_result = {}
 
-    try:
-        proc = await asyncio.to_thread(_run)
-        if proc.returncode != 0:
-            print(f"[-] Screenshot subprocess gagal (exit {proc.returncode}): {proc.stderr[:200]}")
-            return {}
+    for i in range(0, len(urls), BATCH_SIZE):
+        chunk = urls[i:i + BATCH_SIZE]
+        print(f"[*] Memproses batch screenshot {i//BATCH_SIZE + 1} ({len(chunk)} URL)...")
 
-        data: Any = json.loads(proc.stdout)
-        screenshots: list[dict[str, str]] = data.get("screenshots", [])
-        result = {s["url"]: s["minio_path"] for s in screenshots if s.get("url") and s.get("minio_path")}
-        print(f"[+] Screenshot evidence siap: {len(result)} URL berhasil.")
-        return result
-    except Exception as e:
-        print(f"[-] Screenshot subprocess error: {repr(e)}")
-        return {}
+        def _run(current_chunk) -> subprocess.CompletedProcess[str]:
+            return subprocess.run(
+                [sys.executable, "scripts/crawler/screenshot-evidence.py", "--url", *current_chunk],
+                capture_output=True,
+                text=True,
+                cwd=cwd_path,
+                timeout=300, # 5 minutes is plenty for 15 concurrent URLs
+            )
+
+        try:
+            proc = await asyncio.to_thread(_run, chunk)
+            if proc.returncode != 0:
+                print(f"[-] Screenshot subprocess gagal pada batch {i//BATCH_SIZE + 1} (exit {proc.returncode}): {proc.stderr[:300]}")
+                continue
+
+            data: Any = json.loads(proc.stdout)
+            screenshots: list[dict[str, str]] = data.get("screenshots", [])
+            for s in screenshots:
+                if s.get("url") and s.get("minio_path"):
+                    final_result[s["url"]] = s["minio_path"]
+        except Exception as e:
+            print(f"[-] Screenshot subprocess error pada batch {i//BATCH_SIZE + 1}: {repr(e)}")
+            continue
+
+    print(f"[+] Screenshot evidence siap: {len(final_result)} dari {len(urls)} URL berhasil.")
+    return final_result

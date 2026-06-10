@@ -35,7 +35,7 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
 from dotenv import load_dotenv  # noqa: E402
-from playwright.sync_api import sync_playwright  # noqa: E402
+from playwright.async_api import async_playwright  # noqa: E402
 
 from app.db.minio import connect_minio, disconnect_minio  # noqa: E402
 from app.db.mongo import connect_mongo, disconnect_mongo  # noqa: E402
@@ -145,7 +145,151 @@ MINIO_PREFIX = "evidence/screenshots"
 # ============================================================
 # 4. SCREENSHOT — Playwright buka setiap URL dan ambil screenshot
 # ============================================================
-def take_screenshots(urls: list[str], output_dir: Path) -> list[dict]:
+async def process_single_url(url: str, browser, output_dir: Path) -> dict | None:
+    context = await browser.new_context(
+        user_agent=(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Safari/537.36"
+        ),
+        viewport={"width": 1280, "height": 720},
+    )
+    await context.add_init_script(
+        "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+    )
+    page = await context.new_page()
+
+    try:
+        logger.info("Memproses: %s", url)
+        await page.goto(url, wait_until="domcontentloaded", timeout=60_000)
+
+        # --- Per-platform edge case handling ---
+        if "x.com" in url or "twitter.com" in url:
+            await page.wait_for_selector(
+                "span:has-text('Post')", state="visible", timeout=20000)
+            await page.wait_for_timeout(3000)
+
+        elif "instagram.com" in url:
+            try:
+                await page.wait_for_load_state("domcontentloaded")
+
+                try:
+                    await page.wait_for_selector(
+                        'div[role="dialog"]', state="visible", timeout=15000)
+                    await page.wait_for_timeout(3000)
+                except Exception:
+                    pass
+
+                await page.evaluate("""
+                    () => {
+                        const closeSvg = document.querySelector('svg[aria-label="Close"]');
+                        let isClicked = false;
+                        if (closeSvg) {
+                            const closeBtn = closeSvg.closest('div[role="button"], button') || closeSvg.parentElement;
+                            if (closeBtn) {
+                                closeBtn.click();
+                                isClicked = true;
+                            }
+                        }
+                        if (!isClicked) {
+                            document.querySelectorAll('div[role="dialog"], div[aria-modal="true"]').forEach(el => {
+                                el.style.setProperty('display', 'none', 'important');
+                            });
+                            document.querySelectorAll('div').forEach(el => {
+                                const style = window.getComputedStyle(el);
+                                if ((style.position === 'fixed' || style.position === 'absolute') && parseInt(style.zIndex) > 10) {
+                                    if (!el.innerText.trim()) {
+                                        el.style.setProperty('display', 'none', 'important');
+                                    }
+                                }
+                                if (style.position === 'fixed' && style.bottom === '0px' && style.top !== '0px') {
+                                    const text = el.innerText || '';
+                                    if (text.includes('Log in') || text.includes('Sign Up')) {
+                                        el.style.setProperty('display', 'none', 'important');
+                                    }
+                                }
+                            });
+                            document.body.style.setProperty('overflow', 'auto', 'important');
+                            document.documentElement.style.setProperty('overflow', 'auto', 'important');
+                        }
+                    }
+                """)
+                await page.wait_for_timeout(2000)
+
+            except Exception as e:
+                logger.warning("Gagal memanipulasi UI Instagram: %s", e)
+        
+        elif "tiktok.com" in url:
+            try:
+                await page.wait_for_load_state("networkidle", timeout=15000)
+            except Exception:
+                pass
+            
+            for _ in range(3):
+                try:
+                    close_selectors = [
+                        "button:has-text('Got it')",
+                        "button:has-text('Not now')",
+                        "button:has-text('Continue as guest')",
+                        "div[data-e2e='modal-close-inner-button']",
+                        "div[aria-label='Close']"
+                    ]
+                    for sel in close_selectors:
+                        el = await page.query_selector(sel)
+                        if el and await el.is_visible():
+                            await el.click()
+                except Exception:
+                    pass
+
+                await page.evaluate("""
+                    () => {
+                        document.querySelectorAll('[role="dialog"], [aria-modal="true"]').forEach(el => {
+                            el.style.setProperty('display', 'none', 'important');
+                        });
+                        const specificSelectors = [
+                            'div[data-e2e="bottom-banner-container"]',
+                            'tiktok-cookie-banner',
+                            '#login-modal'
+                        ];
+                        document.querySelectorAll(specificSelectors.join(', ')).forEach(el => {
+                            el.style.setProperty('display', 'none', 'important');
+                        });
+                        document.querySelectorAll('div').forEach(el => {
+                            const style = window.getComputedStyle(el);
+                            const zIndex = parseInt(style.zIndex) || 0;
+                            if ((style.position === 'fixed' || style.position === 'absolute') && zIndex > 50) {
+                                el.style.setProperty('display', 'none', 'important');
+                            }
+                        });
+                        document.body.style.setProperty('overflow', 'auto', 'important');
+                        document.documentElement.style.setProperty('overflow', 'auto', 'important');
+                    }
+                """)
+                await page.wait_for_timeout(1500)
+        
+        else:
+            await page.wait_for_timeout(5000)
+
+        unique_name = get_unique_filename(url) or urllib.parse.urlparse(url).netloc
+        filename = f"{uuid.uuid4()}_{unique_name}.png"
+        local_path = output_dir / filename
+
+        await page.screenshot(path=str(local_path), clip={"x": 0, "y": 0, "width": 1280, "height": 720})
+        logger.info("Berhasil disimpan: %s", filename)
+
+        return {
+            "url":         url,
+            "local_path":  str(local_path),
+            "object_name": f"{MINIO_PREFIX}/{filename}",
+        }
+
+    except Exception as e:
+        logger.warning("Gagal memproses %s: %s", url, e)
+        return None
+    finally:
+        await context.close()
+
+async def take_screenshots(urls: list[str], output_dir: Path) -> list[dict]:
     """Buka setiap URL dengan Playwright dan ambil screenshot full-page.
 
     Args:
@@ -155,11 +299,9 @@ def take_screenshots(urls: list[str], output_dir: Path) -> list[dict]:
     Returns:
         List dict berisi url, local_path, dan object_name (MinIO destination).
     """
-    results: list[dict] = []
-
     with _stdout_to_stderr():
-        with sync_playwright() as p:
-            browser = p.chromium.launch(
+        async with async_playwright() as p:
+            browser = await p.chromium.launch(
                 headless=True,
                 args=[
                     "--disable-blink-features=AutomationControlled",
@@ -168,157 +310,14 @@ def take_screenshots(urls: list[str], output_dir: Path) -> list[dict]:
                 ],
             )
 
-            for url in urls:
-                context = browser.new_context(
-                    user_agent=(
-                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) "
-                        "Chrome/120.0.0.0 Safari/537.36"
-                    ),
-                    viewport={"width": 1280, "height": 720},
-                )
-                context.add_init_script(
-                    "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
-                )
-                page = context.new_page()
+            tasks = [process_single_url(url, browser, output_dir) for url in urls]
+            raw_results = await asyncio.gather(*tasks)
 
-                try:
-                    logger.info("Memproses: %s", url)
-                    page.goto(url, wait_until="domcontentloaded",
-                              timeout=60_000)
-
-                    # --- Per-platform edge case handling ---
-                    if "x.com" in url or "twitter.com" in url:
-                        page.wait_for_selector(
-                            "span:has-text('Post')", state="visible", timeout=20000)
-                        page.wait_for_timeout(3000)
-
-                    elif "instagram.com" in url:
-                        try:
-                            page.wait_for_load_state("domcontentloaded")
-
-                            # Tunggu dialog login popup, jangan gagal total jika tidak ada
-                            try:
-                                page.wait_for_selector(
-                                    'div[role="dialog"]', state="visible", timeout=15000)
-                                # Jeda agar React selesai hydration sebelum tombol X bisa diklik
-                                page.wait_for_timeout(3000)
-                            except Exception:
-                                pass
-
-                            # Hybrid JS: prioritas klik tombol X, fallback hapus DOM
-                            page.evaluate("""
-                                () => {
-                                    // SKENARIO A: Paksa Klik Tombol 'X' via JavaScript Native
-                                    const closeSvg = document.querySelector('svg[aria-label="Close"]');
-                                    let isClicked = false;
-
-                                    if (closeSvg) {
-                                        const closeBtn = closeSvg.closest('div[role="button"], button') || closeSvg.parentElement;
-                                        if (closeBtn) {
-                                            closeBtn.click();
-                                            isClicked = true;
-                                        }
-                                    }
-
-                                    // SKENARIO B: Jika klik gagal/tombol tidak ada, hapus DOM secara agresif
-                                    if (!isClicked) {
-                                        document.querySelectorAll('div[role="dialog"], div[aria-modal="true"]').forEach(el => {
-                                            el.style.setProperty('display', 'none', 'important');
-                                        });
-
-                                        document.querySelectorAll('div').forEach(el => {
-                                            const style = window.getComputedStyle(el);
-                                            if ((style.position === 'fixed' || style.position === 'absolute') && parseInt(style.zIndex) > 10) {
-                                                if (!el.innerText.trim()) {
-                                                    el.style.setProperty('display', 'none', 'important');
-                                                }
-                                            }
-                                            if (style.position === 'fixed' && style.bottom === '0px' && style.top !== '0px') {
-                                                const text = el.innerText || '';
-                                                if (text.includes('Log in') || text.includes('Sign Up')) {
-                                                    el.style.setProperty('display', 'none', 'important');
-                                                }
-                                            }
-                                        });
-
-                                        document.body.style.setProperty('overflow', 'auto', 'important');
-                                        document.documentElement.style.setProperty('overflow', 'auto', 'important');
-                                    }
-                                }
-                            """)
-                            page.wait_for_timeout(2000)
-
-                        except Exception as e:
-                            logger.warning(
-                                "Gagal memanipulasi UI Instagram: %s", e)
-
-                    elif "tiktok.com" in url:
-                        page.wait_for_load_state("domcontentloaded")
-                        try:
-                            # Skenario A: Mencoba klik tombol "Got it" pada onboarding overlay
-                            # Gunakan regex untuk antisipasi perbedaan case huruf
-                            page.locator("button:has-text('Got it')").click(timeout=5000)
-                        except Exception:
-                            pass
-
-                        # Skenario B: Fallback hapus elemen DOM overlay secara paksa
-                        page.evaluate("""
-                            () => {
-                                // Hapus modal onboarding, login pop-up, dan banner bawah aplikasi
-                                const selectors = [
-                                    'div[data-e2e="modal-container"]',
-                                    'div[id*="login-modal"]',
-                                    'div[class*="login-modal"]',
-                                    'div[data-e2e="bottom-banner-container"]'
-                                ];
-                                
-                                document.querySelectorAll(selectors.join(', ')).forEach(el => {
-                                    el.style.setProperty('display', 'none', 'important');
-                                });
-
-                                // Hapus overlay transparan yang memblokir interaksi
-                                document.querySelectorAll('div').forEach(el => {
-                                    const style = window.getComputedStyle(el);
-                                    if (style.position === 'fixed' || style.position === 'absolute') {
-                                        if (el.innerText.includes('Scroll, use the') || el.innerText.includes('Log in')) {
-                                            el.style.setProperty('display', 'none', 'important');
-                                        }
-                                    }
-                                });
-                                
-                                // Pulihkan scroll jika terkunci oleh modal
-                                document.body.style.setProperty('overflow', 'auto', 'important');
-                            }
-                        """)
-                        page.wait_for_timeout(3000)
-                    else:
-                        page.wait_for_timeout(5000)
-
-                    # Buat nama file: uuid + nama bermakna dari URL (atau netloc sebagai fallback)
-                    unique_name = get_unique_filename(
-                        url) or urllib.parse.urlparse(url).netloc
-                    filename = f"{uuid.uuid4()}_{unique_name}.png"
-                    local_path = output_dir / filename
-
-                    page.screenshot(path=str(local_path), full_page=True)
-                    logger.info("Berhasil disimpan: %s", filename)
-
-                    results.append({
-                        "url":         url,
-                        "local_path":  str(local_path),
-                        "object_name": f"{MINIO_PREFIX}/{filename}",
-                    })
-
-                except Exception as e:
-                    logger.warning("Gagal memproses %s: %s", url, e)
-                finally:
-                    context.close()
-
-            browser.close()
-
-    logger.info("Total screenshot berhasil: %d", len(results))
-    return results
+            await browser.close()
+            
+            results = [r for r in raw_results if r is not None]
+            logger.info("Total screenshot berhasil: %d", len(results))
+            return results
 
 
 # ============================================================
@@ -390,11 +389,7 @@ async def upload_screenshots(screenshots: list[dict]) -> dict:
 # ============================================================
 # 6. ENTRY POINT — Satu-satunya print() ada di sini (JSON murni)
 # ============================================================
-if __name__ == "__main__":
-    # Safety net: redirect sys.stdout → sys.stderr sebelum semua eksekusi.
-    _real_stdout = sys.stdout
-    sys.stdout = sys.stderr
-
+async def main():
     parser = argparse.ArgumentParser(
         description="Screenshot Evidence — Ambil screenshot URL konten media sosial, upload ke MinIO",
         formatter_class=argparse.RawTextHelpFormatter,
@@ -420,14 +415,14 @@ if __name__ == "__main__":
             logger.info("Output directory: %s", output_dir)
 
             # Step 1: Screenshot semua URL via Playwright
-            screenshots = take_screenshots(args.url, output_dir)
+            screenshots = await take_screenshots(args.url, output_dir)
 
             if not screenshots:
                 raise RuntimeError(
                     "Tidak ada screenshot yang berhasil diambil.")
 
             # Step 2: Upload ke MinIO
-            response = asyncio.run(upload_screenshots(screenshots))
+            response = await upload_screenshots(screenshots)
 
         logger.info("=== Screenshot Evidence selesai ===")
         sys.stdout = _real_stdout
@@ -439,3 +434,10 @@ if __name__ == "__main__":
         sys.stdout = _real_stdout
         print(json.dumps({"status": "error", "message": str(exc)}))
         sys.exit(1)
+
+if __name__ == "__main__":
+    # Safety net: redirect sys.stdout → sys.stderr sebelum semua eksekusi.
+    _real_stdout = sys.stdout
+    sys.stdout = sys.stderr
+
+    asyncio.run(main())

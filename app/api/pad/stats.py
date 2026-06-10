@@ -1,12 +1,16 @@
 from __future__ import annotations
 
+import io
+
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.db.sql import get_db_session
 from app.db.tables import Account, Content, EngineDecision, Platform, TrendingKeyword
+from app.services.export_service import generate_content_csv, generate_content_pdf
 from app.services.minio import get_presigned_url
 
 router = APIRouter(prefix="/stats", tags=["Stats"])
@@ -134,6 +138,8 @@ def _content_base_select():
             Content.crawl_timestamp,
             Content.raw_metadata,
             EngineDecision.final_kategori,
+            Content.reviewed_by,
+            Content.reviewed_at,
         )
         .join(Account, Content.account_id == Account.account_id)
         .join(Platform, Account.platform_id == Platform.platform_id)
@@ -144,7 +150,7 @@ def _content_base_select():
 async def _row_to_item(row) -> dict:
     """Map a content row (see `_content_base_select`) into the ContentItem shape
     the frontend expects, resolving a presigned screenshot URL when available."""
-    (cid, plat, username, desc, eng_status, rating, src_url, crawled_at, raw_meta, kategori) = row
+    (cid, plat, username, desc, eng_status, rating, src_url, crawled_at, raw_meta, kategori, reviewed_by, reviewed_at) = row
     meta = raw_meta or {}
 
     # Prefer real screenshot (MinIO) over CDN thumbnail.
@@ -172,6 +178,8 @@ async def _row_to_item(row) -> dict:
         "reasonAi": meta.get("reason", ""),
         "classifications": meta.get("classifications_json", None),
         "createdAt": crawled_at.isoformat() if crawled_at else "",
+        "reviewedBy": reviewed_by or "",
+        "reviewedAt": reviewed_at.isoformat() if reviewed_at else "",
     }
 
 
@@ -184,6 +192,7 @@ async def get_content_list(
     mission_id: str = "",
     date_from: str = "",
     date_to: str = "",
+    reviewed: str = "",
     page: int = 1,
     per_page: int = 12,
     session: AsyncSession = Depends(get_db_session),
@@ -205,14 +214,31 @@ async def get_content_list(
         stmt = stmt.where(Content.engine_status.in_(["VIOLATION", "NEEDS_REVIEW"]))
     if age_group:
         stmt = stmt.where(Content.final_rating == age_group)
+    if reviewed == "yes":
+        stmt = stmt.where(Content.reviewed_by.isnot(None))
+    elif reviewed == "no":
+        stmt = stmt.where(Content.reviewed_by.is_(None))
     if date_from:
         try:
-            stmt = stmt.where(Content.crawl_timestamp >= datetime.fromisoformat(date_from.replace("Z", "+00:00")))
+            # Support both "YYYY-MM-DD" and full ISO "YYYY-MM-DDTHH:MM:SSZ".
+            cleaned = date_from.replace("Z", "+00:00")
+            if "T" not in cleaned:
+                # Plain date → start of that day
+                cleaned += "T00:00:00"
+            stmt = stmt.where(
+                Content.crawl_timestamp >= datetime.fromisoformat(cleaned)
+            )
         except ValueError:
             pass
     if date_to:
         try:
-            stmt = stmt.where(Content.crawl_timestamp <= datetime.fromisoformat(date_to.replace("Z", "+00:00")))
+            cleaned = date_to.replace("Z", "+00:00")
+            if "T" not in cleaned:
+                # Plain date → end of that day
+                cleaned += "T23:59:59"
+            stmt = stmt.where(
+                Content.crawl_timestamp <= datetime.fromisoformat(cleaned)
+            )
         except ValueError:
             pass
 
@@ -229,6 +255,87 @@ async def get_content_list(
         "data_per_page": items,
         "meta": {"page": page, "max_page": max_page, "total": total},
     }
+
+
+# NOTE: /content/export/csv registered BEFORE /content/{content_id} to avoid
+# FastAPI matching "export" against the int path param.
+@router.get("/content/export/csv")
+async def download_content_csv(
+    q: str = "",
+    platform: str = "",
+    classification: str = "",
+    age_group: str = "",
+    mission_id: str = "",
+    date_from: str = "",
+    date_to: str = "",
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Download crawl results as a CSV file with optional filters.
+
+    Supports filtering by: platform, classification (safe/unsafe), age_group
+    (SU/7+/13+/17+/PRC), mission_id, and date range (date_from / date_to).
+    Returns ALL matching rows (no pagination) for a full export.
+    """
+    from datetime import datetime
+
+    stmt = _content_base_select()
+
+    if mission_id:
+        stmt = stmt.where(Content.raw_metadata["mission_id"].astext == mission_id)
+    if q:
+        stmt = stmt.where(Content.description.ilike(f"%{q}%"))
+    if platform:
+        stmt = stmt.where(Platform.platform_name.ilike(platform))
+    if classification == "safe":
+        stmt = stmt.where(Content.engine_status == "SAFE")
+    elif classification == "unsafe":
+        stmt = stmt.where(Content.engine_status.in_(["VIOLATION", "NEEDS_REVIEW"]))
+    if age_group:
+        stmt = stmt.where(Content.final_rating == age_group)
+    if date_from:
+        try:
+            cleaned = date_from.replace("Z", "+00:00")
+            if "T" not in cleaned:
+                cleaned += "T00:00:00"
+            stmt = stmt.where(
+                Content.crawl_timestamp >= datetime.fromisoformat(cleaned)
+            )
+        except ValueError:
+            pass
+    if date_to:
+        try:
+            cleaned = date_to.replace("Z", "+00:00")
+            if "T" not in cleaned:
+                cleaned += "T23:59:59"
+            stmt = stmt.where(
+                Content.crawl_timestamp <= datetime.fromisoformat(cleaned)
+            )
+        except ValueError:
+            pass
+
+    # Cap at 10 000 rows to avoid OOM on huge datasets.
+    stmt = stmt.order_by(Content.crawl_timestamp.desc()).limit(10_000)
+    rows = (await session.execute(stmt)).all()
+    items = [await _row_to_item(row) for row in rows]
+
+    csv_bytes = generate_content_csv(items)
+
+    # Generate a descriptive filename.
+    now_str = datetime.now().strftime("%Y%m%d_%H%M")
+    filename = f"laporan_crawl_{now_str}"
+    if date_from or date_to:
+        filename += f"_{date_from or 'awal'}_{date_to or 'akhir'}"
+    if age_group:
+        filename += f"_{age_group}"
+    filename += ".csv"
+
+    return StreamingResponse(
+        io.BytesIO(csv_bytes),
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+        },
+    )
 
 
 @router.get("/content/{content_id}")
@@ -275,6 +382,54 @@ async def update_content_classification(
         decision.final_kategori = payload.category
         decision.final_rating = payload.age_group
 
+    await session.commit()
+    return {"status": "ok", "content_id": content_id}
+
+
+class ReviewContentRequest(BaseModel):
+    reviewed_by: str
+
+
+@router.patch("/content/{content_id}/review")
+async def review_content(
+    content_id: int,
+    payload: ReviewContentRequest,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Mark a content item as reviewed by an admin."""
+    from datetime import datetime, timezone as tz
+
+    content = (await session.execute(
+        select(Content).where(Content.content_id == content_id)
+    )).scalars().first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    content.reviewed_by = payload.reviewed_by
+    content.reviewed_at = datetime.now(tz.utc)
+    await session.commit()
+    return {
+        "status": "ok",
+        "content_id": content_id,
+        "reviewed_by": content.reviewed_by,
+        "reviewed_at": content.reviewed_at.isoformat(),
+    }
+
+
+@router.delete("/content/{content_id}/review")
+async def unreview_content(
+    content_id: int,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Remove the reviewed flag from a content item."""
+    content = (await session.execute(
+        select(Content).where(Content.content_id == content_id)
+    )).scalars().first()
+    if not content:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    content.reviewed_by = None
+    content.reviewed_at = None
     await session.commit()
     return {"status": "ok", "content_id": content_id}
 
@@ -488,3 +643,33 @@ async def get_keyword_list(
         ],
         "count": len(rows),
     }
+
+
+# ─── Export endpoints: PDF & CSV ─────────────────────────────────────────────
+
+
+@router.get("/content/{content_id}/pdf")
+async def download_content_pdf(
+    content_id: int,
+    session: AsyncSession = Depends(get_db_session),
+):
+    """Download a single content classification result as a PDF report."""
+    row = (
+        await session.execute(
+            _content_base_select().where(Content.content_id == content_id)
+        )
+    ).first()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Content not found")
+
+    item = await _row_to_item(row)
+    pdf_bytes = generate_content_pdf(item)
+
+    return StreamingResponse(
+        io.BytesIO(pdf_bytes),
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="klasifikasi_konten_{content_id}.pdf"',
+        },
+    )
+
