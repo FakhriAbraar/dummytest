@@ -48,7 +48,7 @@ async def take_screenshots_for_urls(urls: list[str]) -> dict[str, str]:
         try:
             proc = await asyncio.to_thread(_run, chunk)
             if proc.returncode != 0:
-                print(f"[-] Screenshot subprocess gagal pada batch {i//BATCH_SIZE + 1} (exit {proc.returncode}): {proc.stderr[:300]}")
+                print(f"[-] Screenshot subprocess gagal pada batch {i//BATCH_SIZE + 1} (exit {proc.returncode}):\n{proc.stderr}")
                 continue
 
             data: Any = json.loads(proc.stdout)
