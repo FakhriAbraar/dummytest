@@ -146,14 +146,49 @@ MINIO_PREFIX = "evidence/screenshots"
 # 4. SCREENSHOT — Playwright buka setiap URL dan ambil screenshot
 # ============================================================
 async def process_single_url(url: str, browser, output_dir: Path) -> dict | None:
-    context = await browser.new_context(
-        user_agent=(
+    # Cari storage state / session cookies jika tersedia untuk melewati login wall
+    storage_state_path = None
+    crawler_dir = Path(__file__).resolve().parent
+
+    if "x.com" in url or "twitter.com" in url:
+        # Cari file session twitter_session_*.json
+        for i in range(1, 6):
+            paths_to_check = [
+                crawler_dir / "json_sessions" / f"twitter_session_{i}.json",
+                crawler_dir / f"twitter_session_{i}.json",
+            ]
+            for p_path in paths_to_check:
+                if p_path.exists():
+                    storage_state_path = str(p_path)
+                    break
+            if storage_state_path:
+                break
+    elif "instagram.com" in url:
+        # Cari file session instagram / ig
+        paths_to_check = [
+            crawler_dir / "json_sessions" / "instagram.json",
+            crawler_dir / "instagram.json",
+            crawler_dir / "ig_session.json",
+        ]
+        for p_path in paths_to_check:
+            if p_path.exists():
+                storage_state_path = str(p_path)
+                break
+
+    context_args = {
+        "user_agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
             "Chrome/120.0.0.0 Safari/537.36"
         ),
-        viewport={"width": 1280, "height": 720},
-    )
+        "viewport": {"width": 1280, "height": 720},
+    }
+
+    if storage_state_path:
+        context_args["storage_state"] = storage_state_path
+        logger.info("Menggunakan session cookies dari: %s", Path(storage_state_path).name)
+
+    context = await browser.new_context(**context_args)
     await context.add_init_script(
         "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
     )
