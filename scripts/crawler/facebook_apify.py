@@ -50,7 +50,7 @@ APIFY_TOKEN = (
     or os.getenv("APIFY_API_PREMIUM")
     or os.getenv("APIFY_API_FREE")
 )
-FACEBOOK_ACTOR = os.getenv("FACEBOOK_ACTOR", "danek/facebook-search-scraper")
+FACEBOOK_ACTOR = os.getenv("FACEBOOK_ACTOR", "danek/facebook-search-ppr")
 COLLECTION_NAME = "social_media_posts"
 
 
@@ -112,9 +112,13 @@ def scrape_facebook(keyword: str, target_post: int, temp_dir: Path) -> list[dict
 
     client = ApifyClient(APIFY_TOKEN)
 
+    # Actor danek/facebook-search-ppr mengembalikan campuran profiles+posts.
+    # Kirim 6× lebih besar agar setelah filter non-post tetap dapat ~target_post.
+    apify_max = max(target_post * 6, 30)
     run_input = {
-        "query": keyword,
-        "maxResults": target_post,
+        "query":       keyword,
+        "search_type": "global",   # posts + reels sekaligus
+        "max_posts":   apify_max,
     }
 
     logger.info("Memanggil Apify actor '%s' keyword='%s' limit=%d",
@@ -156,36 +160,58 @@ def scrape_facebook(keyword: str, target_post: int, temp_dir: Path) -> list[dict
         if not text and not post_url:
             continue
 
+        # Filter non-post (profiles/pages/groups yang ikut muncul di hasil search)
+        _item_type = (item.get("type") or "").lower()
+        if _item_type in ("search_profile", "search_page", "search_group", "profile", "page"):
+            continue
+        if "/groups/" in post_url:
+            continue
+
         author = item.get("user") or item.get("author") or {}
         if isinstance(author, str):
             username, user_id = author, ""
         else:
             username = (
                 author.get("name") or author.get("username")
-                or item.get("pageName") or ""
+                or item.get("pageName") or item.get("pageUsername")
+                or item.get("userName") or item.get("authorName") or ""
             )
             user_id = str(
                 author.get("id") or author.get("userId")
                 or item.get("userId") or item.get("pageId") or ""
             )
 
-        post_id = item.get("postId") or item.get("id") or uuid.uuid4().hex[:12]
+        post_id = (
+            item.get("postId") or item.get("post_id")
+            or item.get("id") or item.get("reelId")
+            or uuid.uuid4().hex[:12]
+        )
         unique_id = f"facebook_{post_id}"
 
-        # --- Media ---
-        file_paths: list[str] = []
-        cover_url = ""
-        content_type = "text"
+        # --- Media: ikuti field utama danek/facebook-search-ppr ---
+        photo_urls: list[str] = []
 
-        # Foto: ambil CDN URL dari field images[].uri
-        images = item.get("images") or []
-        for img in images:
-            uri = img.get("uri") or img.get("url") or (img if isinstance(img, str) else "")
-            if uri:
-                file_paths.append(uri)
-        if file_paths:
-            cover_url = file_paths[0]
-            content_type = "image" if len(file_paths) == 1 else "multipleImage"
+        # Field 'image' (singular) = field utama dari actor ini
+        img_val = item.get("image")
+        if img_val:
+            if isinstance(img_val, str):
+                photo_urls.append(img_val)
+            elif isinstance(img_val, dict):
+                link = img_val.get("uri") or img_val.get("url") or img_val.get("src") or ""
+                if link:
+                    photo_urls.append(link)
+
+        # Field 'images' / 'photos' (plural) sebagai tambahan
+        for field in ("images", "photos"):
+            for p in (item.get(field) or []):
+                link = (p if isinstance(p, str) else
+                        p.get("uri") or p.get("url") or p.get("src") or "")
+                if link and link not in photo_urls:
+                    photo_urls.append(link)
+
+        file_paths: list[str] = list(photo_urls)
+        cover_url = file_paths[0] if file_paths else ""
+        content_type = "text" if not file_paths else ("image" if len(file_paths) == 1 else "multipleImage")
 
         # Reels / Video: yt-dlp download
         if post_url and _is_reel(post_url):
