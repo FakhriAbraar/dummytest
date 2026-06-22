@@ -189,10 +189,12 @@ def scrape_facebook(keyword: str, target_post: int, temp_dir: Path) -> list[dict
 
         # Reels / Video: yt-dlp download
         if post_url and _is_reel(post_url):
+            # Simpan thumbnail dari images[].uri sebelum file_paths ditimpa video
+            reel_thumbnail = cover_url
             local_path = _download_reel(post_url, temp_dir, unique_id)
             if local_path:
-                file_paths = [local_path]   # ganti foto kalau ternyata ini reel
-                cover_url = ""
+                file_paths = [local_path]
+                cover_url = reel_thumbnail  # thumbnail tetap dari gambar actor
                 content_type = "video"
             else:
                 # Fallback: tetap text-only kalau yt-dlp gagal
