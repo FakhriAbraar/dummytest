@@ -3,7 +3,7 @@ from typing import TypedDict, List, Dict, Any
 class PADState(TypedDict):
     seed_trend: str
     custom_keywords: List[str]        # Keyword tambahan dari form Crawl Config
-    platform_limits: Dict[str, int]   # Max konten per platform (x/instagram/tiktok)
+    platform_limits: Dict[str, int]   # Max konten per platform (x/instagram/tiktok/facebook)
     trends_keyword_count: int         # Jumlah keyword yang diambil dari trends per batch
     current_keywords: List[str]
     history_keywords: List[str]  # Buat ngecek jenuh/convergence
