@@ -236,15 +236,17 @@ async def run_content_crawlers(
     ig_limit = int(limits.get("instagram", limit))
     tiktok_limit = int(limits.get("tiktok", limit))
     x_limit = int(limits.get("x", limits.get("twitter", limit)))
+    fb_limit = int(limits.get("facebook", limit))
     print(
         f"\n[content_crawler] START keyword={keyword!r} "
-        f"limits(x={x_limit}, ig={ig_limit}, tiktok={tiktok_limit})"
+        f"limits(x={x_limit}, ig={ig_limit}, tiktok={tiktok_limit}, facebook={fb_limit})"
     )
 
     # Pembagian engine (sesuai kebutuhan operasional):
     #   - Instagram   -> Playwright, fallback Apify (instagram_apify) bila 0 item
     #   - Twitter/X   -> Playwright (scripts.crawler.twitter)
     #   - TikTok      -> Apify      (scripts.crawler.tiktok)
+    #   - Facebook    -> Apify      (scripts.crawler.facebook_apify)
     # instagram.py butuh --max_scroll (jumlah scroll kosong sebelum menyerah);
     # diturunkan dari target post agar cukup menjangkau target.
     ig_max_scroll = max(5, ig_limit * 2)
@@ -262,9 +264,12 @@ async def run_content_crawlers(
     twitter_task = _crawl_one_platform(
         "x", "scripts.crawler.twitter", keyword, x_limit, progress
     ) if x_limit > 0 else _skip_task("x")
+    facebook_task = _crawl_one_platform(
+        "facebook", "scripts.crawler.facebook_apify", keyword, fb_limit, progress
+    ) if fb_limit > 0 else _skip_task("facebook")
 
-    results = await asyncio.gather(ig_task, tiktok_task, twitter_task)
-    unified_data = results[0] + results[1] + results[2]
+    results = await asyncio.gather(ig_task, tiktok_task, twitter_task, facebook_task)
+    unified_data = results[0] + results[1] + results[2] + results[3]
 
     # Tidak ada fallback dummy: bila semua crawler gagal, kembalikan kosong dan
     # log dengan jelas. Kegagalan dibiarkan terlihat (lihat stderr subprocess).
