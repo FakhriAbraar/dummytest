@@ -63,7 +63,6 @@ async def _run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
                 "x": cfg.get("max_content_x", 5),
                 "instagram": cfg.get("max_content_instagram", 5),
                 "tiktok": cfg.get("max_content_tiktok", 5),
-                "facebook": cfg.get("max_content_facebook", 5),
             },
             "trends_keyword_count": cfg.get("trends_keyword_count", 3),
             "current_keywords": [],
