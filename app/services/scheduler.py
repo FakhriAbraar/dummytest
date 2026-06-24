@@ -31,15 +31,10 @@ WIB = ZoneInfo("Asia/Jakarta")
 _JOB_PREFIX = "auto_crawl"  # semua job auto-crawl pakai prefix ini (bisa >1)
 
 _scheduler: AsyncIOScheduler | None = None
-_keyword_model: Any = None
 # Keep strong refs to detached crawl tasks so they aren't GC'd mid-run.
 _RUNNING_TASKS: set[asyncio.Task[None]] = set()
 
-
-def set_keyword_model(model: Any) -> None:
-    """Stash the loaded GGUF keyword model so scheduled crawls can use it."""
-    global _keyword_model  # noqa: PLW0603
-    _keyword_model = model
+# Removed _keyword_model and set_keyword_model
 
 
 def _ensure_scheduler() -> AsyncIOScheduler:
@@ -123,7 +118,7 @@ def _build_triggers(cfg: CrawlerSchedule) -> list[CronTrigger | IntervalTrigger]
 def spawn_crawl(config: dict[str, Any]) -> job_tracker.Job:
     """Create a tracked job and run it as a detached task. Returns the job."""
     job = job_tracker.create_job(config)
-    task = asyncio.create_task(run_crawl_job(job, _keyword_model))
+    task = asyncio.create_task(run_crawl_job(job))
     job.attach_task(task)
     _RUNNING_TASKS.add(task)
     task.add_done_callback(_RUNNING_TASKS.discard)

@@ -21,7 +21,7 @@ from app.services.log_stream import current_job
 from app.services.report_service import save_mission_report
 
 
-async def run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
+async def run_crawl_job(job: job_tracker.Job) -> None:
     """Execute one configured crawl, reporting per-stage progress to ``job``.
 
     Runs as a detached background task with its own DB session (the request or
@@ -31,7 +31,7 @@ async def run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
     """
     log_token = current_job.set(job)
     try:
-        await _run_crawl_job(job, keyword_model)
+        await _run_crawl_job(job)
     except asyncio.CancelledError:
         # User pressed Stop: cancellation propagates here (CancelledError is a
         # BaseException, so the broad `except Exception` inside _run_crawl_job
@@ -43,7 +43,7 @@ async def run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
         current_job.reset(log_token)
 
 
-async def _run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
+async def _run_crawl_job(job: job_tracker.Job) -> None:
     job.mark_running()
     cfg = job.config
     mission_id = job.job_id
@@ -77,7 +77,7 @@ async def _run_crawl_job(job: job_tracker.Job, keyword_model: object) -> None:
         }
 
         async with session_factory() as session:
-            workflow = build_pad_workflow(keyword_model, session, progress=job)
+            workflow = build_pad_workflow(session, progress=job)
             job.complete_stage("Initializing Engine")
 
             async with AsyncSqliteSaver.from_conn_string("pad_checkpoint.db") as checkpointer:

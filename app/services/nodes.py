@@ -66,77 +66,7 @@ def _is_daily_quota_error(exc: Exception) -> bool:
     return "per-day" in msg or "per day" in msg
 
 
-def extract_json_from_llm(raw_text: str | None) -> dict:
-    if not raw_text:
-        return {}
-    try:
-        match = re.search(r'\{.*\}', raw_text.strip(), re.DOTALL)
-        if match:
-            return json.loads(match.group(0))
-        return json.loads(raw_text)
-    except json.JSONDecodeError:
-        print(f"[gatekeeper] LLM JSON parse failed: {raw_text!r}")
-        return {}
-
-
-async def generate_keyword_local(text_input: str, platform: str, keyword_model) -> list:
-    if keyword_model is None:
-        # Dummy keyword extraction — ambil kata bermakna dari teks saat GGUF tidak ada
-        words = re.findall(r'\b\w{4,}\b', text_input.lower())
-        unique_words = list({w for w in words if w not in {
-            "yang", "dengan", "untuk", "dari", "pada", "atau", "adalah", "akan",
-            "tidak", "bisa", "agar", "juga", "sudah", "dalam", "karena",
-            "lebih", "seperti", "harus", "masih", "bahwa", "serta",
-            "oleh", "semua", "setiap", "belum", "bagi", "setelah", "tentang",
-        }})
-        result = random.sample(unique_words, k=min(3, len(unique_words)))
-        if result:
-            print(f"[fork] keyword extraction (regex fallback, GGUF unavailable): {result}")
-        return result
-
-    system_prompt = (
-        "Ekstraksi semua kata kunci atau frasa penting dari teks berikut, "
-        "ambil langsung dari teks asli tanpa menambah kata baru. "
-        "Format hasilnya sebagai JSON array of strings"
-    )
-    user_input = f"Konteks: {platform} {text_input}"
-
-    full_prompt = (
-        f"<|im_start|>system\n{system_prompt}<|im_end|>\n"
-        f"<|im_start|>user\n{user_input}<|im_end|>\n"
-        f"<|im_start|>assistant\n["
-    )
-
-    try:
-        response = await asyncio.to_thread(
-            keyword_model.create_completion,
-            prompt=full_prompt,
-            max_tokens=128,
-            temperature=0.0,
-            stop=["<|im_end|>", "\n"],
-        )
-
-        raw_output = response["choices"][0]["text"].strip()
-        matches = re.findall(r'"([^"]+)"|\'([^\']+)\'', raw_output)
-
-        keywords = []
-        for match in matches:
-            kw = match[0] if match[0] else match[1]
-            if kw and len(kw.strip()) > 1:
-                keywords.append(kw.strip().lower())
-
-        if not keywords:
-            clean_raw = raw_output.replace("[", "").replace("]", "").strip()
-            if clean_raw:
-                for kw in clean_raw.split(","):
-                    if kw and len(kw.strip()) > 1:
-                        keywords.append(kw.strip().lower())
-
-        return list(set(keywords)) if keywords else []
-
-    except Exception as e:
-        print(f"[fork] keyword model error: {e}")
-        return []
+# Removed generate_keyword_local and extract_json_from_llm
 
 
 # =====================================================================
@@ -409,7 +339,7 @@ def create_gatekeeper_node(session: AsyncSession, progress=None):
     return gatekeeper_node
 
 
-def create_fork_processor_node(keyword_model, progress=None):
+def create_fork_processor_node(progress=None):
     async def fork_processor_node(state: PADState):
         print(f"[fork] depth={state['crawling_depth']} START (keyword expansion)")
         # "Generating RAG Analysis": ekstraksi entitas + keyword turunan.
@@ -439,7 +369,8 @@ def create_fork_processor_node(keyword_model, progress=None):
                 },
             })
 
-            generated_kws = await generate_keyword_local(text_payload, platform, keyword_model)
+            from app.services.itspad_client import extract_keywords
+            generated_kws = await extract_keywords(text_payload, platform)
             if generated_kws:
                 print(f"[fork] extracted keywords: {generated_kws}")
             new_keywords_generated.extend(generated_kws)

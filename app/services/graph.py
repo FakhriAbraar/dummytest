@@ -3,7 +3,7 @@ from .state import PADState
 from .nodes import trend_crawler_node, content_crawler_node, create_gatekeeper_node, create_fork_processor_node
 from .router import check_loop_status  
 
-def build_pad_workflow(keyword_model, session, progress=None):
+def build_pad_workflow(session, progress=None):
     workflow = StateGraph(PADState)
 
     # `progress` (optional) is a job_tracker.Job handle that the nodes use to
@@ -21,7 +21,7 @@ def build_pad_workflow(keyword_model, session, progress=None):
     workflow.add_node("ContentCrawler", _with_progress(content_crawler_node))
 
     workflow.add_node("Gatekeeper", create_gatekeeper_node(session, progress))
-    workflow.add_node("ForkProcessor", create_fork_processor_node(keyword_model, progress))
+    workflow.add_node("ForkProcessor", create_fork_processor_node(progress))
     
     workflow.set_entry_point("TrendSeed")
     workflow.add_edge("TrendSeed", "ContentCrawler")

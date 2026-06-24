@@ -69,8 +69,7 @@ async def trigger_agentic_crawler(
         "max_depth": request.max_depth,
     }
 
-    keyword_model = getattr(fastapi_req.app.state, "keyword_model", None)
-    workflow = build_pad_workflow(keyword_model, session)
+    workflow = build_pad_workflow(session)
 
     try:
         async with AsyncSqliteSaver.from_conn_string("pad_checkpoint.db") as checkpointer:
@@ -142,10 +141,9 @@ async def start_crawl_job(request: StartCrawlRequest, fastapi_req: Request):
 
     Returns immediately with a `job_id` the frontend polls via `/crawler/jobs/{id}`.
     """
-    keyword_model = getattr(fastapi_req.app.state, "keyword_model", None)
     job = job_tracker.create_job(request.model_dump())
 
-    task = asyncio.create_task(run_crawl_job(job, keyword_model))
+    task = asyncio.create_task(run_crawl_job(job))
     job.attach_task(task)
     _RUNNING_TASKS.add(task)
     task.add_done_callback(_RUNNING_TASKS.discard)
