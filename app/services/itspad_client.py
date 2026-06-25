@@ -10,6 +10,7 @@ Konfigurasi via .env:
 """
 from __future__ import annotations
 
+import ast
 import asyncio
 import json
 import os
@@ -70,16 +71,22 @@ def parse_output(task: str, output: str) -> dict:
     clean_output = re.sub(r'```\s*$', '', clean_output)
     
     if task == "KEYWORD_EXTRACTION":
-        try:
-            parsed = json.loads(clean_output)
-            if isinstance(parsed, list):
-                return {"keywords": parsed, "raw": output}
-        except Exception:
-            # Fallback regex extraction
-            matches = re.findall(r'"([^"]+)"', clean_output)
-            if matches:
-                return {"keywords": matches, "raw": output}
-                
+        # Model kadang balas JSON valid (double quote), kadang list gaya Python
+        # (single quote) yang BUKAN JSON valid — mis. ['a', 'b']. Coba json.loads
+        # lalu ast.literal_eval, baru fallback regex (tangkap quote tunggal & ganda).
+        for loader in (json.loads, ast.literal_eval):
+            try:
+                parsed = loader(clean_output)
+                if isinstance(parsed, (list, tuple)):
+                    kws = [str(x).strip() for x in parsed if str(x).strip()]
+                    return {"keywords": kws, "raw": output}
+            except Exception:
+                pass
+
+        matches = re.findall(r"""['"]([^'"]+)['"]""", clean_output)
+        if matches:
+            return {"keywords": [m.strip() for m in matches if m.strip()], "raw": output}
+
         return {"keywords": [], "raw": output}
 
     # Untuk TEXT_CLASSIFICATION & IMG_CLASSIFICATION

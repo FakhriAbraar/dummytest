@@ -1,13 +1,17 @@
 def resolve_ai_conflict(text_result: dict, visual_result: dict, igrs_rule: dict) -> dict:
-    VALID_RATINGS = {"SU", "7+", "13+", "17+", "PRC"}
+    # UNRATED ("Unrated" dari model untuk gambar blur/tidak yakin) WAJIB ikut valid,
+    # kalau tidak akan dipaksa jadi "SU" (aman) — menyembunyikan konten yang justru
+    # butuh tinjauan manual. Severity -1 = selalu kalah dari rating konkret, jadi
+    # hasil final UNRATED hanya muncul saat tidak ada sinyal konkret sama sekali.
+    VALID_RATINGS = {"SU", "7+", "13+", "17+", "PRC", "UNRATED"}
     RATING_SEVERITY = {"SU": 0, "7+": 1, "13+": 2, "17+": 3, "PRC": 4, "UNRATED": -1}
-    
+
     text_rating = text_result.get("predicted_rating", "SU")
-    if text_rating not in VALID_RATINGS: 
+    if text_rating not in VALID_RATINGS:
         text_rating = "SU"
-        
+
     visual_rating = visual_result.get("predicted_rating", "SU")
-    if visual_rating not in VALID_RATINGS: 
+    if visual_rating not in VALID_RATINGS:
         visual_rating = "SU"
         
     text_sev = RATING_SEVERITY.get(text_rating, 0)

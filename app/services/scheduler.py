@@ -115,8 +115,19 @@ def _build_triggers(cfg: CrawlerSchedule) -> list[CronTrigger | IntervalTrigger]
     return [IntervalTrigger(hours=cfg.interval_hours, start_date=start, timezone=WIB)]
 
 
-def spawn_crawl(config: dict[str, Any]) -> job_tracker.Job:
-    """Create a tracked job and run it as a detached task. Returns the job."""
+def spawn_crawl(config: dict[str, Any]) -> job_tracker.Job | None:
+    """Create a tracked job and run it as a detached task. Returns the job.
+
+    Returns ``None`` (and skips) if a crawl is already running, so a scheduled
+    tick never double-crawls on top of a manual or still-running previous run.
+    """
+    active = job_tracker.get_active_job()
+    if active is not None:
+        print(  # noqa: T201
+            f"[scheduler] Crawl {active.job_id[:8]} masih berjalan; "
+            "lewati tick ini (hindari double crawling)."
+        )
+        return None
     job = job_tracker.create_job(config)
     task = asyncio.create_task(run_crawl_job(job))
     job.attach_task(task)
@@ -136,6 +147,14 @@ async def _run_scheduled_crawl() -> None:
             cfg = await session.get(CrawlerSchedule, 1)
             if cfg is None or not cfg.enabled:
                 print("[scheduler] Auto-crawl disabled; skipping tick.")  # noqa: T201
+                return
+            # Don't stamp last_run / spawn when a crawl is already in flight.
+            active = job_tracker.get_active_job()
+            if active is not None:
+                print(  # noqa: T201
+                    f"[scheduler] Crawl {active.job_id[:8]} masih berjalan; "
+                    "lewati tick ini (hindari double crawling)."
+                )
                 return
             config = crawl_config_from_row(cfg)
             cfg.last_run_at = datetime.now(tz=timezone.utc)

@@ -261,9 +261,18 @@ async def run_public_checking_pipeline(url: str, session: AsyncSession) -> dict[
         "yang menyimpang; kekerasan seksual; masturbasi atau onani; ketelanjangan atau tampilan yang "
         "mengesankan ketelanjangan; alat kelamin; atau pornografi anak."
     )
-    qdrant_context = _STATIC_LEGAL_FALLBACK
+    # Dasar hukum hanya relevan untuk konten yang ditandai TIDAK aman. Konten
+    # aman (rating SU/7+) tidak melanggar apa pun — menampilkan pasal di situ
+    # justru menyesatkan. Gate pakai RATING (otoritatif), bukan kategori: kategori
+    # untuk konten aman bisa "diperkaya" jadi kategori IGRS konkret di atas.
+    # Frontend menyembunyikan baris "Dasar Hukum" bila string ini kosong.
+    is_safe_content = final_decision.get("rating_final", "SU") in ("SU", "7+")
 
-    if QDRANT_URL:
+    qdrant_context = "" if is_safe_content else _STATIC_LEGAL_FALLBACK
+
+    if is_safe_content:
+        print("[checker] konten aman (SU/7+); lewati RAG dasar hukum")
+    elif QDRANT_URL:
         try:
             query_text = final_decision.get("reason_final") or final_decision["kategori_final"]
             search_query = f"query: {query_text}"

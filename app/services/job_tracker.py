@@ -236,6 +236,19 @@ def get_job(job_id: str) -> Job | None:
     return _JOBS.get(job_id)
 
 
+# A job is "active" while it is queued or executing. Used to prevent two crawls
+# from running at once (double crawling) regardless of trigger source.
+_ACTIVE_STATES = ("pending", "running")
+
+
+def get_active_job() -> Job | None:
+    """Return the crawl job currently pending/running, if any (newest first)."""
+    for job in reversed(_JOBS.values()):
+        if job.status in _ACTIVE_STATES:
+            return job
+    return None
+
+
 def list_jobs() -> list[Job]:
     # newest first
     return list(reversed(_JOBS.values()))

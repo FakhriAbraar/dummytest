@@ -3,8 +3,10 @@ from __future__ import annotations
 import asyncio
 import base64
 import mimetypes
+import re
 from datetime import datetime, timezone
 from typing import Any
+from urllib.parse import urlparse
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
@@ -21,6 +23,27 @@ from app.services.resolver import resolve_ai_conflict
 
 # Ratings that mark a check as "unsafe" in list/preview views (mirrors frontend).
 _UNSAFE_RATINGS = {"13+", "17+", "PRC"}
+
+# Platform yang didukung untuk cek-via-URL. Crawler/verifier hanya bisa menarik
+# konten dari Instagram, X (Twitter), dan TikTok — mirror src/lib/platforms.ts.
+_SUPPORTED_HOSTS = ("instagram.com", "twitter.com", "x.com", "tiktok.com")
+_SUPPORTED_PLATFORM_LABEL = "Instagram, X (Twitter), dan TikTok"
+
+
+def _is_supported_content_url(raw: str) -> bool:
+    """True jika `raw` adalah URL dari platform yang didukung (toleran tanpa skema)."""
+    raw = (raw or "").strip()
+    if not raw:
+        return False
+    if not re.match(r"^https?://", raw, re.IGNORECASE):
+        raw = "https://" + raw
+    try:
+        host = (urlparse(raw).hostname or "").lower()
+    except Exception:
+        return False
+    if host.startswith("www."):
+        host = host[4:]
+    return any(host == h or host.endswith("." + h) for h in _SUPPORTED_HOSTS)
 
 
 async def _persist_public_check(session: AsyncSession, result: dict[str, Any]) -> None:
@@ -111,6 +134,11 @@ async def public_checking_endpoint(
     request: CheckRequest,
     session: AsyncSession = Depends(get_db_session)
 ):
+    if not _is_supported_content_url(request.url):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Saat ini hanya mendukung link dari {_SUPPORTED_PLATFORM_LABEL}.",
+        )
     try:
         result = await run_public_checking_pipeline(request.url, session)
         await _persist_public_check(session, result)

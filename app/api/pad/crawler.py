@@ -140,7 +140,18 @@ async def start_crawl_job(request: StartCrawlRequest, fastapi_req: Request):
     """Create a crawl job from the config form and run it in the background.
 
     Returns immediately with a `job_id` the frontend polls via `/crawler/jobs/{id}`.
+    Rejects with 409 if a crawl is already running, so we never double-crawl.
     """
+    active = job_tracker.get_active_job()
+    if active is not None:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                f"Sebuah crawl sedang berjalan (job {active.job_id[:8]}). "
+                "Tunggu hingga selesai atau hentikan dulu sebelum memulai yang baru."
+            ),
+        )
+
     job = job_tracker.create_job(request.model_dump())
 
     task = asyncio.create_task(run_crawl_job(job))
@@ -184,6 +195,18 @@ async def stop_crawl_job(job_id: str):
 @router.get("/jobs")
 async def list_crawl_jobs():
     return {"jobs": [job.to_dict() for job in job_tracker.list_jobs()]}
+
+
+@router.get("/active")
+async def get_active_crawl_job():
+    """Job crawl yang sedang berjalan (pending/running), atau null.
+
+    Sumber kebenaran lintas-device: device mana pun bisa tahu engine sedang
+    berjalan (lalu menampilkannya & mencegah start baru), bukan cuma device
+    yang memulai. Single-engine ditegakkan di /start (409 bila ada yang aktif).
+    """
+    job = job_tracker.get_active_job()
+    return {"active": job.to_dict() if job else None}
 
 
 @router.get("/jobs/{job_id}")

@@ -17,11 +17,105 @@ router = APIRouter(prefix="/stats", tags=["Stats"])
 
 _AGE_ORDER = ["SU", "7+", "13+", "17+", "PRC"]
 
-# Bobot poin risiko per kategori umur (makin tinggi rating, makin berisiko).
-# PRC (Perlu Pendampingan) tertinggi. Skor akun = total poin seluruh kontennya.
-_AGE_POINTS = {"SU": 0, "7+": 1, "13+": 2, "17+": 4, "PRC": 6}
-# Akun ditandai "warning" bila skor >= ambang ATAU punya konten 17+/PRC.
-_WARNING_SCORE_THRESHOLD = 8
+# ── Penilaian Risiko Akun ────────────────────────────────────────────────────
+# Metodologi (transparan, tiap angka punya alasan jelas). Mengacu praktik umum
+# Trust & Safety + risk-scoring: Risiko = Dampak (severity) × Prevalensi, lalu
+# dinormalisasi ke indeks 0–100 dengan worst-case floor untuk konten berat.
+#
+# Bobot DAMPAK per kategori umur = perkiraan potensi bahaya bila seorang ANAK
+# terpapar konten tsb. Skala non-linear: lompatan makin besar di tingkat berat
+# karena bahayanya tidak proporsional (PRC = pelanggaran/ilegal).
+#   SU  = 0  → aman untuk semua umur, tidak menambah risiko
+#   7+  = 1  → konten ringan, risiko minimal
+#   13+ = 3  → mulai tak sesuai anak, perlu pendampingan
+#   17+ = 6  → konten dewasa, jelas bukan untuk anak (±2× dari 13+)
+#   PRC = 10 → konten terlarang/ilegal, bahaya tertinggi
+# Bobot = bilangan segitiga T(level) dari level keparahan ordinal 0..4
+# (T(n)=n(n+1)/2 → 0,1,3,6,10): eskalasi konveks/super-linear, sesuai prinsip
+# disutility bahaya yang naik tak proporsional. Lihat docs/penilaian-akun-berisiko.md.
+_AGE_POINTS = {"SU": 0, "7+": 1, "13+": 3, "17+": 6, "PRC": 10}
+_MAX_AGE_POINT = 10  # bobot PRC — dipakai untuk normalisasi indeks 0–100
+# Prior (Laplace smoothing) untuk densitas: seolah ada N konten "netral" semu.
+# Mencegah akun ber-konten sedikit (mis. 1 post PRC) langsung 100%/Kritis —
+# bukti sedikit = kurang yakin. Makin banyak konten, efek prior makin hilang.
+_PRIOR_SAFE = 5
+
+# Konten "tidak layak untuk anak" (untuk hitung prevalensi). Sejalan dengan
+# pemisahan SAFE/UNSAFE di engine (SAFE = SU/7+).
+_UNSAFE_RATINGS = ("13+", "17+", "PRC")
+
+# Ambang level risiko pada indeks 0–100 (risk-tiering, urut dari tertinggi).
+_RISK_LEVELS = [(90, "Kritis"), (70, "Tinggi"), (40, "Sedang"), (1, "Rendah"), (0, "Aman")]
+# Akun "berisiko" (warning) = minimal level Sedang (indeks >= 40).
+_WARNING_INDEX_THRESHOLD = 40
+
+
+def _compute_account_risk(age_groups: dict[str, int], total: int) -> dict:
+    """Hitung indeks risiko 0–100, level, poin per-kategori, dan ALASAN satu akun.
+
+    Langkah (semua dapat dijelaskan ke pengguna):
+    1. Severity points: tiap konten dapat bobot _AGE_POINTS sesuai rating-nya.
+    2. Harm density (Dampak × Prevalensi) + Laplace smoothing:
+       (Σ bobot) / ((total + _PRIOR_SAFE) × _MAX_AGE_POINT) × 100. Menangkap
+       SEBERAPA KONSISTEN akun memposting konten berbahaya (prevalensi = tolok
+       ukur utama Trust & Safety). Prior _PRIOR_SAFE mencegah akun ber-konten
+       sedikit (mis. 1 post) langsung 100% — bukti sedikit = belum yakin.
+    3. Severity floor (worst-case): konten berat tak bisa "diencerkan" oleh
+       banyaknya konten aman — sedikit saja sudah tidak dapat ditoleransi.
+         • ada PRC             → minimal Tinggi; >=3 PRC → Kritis
+         • ada 17+ (tanpa PRC) → minimal Sedang
+    Indeks akhir = max(harm_density, floor); level diturunkan dari indeks.
+    """
+    age_points = {r: _AGE_POINTS.get(r, 0) * c for r, c in age_groups.items()}
+    severity_sum = sum(age_points.values())
+    unsafe = sum(age_groups.get(r, 0) for r in _UNSAFE_RATINGS)
+
+    density_index = severity_sum / ((total + _PRIOR_SAFE) * _MAX_AGE_POINT) * 100
+
+    prc = age_groups.get("PRC", 0)
+    p17 = age_groups.get("17+", 0)
+    p13 = age_groups.get("13+", 0)
+
+    floor = 0
+    if prc > 0:
+        floor = 90 if prc >= 3 else 70
+    elif p17 > 0:
+        floor = 40
+
+    risk_index = round(min(100.0, max(density_index, float(floor))))
+    if unsafe == 0:  # tak ada konten "tidak layak anak" → aman, apa pun volumenya
+        risk_index = 0
+
+    level = "Aman"
+    for thr, name in _RISK_LEVELS:
+        if risk_index >= thr:
+            level = name
+            break
+
+    reasons: list[str] = []
+    if prc > 0:
+        reasons.append(f"{prc} konten Konten Terlarang/PRC — pelanggaran berat, berpotensi ilegal.")
+    if p17 > 0:
+        reasons.append(f"{p17} konten kategori 17+ — khusus dewasa, tidak layak untuk anak.")
+    if p13 > 0:
+        reasons.append(f"{p13} konten kategori 13+ — belum sepenuhnya sesuai untuk anak.")
+    if total > 0 and unsafe > 0:
+        reasons.append(
+            f"{round(unsafe / total * 100)}% konten tidak layak untuk anak ({unsafe} dari {total})."
+        )
+    if not reasons:
+        reasons.append("Mayoritas konten tergolong aman untuk anak.")
+
+    return {
+        "score": severity_sum,
+        "age_points": age_points,
+        "risk_index": risk_index,
+        "risk_level": level,
+        "unsafe_count": unsafe,
+        "unsafe_ratio": round(unsafe / total, 3) if total else 0.0,
+        "reasons": reasons,
+        "is_warning": risk_index >= _WARNING_INDEX_THRESHOLD,
+    }
 
 
 @router.get("/dashboard")
@@ -522,10 +616,12 @@ async def get_risky_accounts(
     only_warning: bool = False,
     session: AsyncSession = Depends(get_db_session),
 ):
-    """Daftar akun berisiko: skor dihitung dari poin tiap kategori umur kontennya.
+    """Daftar akun berisiko dengan penilaian transparan (lihat _compute_account_risk).
 
-    Akun ditandai 'warning' jika skor >= ambang atau memiliki konten 17+/PRC.
-    Mengembalikan rincian jumlah & poin per kategori umur untuk tiap akun.
+    Tiap akun mendapat indeks risiko 0–100, level (Aman/Rendah/Sedang/Tinggi/
+    Kritis), dan daftar `reasons` (alasan jelas) berdasarkan dampak (bobot per
+    rating) × prevalensi konten tidak layak + worst-case floor untuk 17+/PRC.
+    Ditandai 'berisiko' bila indeks >= ambang (Sedang).
     """
     from datetime import datetime
 
@@ -568,33 +664,30 @@ async def get_risky_accounts(
             "platform": (plat or "").lower(),
             "total_content": 0,
             "age_groups": {k: 0 for k in _AGE_ORDER},
-            "age_points": {k: 0 for k in _AGE_ORDER},
-            "score": 0,
         })
         a["total_content"] += cnt
-        if rating in _AGE_POINTS:
+        # UNRATED & rating tak dikenal tetap dihitung di total (sebagai pembagi
+        # prevalensi) tapi tidak diberi bobot bahaya (belum terkonfirmasi).
+        if rating in a["age_groups"]:
             a["age_groups"][rating] += cnt
-            pts = _AGE_POINTS[rating] * cnt
-            a["age_points"][rating] += pts
-            a["score"] += pts
 
     result = []
     for a in accounts.values():
-        has_high = a["age_groups"]["17+"] > 0 or a["age_groups"]["PRC"] > 0
-        a["is_warning"] = a["score"] >= _WARNING_SCORE_THRESHOLD or has_high
+        a.update(_compute_account_risk(a["age_groups"], a["total_content"]))
         if only_warning and not a["is_warning"]:
             continue
         result.append(a)
 
-    # Urutkan: yang warning dulu, lalu skor tertinggi.
-    result.sort(key=lambda x: (x["is_warning"], x["score"]), reverse=True)
+    # Urutkan: yang warning dulu, lalu indeks risiko tertinggi.
+    result.sort(key=lambda x: (x["is_warning"], x["risk_index"]), reverse=True)
     result = result[:limit]
 
     return {
         "accounts": result,
         "count": len(result),
-        "threshold": _WARNING_SCORE_THRESHOLD,
+        "threshold": _WARNING_INDEX_THRESHOLD,
         "weights": _AGE_POINTS,
+        "levels": [name for _, name in reversed(_RISK_LEVELS)],
     }
 
 
